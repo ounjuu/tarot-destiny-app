@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" width="200" height="320">
+  <rect width="200" height="320" rx="16" fill="#f8f8e0" stroke="#d0c050" stroke-width="2.5"/>
+  <rect x="8" y="8" width="184" height="304" rx="12" fill="none" stroke="#d0c050" stroke-opacity="0.3"/>
+  <text x="100" y="30" text-anchor="middle" fill="#d0c050" font-size="26" font-weight="bold" letter-spacing="4" font-family="serif">XIX</text>
+  <rect x="16" y="40" width="168" height="210" rx="12" fill="#f0f0c0"/>
+  <circle cx="100" cy="85" r="18" fill="#ffcc44" opacity="0.5"/><line x1="100" y1="60" x2="100" y2="50" stroke="#ffaa00" stroke-width="3" stroke-linecap="round" opacity="0.3"/><line x1="118" y1="67" x2="125" y2="60" stroke="#ffaa00" stroke-width="3" stroke-linecap="round" opacity="0.3"/><line x1="82" y1="67" x2="75" y2="60" stroke="#ffaa00" stroke-width="3" stroke-linecap="round" opacity="0.3"/><line x1="125" y1="85" x2="135" y2="85" stroke="#ffaa00" stroke-width="3" stroke-linecap="round" opacity="0.3"/><line x1="75" y1="85" x2="65" y2="85" stroke="#ffaa00" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+  <circle cx="100" cy="175" r="18" fill="#f0a050"/><circle cx="100" cy="158" r="16" fill="#f0a050"/><path d="M87 149 L83 135 L93 147" fill="#f0a050"/><path d="M113 149 L117 135 L107 147" fill="#f0a050"/><ellipse cx="100" cy="163" rx="10" ry="6" fill="white"/><circle cx="94" cy="155" r="3.5" fill="#302020"/><circle cx="106" cy="155" r="3.5" fill="#302020"/><circle cx="94.8" cy="154.3" r="1" fill="white"/><circle cx="106.8" cy="154.3" r="1" fill="white"/><ellipse cx="100" cy="162" rx="2.5" ry="1.5" fill="#302020"/><circle cx="88" cy="160" r="5.5" fill="#f08060" opacity="0.3"/><circle cx="112" cy="160" r="5.5" fill="#f08060" opacity="0.3"/>
+  <text x="100" y="280" text-anchor="middle" fill="#d0c050" font-size="26" font-weight="bold" font-family="sans-serif">태양</text>
+  <text x="100" y="298" text-anchor="middle" fill="#d0c050" opacity="0.5" font-size="18" letter-spacing="2" font-family="serif" font-style="italic">The Sun</text>
+</svg>

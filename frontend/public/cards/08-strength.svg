@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" width="200" height="320">
+  <rect width="200" height="320" rx="16" fill="#f8f8e0" stroke="#c0c080" stroke-width="2.5"/>
+  <rect x="8" y="8" width="184" height="304" rx="12" fill="none" stroke="#c0c080" stroke-opacity="0.3"/>
+  <text x="100" y="30" text-anchor="middle" fill="#c0c080" font-size="26" font-weight="bold" letter-spacing="4" font-family="serif">VIII</text>
+  <rect x="16" y="40" width="168" height="210" rx="12" fill="#f0f0c8"/>
+  <circle cx="130" cy="178" r="10" fill="#e8b840"/><circle cx="130" cy="170" r="8" fill="#e8b840"/><circle cx="130" cy="170" r="11" fill="#d4a030" opacity="0.25"/><circle cx="128" cy="168" r="1.8" fill="#302020"/><circle cx="132" cy="168" r="1.8" fill="#302020"/><circle cx="128.5" cy="167.5" r="0.6" fill="white"/><circle cx="132.5" cy="167.5" r="0.6" fill="white"/><circle cx="126" cy="172" r="2.5" fill="#e0a0b0" opacity="0.3"/><circle cx="134" cy="172" r="2.5" fill="#e0a0b0" opacity="0.3"/>
+  <circle cx="100" cy="175" r="18" fill="white"/><circle cx="100" cy="158" r="15" fill="white"/><ellipse cx="90" cy="134" rx="7" ry="18" fill="white"/><ellipse cx="110" cy="134" rx="7" ry="18" fill="white"/><ellipse cx="90" cy="132" rx="3.5" ry="12" fill="#f0b0c0" opacity="0.45"/><ellipse cx="110" cy="132" rx="3.5" ry="12" fill="#f0b0c0" opacity="0.45"/><circle cx="95" cy="155" r="4" fill="#402030"/><circle cx="105" cy="155" r="4" fill="#402030"/><circle cx="95.8" cy="154.2" r="1.2" fill="white"/><circle cx="105.8" cy="154.2" r="1.2" fill="white"/><path d="M97 163 L100 165 L103 163" fill="#e090a0" stroke="#e090a0" stroke-width="0.6"/><circle cx="89" cy="160" r="5" fill="#f0a0b0" opacity="0.3"/><circle cx="111" cy="160" r="5" fill="#f0a0b0" opacity="0.3"/>
+  <text x="100" y="280" text-anchor="middle" fill="#c0c080" font-size="26" font-weight="bold" font-family="sans-serif">힘</text>
+  <text x="100" y="298" text-anchor="middle" fill="#c0c080" opacity="0.5" font-size="18" letter-spacing="2" font-family="serif" font-style="italic">Strength</text>
+</svg>

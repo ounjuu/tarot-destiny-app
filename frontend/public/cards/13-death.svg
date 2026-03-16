@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" width="200" height="320">
+  <rect width="200" height="320" rx="16" fill="#e8e8e8" stroke="#888890" stroke-width="2.5"/>
+  <rect x="8" y="8" width="184" height="304" rx="12" fill="none" stroke="#888890" stroke-opacity="0.3"/>
+  <text x="100" y="30" text-anchor="middle" fill="#888890" font-size="26" font-weight="bold" letter-spacing="4" font-family="serif">XIII</text>
+  <rect x="16" y="40" width="168" height="210" rx="12" fill="#d8d8dc"/>
+  <circle cx="135" cy="140" r="6" fill="white" opacity="0.8"/><circle cx="135" cy="140" r="2.5" fill="#ffe088"/><circle cx="128" cy="150" r="4" fill="white" opacity="0.6"/><circle cx="128" cy="150" r="1.5" fill="#ffe088"/><circle cx="140" cy="155" r="3" fill="white" opacity="0.5"/>
+  <circle cx="100" cy="175" r="18" fill="#404048"/><circle cx="100" cy="158" r="15" fill="#404048"/><path d="M90 148 L86 135 L94 146" fill="#404048"/><path d="M110 148 L114 135 L106 146" fill="#404048"/><circle cx="95" cy="155" r="4.5" fill="white"/><circle cx="105" cy="155" r="4.5" fill="white"/><circle cx="96" cy="154.5" r="2" fill="#a0e0a0"/><circle cx="106" cy="154.5" r="2" fill="#a0e0a0"/><circle cx="96.8" cy="153.8" r="0.7" fill="white"/><circle cx="106.8" cy="153.8" r="0.7" fill="white"/><path d="M97 162 L100 164 L103 162" fill="#d090a0" stroke="#d090a0" stroke-width="0.8"/><circle cx="89" cy="160" r="5" fill="#e0a0b0" opacity="0.35"/><circle cx="111" cy="160" r="5" fill="#e0a0b0" opacity="0.35"/>
+  <text x="100" y="280" text-anchor="middle" fill="#888890" font-size="26" font-weight="bold" font-family="sans-serif">죽음</text>
+  <text x="100" y="298" text-anchor="middle" fill="#888890" opacity="0.5" font-size="18" letter-spacing="2" font-family="serif" font-style="italic">Death</text>
+</svg>

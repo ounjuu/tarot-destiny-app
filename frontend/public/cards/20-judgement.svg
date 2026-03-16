@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" width="200" height="320">
+  <rect width="200" height="320" rx="16" fill="#f0e0e8" stroke="#c090a0" stroke-width="2.5"/>
+  <rect x="8" y="8" width="184" height="304" rx="12" fill="none" stroke="#c090a0" stroke-opacity="0.3"/>
+  <text x="100" y="30" text-anchor="middle" fill="#c090a0" font-size="26" font-weight="bold" letter-spacing="4" font-family="serif">XX</text>
+  <rect x="16" y="40" width="168" height="210" rx="12" fill="#e8c8d0"/>
+  <circle cx="140" cy="130" r="6" fill="#c090a0" opacity="0.15"/><circle cx="145" cy="125" r="4" fill="#c090a0" opacity="0.12"/><circle cx="148" cy="132" r="3" fill="#c090a0" opacity="0.1"/>
+  <circle cx="100" cy="175" r="16" fill="#e09060"/><circle cx="100" cy="158" r="14" fill="#e09060"/><path d="M100 144 L96 130 L100 136 L104 130 L100 144" fill="#e05040"/><circle cx="96" cy="155" r="3.5" fill="white"/><circle cx="104" cy="155" r="3.5" fill="white"/><circle cx="96.5" cy="154.5" r="1.8" fill="#302020"/><circle cx="104.5" cy="154.5" r="1.8" fill="#302020"/><circle cx="97" cy="154" r="0.6" fill="white"/><circle cx="105" cy="154" r="0.6" fill="white"/><path d="M98 162 L100 165 L102 162" fill="#e0a040"/><circle cx="90" cy="160" r="4" fill="#e0a0b0" opacity="0.3"/><circle cx="110" cy="160" r="4" fill="#e0a0b0" opacity="0.3"/><path d="M84 170 Q78 160 75 165" fill="none" stroke="#e09060" stroke-width="2" stroke-linecap="round"/><path d="M116 170 Q122 160 125 165" fill="none" stroke="#e09060" stroke-width="2" stroke-linecap="round"/>
+  <text x="100" y="280" text-anchor="middle" fill="#c090a0" font-size="26" font-weight="bold" font-family="sans-serif">심판</text>
+  <text x="100" y="298" text-anchor="middle" fill="#c090a0" opacity="0.5" font-size="18" letter-spacing="2" font-family="serif" font-style="italic">Judgement</text>
+</svg>

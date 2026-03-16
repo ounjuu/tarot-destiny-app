@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" width="200" height="320">
+  <rect width="200" height="320" rx="16" fill="#f0e8e0" stroke="#c0a080" stroke-width="2.5"/>
+  <rect x="8" y="8" width="184" height="304" rx="12" fill="none" stroke="#c0a080" stroke-opacity="0.3"/>
+  <text x="100" y="30" text-anchor="middle" fill="#c0a080" font-size="26" font-weight="bold" letter-spacing="4" font-family="serif">XVI</text>
+  <rect x="16" y="40" width="168" height="210" rx="12" fill="#e0d0c0"/>
+  <rect x="120" y="120" width="25" height="55" rx="3" fill="#d0c0a0" opacity="0.5"/><path d="M132 120 L128 130 L136 125 L130 135 L138 130 L133 140" fill="none" stroke="#f0d060" stroke-width="2" stroke-linecap="round" opacity="0.6"/><line x1="125" y1="155" x2="140" y2="160" stroke="#c0a080" stroke-width="1.5" opacity="0.4"/>
+  <circle cx="80" cy="175" r="14" fill="#c09060"/><circle cx="80" cy="162" r="12" fill="#c09060"/><circle cx="70" cy="150" r="6" fill="#c09060"/><circle cx="90" cy="150" r="6" fill="#c09060"/><ellipse cx="80" cy="155" rx="3" ry="14" fill="#c09060" transform="rotate(30,80,155)"/><circle cx="76" cy="160" r="3.5" fill="white"/><circle cx="84" cy="160" r="3.5" fill="white"/><circle cx="76.5" cy="159.5" r="1.8" fill="#302020"/><circle cx="84.5" cy="159.5" r="1.8" fill="#302020"/><circle cx="77" cy="159" r="0.6" fill="white"/><circle cx="85" cy="159" r="0.6" fill="white"/><ellipse cx="80" cy="166" rx="1.5" ry="1" fill="#d0a0a0"/><circle cx="72" cy="164" r="3.5" fill="#e0a0b0" opacity="0.3"/><circle cx="88" cy="164" r="3.5" fill="#e0a0b0" opacity="0.3"/>
+  <text x="100" y="280" text-anchor="middle" fill="#c0a080" font-size="26" font-weight="bold" font-family="sans-serif">탑</text>
+  <text x="100" y="298" text-anchor="middle" fill="#c0a080" opacity="0.5" font-size="18" letter-spacing="2" font-family="serif" font-style="italic">The Tower</text>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" width="200" height="320">
+  <rect width="200" height="320" rx="16" fill="#f8f0e0" stroke="#d0b060" stroke-width="2.5"/>
+  <rect x="8" y="8" width="184" height="304" rx="12" fill="none" stroke="#d0b060" stroke-opacity="0.3"/>
+  <text x="100" y="30" text-anchor="middle" fill="#d0b060" font-size="26" font-weight="bold" letter-spacing="4" font-family="serif">IV</text>
+  <rect x="16" y="40" width="168" height="210" rx="12" fill="#f0e0c0"/>
+  
+  <circle cx="100" cy="175" r="20" fill="#e8b840"/><circle cx="100" cy="155" r="18" fill="#e8b840"/><circle cx="100" cy="155" r="24" fill="#d4a030" opacity="0.3"/><circle cx="95" cy="152" r="4" fill="#302020"/><circle cx="105" cy="152" r="4" fill="#302020"/><circle cx="96" cy="151" r="1.2" fill="white"/><circle cx="106" cy="151" r="1.2" fill="white"/><ellipse cx="100" cy="160" rx="2.5" ry="1.5" fill="#302020"/><circle cx="88" cy="157" r="5" fill="#e0a0b0" opacity="0.3"/><circle cx="112" cy="157" r="5" fill="#e0a0b0" opacity="0.3"/><path d="M88 142 L92 136 L96 142 L100 136 L104 142 L108 136 L112 142" fill="#ffcc44" stroke="#ddaa00" stroke-width="1"/>
+  <text x="100" y="280" text-anchor="middle" fill="#d0b060" font-size="26" font-weight="bold" font-family="sans-serif">황제</text>
+  <text x="100" y="298" text-anchor="middle" fill="#d0b060" opacity="0.5" font-size="18" letter-spacing="2" font-family="serif" font-style="italic">The Emperor</text>
+</svg>

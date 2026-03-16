@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" width="200" height="320">
+  <rect width="200" height="320" rx="16" fill="#e0f0f0" stroke="#80c0c0" stroke-width="2.5"/>
+  <rect x="8" y="8" width="184" height="304" rx="12" fill="none" stroke="#80c0c0" stroke-opacity="0.3"/>
+  <text x="100" y="30" text-anchor="middle" fill="#80c0c0" font-size="26" font-weight="bold" letter-spacing="4" font-family="serif">VII</text>
+  <rect x="16" y="40" width="168" height="210" rx="12" fill="#c0e0e0"/>
+  <line x1="130" y1="160" x2="145" y2="155" stroke="#80c0c0" stroke-width="1.5" opacity="0.4"/>
+  <line x1="130" y1="165" x2="148" y2="162" stroke="#80c0c0" stroke-width="1" opacity="0.3"/>
+  <circle cx="60" cy="90" r="3" fill="#fff0a0" opacity="0.5"/>
+  <ellipse cx="100" cy="178" rx="22" ry="14" fill="white"/>
+  <circle cx="100" cy="158" r="14" fill="white"/>
+  <path d="M90 148 L86 132 L94 146" fill="white"/>
+  <path d="M110 148 L114 132 L106 146" fill="white"/>
+  <circle cx="88" cy="136" r="1.5" fill="#c0e0e0"/>
+  <circle cx="112" cy="136" r="1.5" fill="#c0e0e0"/>
+  <circle cx="95" cy="155" r="3.5" fill="#304050"/>
+  <circle cx="105" cy="155" r="3.5" fill="#304050"/>
+  <circle cx="95.8" cy="154.2" r="1" fill="white"/>
+  <circle cx="105.8" cy="154.2" r="1" fill="white"/>
+  <ellipse cx="100" cy="162" rx="2" ry="1" fill="#c0a0a0"/>
+  <circle cx="89" cy="159" r="4" fill="#e0a0b0" opacity="0.25"/>
+  <circle cx="111" cy="159" r="4" fill="#e0a0b0" opacity="0.25"/>
+  <text x="100" y="280" text-anchor="middle" fill="#80c0c0" font-size="26" font-weight="bold" font-family="sans-serif">전차</text>
+  <text x="100" y="298" text-anchor="middle" fill="#80c0c0" opacity="0.5" font-size="18" letter-spacing="2" font-family="serif" font-style="italic">The Chariot</text>
+</svg>

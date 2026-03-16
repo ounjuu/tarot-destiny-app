@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" width="200" height="320">
+  <rect width="200" height="320" rx="16" fill="#e8e8e8" stroke="#a0a0a8" stroke-width="2.5"/>
+  <rect x="8" y="8" width="184" height="304" rx="12" fill="none" stroke="#a0a0a8" stroke-opacity="0.3"/>
+  <text x="100" y="30" text-anchor="middle" fill="#a0a0a8" font-size="26" font-weight="bold" letter-spacing="4" font-family="serif">IX</text>
+  <rect x="16" y="40" width="168" height="210" rx="12" fill="#d0d0d8"/>
+  <circle cx="130" cy="140" r="10" fill="#ffe066" opacity="0.12"/><circle cx="130" cy="140" r="6" fill="#ffe066" opacity="0.2"/><rect x="126" y="132" width="8" height="10" rx="2" fill="#c9a84c" opacity="0.7"/><circle cx="130" cy="137" r="3" fill="#ffe066" opacity="0.5"/>
+  <circle cx="100" cy="175" r="18" fill="#a0a0b0"/><circle cx="100" cy="158" r="16" fill="#a0a0b0"/><path d="M87 149 L83 135 L93 147" fill="#a0a0b0"/><path d="M113 149 L117 135 L107 147" fill="#a0a0b0"/><ellipse cx="100" cy="163" rx="10" ry="6" fill="white"/><circle cx="94" cy="155" r="3.5" fill="#303030"/><circle cx="106" cy="155" r="3.5" fill="#303030"/><circle cx="94.8" cy="154.3" r="1" fill="white"/><circle cx="106.8" cy="154.3" r="1" fill="white"/><ellipse cx="100" cy="162" rx="2.5" ry="1.5" fill="#303030"/><circle cx="88" cy="160" r="5.5" fill="#f08060" opacity="0.3"/><circle cx="112" cy="160" r="5.5" fill="#f08060" opacity="0.3"/>
+  <text x="100" y="280" text-anchor="middle" fill="#a0a0a8" font-size="26" font-weight="bold" font-family="sans-serif">은둔자</text>
+  <text x="100" y="298" text-anchor="middle" fill="#a0a0a8" opacity="0.5" font-size="18" letter-spacing="2" font-family="serif" font-style="italic">The Hermit</text>
+</svg>

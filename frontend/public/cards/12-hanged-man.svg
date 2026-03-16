@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" width="200" height="320">
+  <rect width="200" height="320" rx="16" fill="#e8e0f8" stroke="#a080d0" stroke-width="2.5"/>
+  <rect x="8" y="8" width="184" height="304" rx="12" fill="none" stroke="#a080d0" stroke-opacity="0.3"/>
+  <text x="100" y="30" text-anchor="middle" fill="#a080d0" font-size="26" font-weight="bold" letter-spacing="4" font-family="serif">XII</text>
+  <rect x="16" y="40" width="168" height="210" rx="12" fill="#d0c0f0"/>
+  
+  <line x1="70" y1="100" x2="130" y2="100" stroke="#a080d0" stroke-width="3" stroke-linecap="round" opacity="0.4"/><circle cx="100" cy="150" r="12" fill="#6050a0"/><circle cx="100" cy="162" r="10" fill="#6050a0"/><path d="M80 145 Q75 130 88 145" fill="#6050a0" opacity="0.6"/><path d="M120 145 Q125 130 112 145" fill="#6050a0" opacity="0.6"/><circle cx="97" cy="148" r="3" fill="white"/><circle cx="103" cy="148" r="3" fill="white"/><circle cx="97.5" cy="147.5" r="1.5" fill="#201030"/><circle cx="103.5" cy="147.5" r="1.5" fill="#201030"/><circle cx="97.8" cy="147" r="0.5" fill="white"/><circle cx="103.8" cy="147" r="0.5" fill="white"/><path d="M97 154 Q100 156 103 154" fill="none" stroke="#8070a0" stroke-width="1.2" stroke-linecap="round"/><circle cx="93" cy="152" r="3.5" fill="#e0a0b0" opacity="0.3"/><circle cx="107" cy="152" r="3.5" fill="#e0a0b0" opacity="0.3"/><line x1="100" y1="108" x2="100" y2="140" stroke="#a080d0" stroke-width="1.5" opacity="0.3"/>
+  <text x="100" y="280" text-anchor="middle" fill="#a080d0" font-size="24" font-weight="bold" font-family="sans-serif">매달린 사람</text>
+  <text x="100" y="298" text-anchor="middle" fill="#a080d0" opacity="0.5" font-size="18" letter-spacing="2" font-family="serif" font-style="italic">The Hanged Man</text>
+</svg>

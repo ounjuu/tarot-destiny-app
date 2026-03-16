@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" width="200" height="320">
+  <defs>
+    <linearGradient id="cbg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1050"/>
+      <stop offset="50%" stop-color="#2a1870"/>
+      <stop offset="100%" stop-color="#1a1050"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="320" rx="16" fill="url(#cbg)" stroke="#c9a84c" stroke-width="2.5"/>
+  <!-- 이중 프레임 -->
+  <rect x="8" y="8" width="184" height="304" rx="12" fill="none" stroke="#c9a84c" stroke-opacity="0.15" stroke-width="1"/>
+  <rect x="16" y="16" width="168" height="288" rx="8" fill="none" stroke="#c9a84c" stroke-opacity="0.08" stroke-width="1"/>
+  <!-- 모서리 장식 -->
+  <circle cx="28" cy="28" r="2" fill="#c9a84c" opacity="0.2"/>
+  <circle cx="172" cy="28" r="2" fill="#c9a84c" opacity="0.2"/>
+  <circle cx="28" cy="292" r="2" fill="#c9a84c" opacity="0.2"/>
+  <circle cx="172" cy="292" r="2" fill="#c9a84c" opacity="0.2"/>
+  <!-- 상단 장식 -->
+  <text x="100" y="58" text-anchor="middle" fill="#c9a84c" opacity="0.15" font-size="10" letter-spacing="8" font-family="serif">✧ ✧ ✧</text>
+  <!-- 달 + 별 -->
+  <circle cx="92" cy="130" r="22" fill="#c9a84c" opacity="0.1"/>
+  <circle cx="102" cy="125" r="17" fill="#1a1050"/>
+  <polygon points="115,112 117.5,119 125,119 119,124 121,131 115,127 109,131 111,124 105,119 112.5,119" fill="#c9a84c" opacity="0.2"/>
+  <!-- 작은 별들 -->
+  <circle cx="65" cy="100" r="2" fill="#c9a84c" opacity="0.12"/>
+  <circle cx="140" cy="110" r="1.5" fill="#c9a84c" opacity="0.1"/>
+  <circle cx="75" cy="160" r="1.2" fill="#c9a84c" opacity="0.08"/>
+  <circle cx="130" cy="155" r="1.8" fill="#c9a84c" opacity="0.08"/>
+  <circle cx="60" cy="145" r="1" fill="#c9a84c" opacity="0.06"/>
+  <circle cx="145" cy="140" r="1.3" fill="#c9a84c" opacity="0.06"/>
+  <!-- 텍스트 -->
+  <text x="100" y="200" text-anchor="middle" fill="#c9a84c" opacity="0.4" font-size="12" letter-spacing="3" font-family="serif">✧ LUNA ✧</text>
+  <text x="100" y="218" text-anchor="middle" fill="#c9a84c" opacity="0.2" font-size="9" letter-spacing="5" font-family="serif">TAROT</text>
+  <!-- 하단 장식 -->
+  <line x1="65" y1="238" x2="135" y2="238" stroke="#c9a84c" stroke-opacity="0.1" stroke-width="0.5"/>
+  <text x="100" y="268" text-anchor="middle" fill="#c9a84c" opacity="0.1" font-size="10" letter-spacing="8" font-family="serif">✧ ✧ ✧</text>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" width="200" height="320">
+  <rect width="200" height="320" rx="16" fill="#e0f0e8" stroke="#80c0a0" stroke-width="2.5"/>
+  <rect x="8" y="8" width="184" height="304" rx="12" fill="none" stroke="#80c0a0" stroke-opacity="0.3"/>
+  <text x="100" y="30" text-anchor="middle" fill="#80c0a0" font-size="26" font-weight="bold" letter-spacing="4" font-family="serif">X</text>
+  <rect x="16" y="40" width="168" height="210" rx="12" fill="#c0e8d0"/>
+  
+  <circle cx="100" cy="155" r="40" fill="none" stroke="#80c0a0" stroke-width="2" opacity="0.4"/><circle cx="100" cy="155" r="32" fill="none" stroke="#80c0a0" stroke-width="1" opacity="0.25"/><line x1="100" y1="115" x2="100" y2="195" stroke="#80c0a0" stroke-width="1" opacity="0.15"/><line x1="60" y1="155" x2="140" y2="155" stroke="#80c0a0" stroke-width="1" opacity="0.15"/><circle cx="100" cy="165" r="14" fill="#e8c090"/><circle cx="100" cy="152" r="12" fill="#e8c090"/><circle cx="92" cy="142" r="6" fill="#e8c090"/><circle cx="108" cy="142" r="6" fill="#e8c090"/><circle cx="92" cy="142" r="3" fill="#f0d0b0"/><circle cx="108" cy="142" r="3" fill="#f0d0b0"/><circle cx="96" cy="150" r="3" fill="#302020"/><circle cx="104" cy="150" r="3" fill="#302020"/><circle cx="96.8" cy="149.2" r="1" fill="white"/><circle cx="104.8" cy="149.2" r="1" fill="white"/><ellipse cx="100" cy="156" rx="2" ry="1" fill="#d0a0a0"/><circle cx="90" cy="155" r="4" fill="#e0a0b0" opacity="0.3"/><circle cx="110" cy="155" r="4" fill="#e0a0b0" opacity="0.3"/>
+  <text x="100" y="280" text-anchor="middle" fill="#80c0a0" font-size="22" font-weight="bold" font-family="sans-serif">운명의 수레바퀴</text>
+  <text x="100" y="298" text-anchor="middle" fill="#80c0a0" opacity="0.5" font-size="18" letter-spacing="2" font-family="serif" font-style="italic">Wheel of Fortune</text>
+</svg>
