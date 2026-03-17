@@ -26,7 +26,7 @@ export default function CardSpreadLayout({ categoryId, cards }: CardSpreadLayout
   // 연애운/커플운: 하트 모양 배치 (반응형)
   if (isLoveCategory(categoryId)) {
     return (
-      <div className="relative w-full max-w-[280px] aspect-[280/220] mx-auto mb-6">
+      <div className="relative w-full max-w-[280px] h-[200px] sm:h-[220px] mx-auto mb-6">
         {[
           { x: "20%", y: "0%" },
           { x: "59%", y: "0%" },
