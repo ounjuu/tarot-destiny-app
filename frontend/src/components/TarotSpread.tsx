@@ -115,33 +115,32 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
               <div className="absolute bottom-1.5 left-2.5 text-gold/15 text-[8px]">✦</div>
               <div className="absolute bottom-1.5 right-2.5 text-gold/15 text-[8px]">✦</div>
 
-              {/* 카드 6장 */}
-              <div className="flex gap-2.5 justify-center">
+              {/* 카드 6장 - 3x2 그리드 (작은 화면 대응) */}
+              <div className="grid grid-cols-6 gap-1.5 sm:gap-2.5 justify-items-center">
                 {Array.from({ length: MAX_CARDS }).map((_, i) => {
                   const card = selectedCardData[i];
                   const isFlipped = card && flippedCards.has(card.id);
 
                   return (
-                    <div key={card?.id ?? `empty-${i}`} className="flex flex-col items-center gap-1.5">
-                      {/* 카드 번호 라벨 */}
-                      <span className={`text-[9px] ${card ? "text-gold/50" : "text-gold/15"}`}>
+                    <div key={card?.id ?? `empty-${i}`} className="flex flex-col items-center gap-1">
+                      <span className={`text-[8px] sm:text-[9px] ${card ? "text-gold/50" : "text-gold/15"}`}>
                         {i + 1}
                       </span>
 
                       {card ? (
-                        <div className="fade-in card-flip w-[60px] h-[90px]" style={{ animationDelay: `${i * 0.1}s` }}>
+                        <div className="fade-in card-flip w-[46px] h-[69px] sm:w-[56px] sm:h-[84px]" style={{ animationDelay: `${i * 0.1}s` }}>
                           <div className={`card-flip-inner ${isFlipped ? "flipped" : ""}`}>
-                            <div className="card-front rounded-lg overflow-hidden border-2 border-[#c9a84c]/30 shadow-md">
-                              <Image src={CARD_BACK_IMAGE} alt="카드 뒷면" width={60} height={90} className="w-full h-full object-cover" />
+                            <div className="card-front rounded-md overflow-hidden border-2 border-[#c9a84c]/30 shadow-md">
+                              <Image src={CARD_BACK_IMAGE} alt="카드 뒷면" width={56} height={84} className="w-full h-full object-cover" />
                             </div>
-                            <div className="card-back rounded-lg overflow-hidden border-2 border-gold/50 shadow-md">
-                              <Image src={card.image} alt={card.nameKo} width={60} height={90} className="w-full h-full object-cover" />
+                            <div className="card-back rounded-md overflow-hidden border-2 border-gold/50 shadow-md">
+                              <Image src={card.image} alt={card.nameKo} width={56} height={84} className="w-full h-full object-cover" />
                             </div>
                           </div>
                         </div>
                       ) : (
-                        <div className="w-[60px] h-[90px] rounded-lg border-2 border-dashed border-gold/8 flex items-center justify-center bg-purple-dark/5">
-                          <span className="text-gold/10 text-[10px]">✧</span>
+                        <div className="w-[46px] h-[69px] sm:w-[56px] sm:h-[84px] rounded-md border-2 border-dashed border-gold/8 flex items-center justify-center bg-purple-dark/5">
+                          <span className="text-gold/10 text-[8px]">✧</span>
                         </div>
                       )}
                     </div>
@@ -163,13 +162,13 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
 
           {/* 하단: 부채꼴 카드 (작게) */}
           {phase === "select" && (
-            <div className="relative h-[200px] flex-shrink-0">
+            <div className="relative h-[180px] sm:h-[200px] flex-shrink-0">
               <div className="absolute bottom-0 left-1/2 w-0 h-0">
                 {remainingCards.map((card, index) => {
                   const angle = totalRemaining > 1
                     ? startAngle + (fanAngle / (totalRemaining - 1)) * index
                     : 0;
-                  const radius = 170;
+                  const radius = 150;
 
                   return (
                     <div
@@ -179,12 +178,12 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
                         transform: `rotate(${angle}deg) translateY(-${radius}px)`,
                         transition: "transform 0.4s ease-out",
                         zIndex: index,
-                        left: "-30px",
+                        left: "-25px",
                         bottom: "0",
                       }}
                       onClick={() => handleCardClick(card.id)}
                     >
-                      <div className="w-[60px] h-[90px] rounded-lg overflow-hidden shadow-md">
+                      <div className="w-[50px] h-[75px] sm:w-[60px] sm:h-[90px] rounded-lg overflow-hidden shadow-md">
                         <Image src={CARD_BACK_IMAGE} alt="카드 뒷면" width={60} height={90} className="w-full h-full object-cover" />
                       </div>
                     </div>

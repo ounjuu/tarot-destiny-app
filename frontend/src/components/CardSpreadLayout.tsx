@@ -7,7 +7,6 @@ interface CardSpreadLayoutProps {
   cards: { id: number; name: string; nameKo: string; image: string }[];
 }
 
-// 카테고리별 포지션 라벨
 const POSITION_LABELS: Record<string, string[]> = {
   love: ["나의 마음", "상대의 마음", "두 사람의 현재", "장애물", "숨겨진 감정", "결말"],
   couple: ["나의 상태", "상대의 상태", "관계의 현재", "갈등 요인", "해결의 열쇠", "관계의 미래"],
@@ -24,31 +23,29 @@ const isLoveCategory = (id: string) => id === "love" || id === "couple";
 export default function CardSpreadLayout({ categoryId, cards }: CardSpreadLayoutProps) {
   const labels = POSITION_LABELS[categoryId] || POSITION_LABELS.love;
 
-  // 연애운/커플운: 하트 모양 배치
+  // 연애운/커플운: 하트 모양 배치 (반응형)
   if (isLoveCategory(categoryId)) {
     return (
-      <div className="relative w-[280px] h-[220px] mx-auto mb-6">
-        {/* 하트 모양 배치 위치 */}
+      <div className="relative w-full max-w-[280px] aspect-[280/220] mx-auto mb-6">
         {[
-          { x: 55, y: 0 },    // 1: 왼쪽 위
-          { x: 165, y: 0 },   // 2: 오른쪽 위
-          { x: 15, y: 55 },   // 3: 왼쪽
-          { x: 205, y: 55 },  // 4: 오른쪽
-          { x: 55, y: 100 },  // 5: 왼쪽 아래
-          { x: 165, y: 100 }, // 6: 오른쪽 아래
+          { x: "20%", y: "0%" },
+          { x: "59%", y: "0%" },
+          { x: "5%", y: "25%" },
+          { x: "73%", y: "25%" },
+          { x: "20%", y: "45%" },
+          { x: "59%", y: "45%" },
         ].map((pos, i) => (
           <div
             key={cards[i]?.id ?? i}
             className="absolute fade-in flex flex-col items-center"
             style={{ left: pos.x, top: pos.y, animationDelay: `${i * 0.12}s` }}
           >
-            <div className="w-[52px] h-[78px] rounded-lg overflow-hidden border border-gold/40 shadow-md">
+            <div className="w-[42px] h-[63px] sm:w-[52px] sm:h-[78px] rounded-lg overflow-hidden border border-gold/40 shadow-md">
               <Image src={cards[i].image} alt={cards[i].nameKo} width={52} height={78} className="w-full h-full object-cover" />
             </div>
-            <span className="text-[8px] text-gold/40 mt-1 text-center w-[60px]">{labels[i]}</span>
+            <span className="text-[7px] sm:text-[8px] text-gold/40 mt-0.5 text-center w-[50px]">{labels[i]}</span>
           </div>
         ))}
-        {/* 하트 라인 */}
         <svg className="absolute inset-0 pointer-events-none" viewBox="0 0 280 220" fill="none">
           <path d="M140 210 Q30 140 40 70 Q50 10 140 60 Q230 10 240 70 Q250 140 140 210Z" stroke="#e0a0b0" strokeWidth="0.8" opacity="0.2" fill="none" />
         </svg>
@@ -56,15 +53,15 @@ export default function CardSpreadLayout({ categoryId, cards }: CardSpreadLayout
     );
   }
 
-  // 기본: 2x3 그리드
+  // 기본: 2x3 그리드 (반응형)
   return (
-    <div className="grid grid-cols-3 gap-3 justify-items-center mx-auto mb-6" style={{ maxWidth: "240px" }}>
+    <div className="grid grid-cols-3 gap-2 sm:gap-3 justify-items-center mx-auto mb-6 max-w-[220px] sm:max-w-[240px]">
       {cards.map((card, i) => (
         <div key={card.id} className="fade-in flex flex-col items-center" style={{ animationDelay: `${i * 0.1}s` }}>
-          <div className="w-[52px] h-[78px] rounded-lg overflow-hidden border border-gold/40 shadow-md">
+          <div className="w-[42px] h-[63px] sm:w-[52px] sm:h-[78px] rounded-lg overflow-hidden border border-gold/40 shadow-md">
             <Image src={card.image} alt={card.nameKo} width={52} height={78} className="w-full h-full object-cover" />
           </div>
-          <span className="text-[8px] text-gold/40 mt-1 text-center w-[60px]">{labels[i]}</span>
+          <span className="text-[7px] sm:text-[8px] text-gold/40 mt-0.5 text-center w-[50px]">{labels[i]}</span>
         </div>
       ))}
     </div>

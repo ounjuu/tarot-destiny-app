@@ -45,6 +45,7 @@ html, body {
 
 /* 앱 컨테이너 */
 .app-container {
+  width: 100%;
   max-width: 430px;
   margin: 0 auto;
   height: 100dvh;
@@ -52,6 +53,12 @@ html, body {
   flex-direction: column;
   position: relative;
   overflow: hidden;
+}
+
+@media (max-width: 380px) {
+  .app-container {
+    max-width: 100%;
+  }
 }
 
 /* 앱 본문 스크롤 영역 */
