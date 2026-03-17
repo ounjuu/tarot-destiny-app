@@ -16,6 +16,7 @@ const POSITION_LABELS: Record<string, string[]> = {
   study: ["학업 상태", "강점", "약점", "집중할 것", "주변 환경", "학업 성과"],
   career: ["현재 직장", "이직 동기", "새로운 기회", "리스크", "준비할 것", "이직 결과"],
   health: ["현재 건강", "신체 에너지", "정신 에너지", "주의할 점", "도움 되는 것", "건강 전망"],
+  pastlife: ["전생의 나", "전생의 인연", "가져온 카르마", "이번 생의 과제", "숨겨진 재능", "영혼의 방향"],
 };
 
 const isLoveCategory = (id: string) => id === "love" || id === "couple";
