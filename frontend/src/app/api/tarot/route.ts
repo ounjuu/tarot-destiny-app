@@ -1,40 +1,40 @@
 import { NextResponse } from "next/server";
 
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 export async function POST(request: Request) {
   try {
     const { category, categoryLabel, cards } = await request.json();
 
-    if (!ANTHROPIC_API_KEY) {
+    if (!GEMINI_API_KEY) {
       return NextResponse.json({
         success: true,
         reading: generateFallbackReading(categoryLabel, cards),
       });
     }
 
-    // Claude API 호출
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1024,
-        messages: [
-          {
-            role: "user",
-            content: buildPrompt(category, categoryLabel, cards),
-          },
-        ],
-      }),
-    });
+    // Gemini API 호출
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [
+                { text: buildPrompt(category, categoryLabel, cards) },
+              ],
+            },
+          ],
+        }),
+      }
+    );
 
     const data = await response.json();
-    const reading = data.content?.[0]?.text || "해석을 불러오지 못했습니다.";
+    const reading =
+      data.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "해석을 불러오지 못했습니다.";
 
     return NextResponse.json({ success: true, reading });
   } catch (error) {
@@ -45,7 +45,7 @@ export async function POST(request: Request) {
   }
 }
 
-// Claude에게 보낼 프롬프트
+// Gemini에게 보낼 프롬프트
 function buildPrompt(category: string, categoryLabel: string, cards: string[]) {
   return `당신은 신비로운 타로 카드 리더 "루나"입니다.
 달빛 아래에서 타로 카드를 읽어주는 따뜻하고 신비로운 분위기의 점술사입니다.
