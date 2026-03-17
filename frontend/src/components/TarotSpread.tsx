@@ -18,6 +18,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
   const [phase, setPhase] = useState<"select" | "flipping" | "loading" | "result">("select");
   const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
   const [reading, setReading] = useState("");
+  const [hasError, setHasError] = useState(false);
   const MAX_CARDS = 6;
 
   const remainingCards = cards.filter((c) => !selectedCards.includes(c.id));
@@ -66,8 +67,10 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
 
       const data = await response.json();
       setReading(data.reading || "해석을 불러오지 못했습니다.");
+      setHasError(!data.success);
     } catch {
-      setReading("서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.");
+      setReading("🌙 인터넷 연결이 불안정해요.\n\n네트워크를 확인하고 다시 시도해주세요.");
+      setHasError(true);
     }
 
     setPhase("result");
@@ -228,16 +231,26 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
           </div>
 
           {/* 버튼 */}
-          <div className="flex gap-3">
-            <button onClick={onBack} className="flex-1 py-3.5 border border-gold/20 rounded-2xl text-gold/60 text-sm active:scale-[0.98] transition-all cursor-pointer">
-              ☽ 다른 운세 보기
-            </button>
-            <button
-              onClick={() => { setSelectedCards([]); setFlippedCards(new Set()); setPhase("select"); }}
-              className="flex-1 py-3.5 bg-purple-dark/50 border border-gold/20 rounded-2xl text-gold text-sm active:scale-[0.98] transition-all cursor-pointer"
-            >
-              ☾ 다시 뽑기
-            </button>
+          <div className="flex flex-col gap-3">
+            {hasError && (
+              <button
+                onClick={() => { setHasError(false); fetchReading(); }}
+                className="w-full py-3.5 bg-gradient-to-r from-purple to-gold/80 rounded-2xl text-white font-bold text-sm active:scale-[0.98] transition-all cursor-pointer shadow-lg shadow-purple/30"
+              >
+                ✨ 다시 해석하기
+              </button>
+            )}
+            <div className="flex gap-3">
+              <button onClick={onBack} className="flex-1 py-3.5 border border-gold/20 rounded-2xl text-gold/60 text-sm active:scale-[0.98] transition-all cursor-pointer">
+                ☽ 다른 운세 보기
+              </button>
+              <button
+                onClick={() => { setSelectedCards([]); setFlippedCards(new Set()); setHasError(false); setPhase("select"); }}
+                className="flex-1 py-3.5 bg-purple-dark/50 border border-gold/20 rounded-2xl text-gold text-sm active:scale-[0.98] transition-all cursor-pointer"
+              >
+                ☾ 다시 뽑기
+              </button>
+            </div>
           </div>
         </div>
       )}

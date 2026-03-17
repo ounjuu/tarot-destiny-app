@@ -45,14 +45,32 @@ export async function POST(request: Request) {
     );
 
     const data = await response.json();
+
+    // API 에러 처리
+    if (data.error) {
+      const code = data.error.code;
+      if (code === 429) {
+        return NextResponse.json({
+          success: false,
+          error: "rate_limit",
+          reading: "🌙 지금 너무 많은 분들이 타로를 보고 있어요!\n\n잠시 후(약 1분) 다시 시도해주세요.\n루나가 기다리고 있을게요 ✨",
+        });
+      }
+      return NextResponse.json({
+        success: false,
+        error: "api_error",
+        reading: "🌙 별들의 신호가 잠시 불안정해요.\n\n잠시 후 다시 시도해주세요.",
+      });
+    }
+
     const reading =
       data.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "해석을 불러오지 못했습니다.";
+      "🌙 카드의 메시지를 읽어오지 못했어요.\n\n다시 시도해주세요.";
 
     return NextResponse.json({ success: true, reading });
   } catch (error) {
     return NextResponse.json(
-      { success: false, reading: "서버 오류가 발생했습니다." },
+      { success: false, error: "server_error", reading: "🌙 서버와의 연결이 불안정해요.\n\n잠시 후 다시 시도해주세요." },
       { status: 500 }
     );
   }
