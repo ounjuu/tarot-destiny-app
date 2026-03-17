@@ -166,11 +166,11 @@ html, body {
   animation: cardPop 0.3s ease-out forwards;
 }
 
-/* Safe area */
+/* Safe area - 카카오톡 인앱 브라우저 등 대응 */
 .safe-top {
-  padding-top: env(safe-area-inset-top, 0px);
+  padding-top: max(env(safe-area-inset-top, 0px), 8px);
 }
 
 .safe-bottom {
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 8px);
 }

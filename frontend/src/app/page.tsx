@@ -16,7 +16,7 @@ export default function Home() {
       <StarBackground />
 
       {/* 상단 헤더 */}
-      <header className="safe-top relative z-20 flex items-center justify-center py-4 border-b border-gold/10">
+      <header className="safe-top relative z-20 flex items-center justify-center pt-3 pb-3 border-b border-gold/10 min-h-[52px]">
         {selectedCategory ? (
           <button
             onClick={() => setSelectedCategory(null)}
