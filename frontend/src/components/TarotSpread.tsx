@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { MAJOR_ARCANA, CARD_BACK_IMAGE, getShuffledCards } from "@/data/tarot-cards";
+import { CARD_BACK_IMAGE, getShuffledCards, getCardDeck } from "@/data/tarot-cards";
+import CardSpreadLayout from "./CardSpreadLayout";
 
 interface TarotSpreadProps {
   categoryId: string;
@@ -11,7 +12,8 @@ interface TarotSpreadProps {
 }
 
 export default function TarotSpread({ categoryId, categoryLabel, onBack }: TarotSpreadProps) {
-  const [cards] = useState(() => getShuffledCards(20));
+  const [cards] = useState(() => getShuffledCards(20, categoryId));
+  const deck = getCardDeck(categoryId);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [phase, setPhase] = useState<"select" | "flipping" | "loading" | "result">("select");
   const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
@@ -48,7 +50,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
     setPhase("loading");
 
     const selectedCardData = selectedCards.map((id) =>
-      MAJOR_ARCANA.find((c) => c.id === id)!
+      deck.find((c) => c.id === id)!
     );
 
     try {
@@ -72,7 +74,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
   };
 
   const selectedCardData = selectedCards.map((id) =>
-    MAJOR_ARCANA.find((c) => c.id === id)!
+    deck.find((c) => c.id === id)!
   );
 
   const totalRemaining = remainingCards.length;
@@ -198,12 +200,8 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
       {phase === "loading" && (
         <div className="flex flex-col items-center justify-center flex-1">
           {/* 뒤집힌 카드 표시 */}
-          <div className="flex gap-2 justify-center mb-8">
-            {selectedCardData.map((card) => (
-              <div key={card.id} className="w-[60px] h-[90px] rounded-lg overflow-hidden border border-gold/40 shadow-md">
-                <Image src={card.image} alt={card.nameKo} width={60} height={90} className="w-full h-full object-cover" />
-              </div>
-            ))}
+          <div className="mb-6">
+            <CardSpreadLayout categoryId={categoryId} cards={selectedCardData} />
           </div>
           <div className="text-4xl mb-4 pulse-glow">🔮</div>
           <p className="text-gold text-base font-bold mb-2">카드를 해석하고 있어요</p>
@@ -221,14 +219,8 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
         <div className="fade-in px-5 pt-4 pb-6 overflow-y-auto">
           <h2 className="text-center text-gold text-lg font-bold mb-5">✨ {categoryLabel} 결과 ✨</h2>
 
-          {/* 카드 표시 */}
-          <div className="flex justify-center gap-2 mb-6">
-            {selectedCardData.map((card, index) => (
-              <div key={card.id} className="fade-in w-[60px] h-[90px] rounded-lg overflow-hidden border border-gold/40 shadow-md" style={{ animationDelay: `${index * 0.1}s` }}>
-                <Image src={card.image} alt={card.nameKo} width={60} height={90} className="w-full h-full object-cover" />
-              </div>
-            ))}
-          </div>
+          {/* 카드 스프레드 */}
+          <CardSpreadLayout categoryId={categoryId} cards={selectedCardData} />
 
           {/* AI 해석 */}
           <div className="relative p-5 bg-gradient-to-b from-purple-dark/30 to-purple-dark/10 rounded-2xl border border-gold/15 mb-6">
