@@ -19,6 +19,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
   const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
   const [reading, setReading] = useState("");
   const [hasError, setHasError] = useState(false);
+  const [copied, setCopied] = useState(false);
   const MAX_CARDS = 6;
 
   const remainingCards = cards.filter((c) => !selectedCards.includes(c.id));
@@ -79,6 +80,25 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
   const selectedCardData = selectedCards.map((id) =>
     deck.find((c) => c.id === id)!
   );
+
+  const handleShare = async () => {
+    const cardNames = selectedCardData.map((c) => c.nameKo).join(", ");
+    const scoreMatch = reading.match(/(\d+)%/);
+    const score = scoreMatch ? scoreMatch[0] : "";
+
+    const shareText = `🌙 LunaTarot ${categoryLabel} 결과\n\n🃏 뽑은 카드: ${cardNames}\n📊 점수: ${score}\n\n나도 타로 보러 가기 👇`;
+    const shareUrl = window.location.origin;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: `LunaTarot ${categoryLabel}`, text: shareText, url: shareUrl });
+      } catch {}
+    } else {
+      await navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
 
   const totalRemaining = remainingCards.length;
   const fanAngle = Math.min(100, totalRemaining * 5);
@@ -240,12 +260,20 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
                 ✨ 다시 해석하기
               </button>
             )}
+            {!hasError && (
+              <button
+                onClick={handleShare}
+                className="w-full py-3.5 bg-gradient-to-r from-purple to-gold/80 rounded-2xl text-white font-bold text-sm active:scale-[0.98] transition-all cursor-pointer shadow-lg shadow-purple/30"
+              >
+                {copied ? "✅ 복사 완료!" : "📤 결과 공유하기"}
+              </button>
+            )}
             <div className="flex gap-3">
               <button onClick={onBack} className="flex-1 py-3.5 border border-gold/20 rounded-2xl text-gold/60 text-sm active:scale-[0.98] transition-all cursor-pointer">
                 ☽ 다른 운세 보기
               </button>
               <button
-                onClick={() => { setSelectedCards([]); setFlippedCards(new Set()); setHasError(false); setPhase("select"); }}
+                onClick={() => { setSelectedCards([]); setFlippedCards(new Set()); setHasError(false); setCopied(false); setPhase("select"); }}
                 className="flex-1 py-3.5 bg-purple-dark/50 border border-gold/20 rounded-2xl text-gold text-sm active:scale-[0.98] transition-all cursor-pointer"
               >
                 ☾ 다시 뽑기
