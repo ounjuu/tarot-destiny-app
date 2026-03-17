@@ -197,17 +197,15 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
 
       {/* 로딩 */}
       {phase === "loading" && (
-        <div className="flex-1 overflow-y-auto px-5 pt-6 pb-6">
+        <div className="flex-1 flex flex-col items-center justify-center px-5">
           <CardSpreadLayout categoryId={categoryId} cards={selectedCardData} />
-          <div className="flex flex-col items-center">
-            <div className="text-4xl mb-4 pulse-glow">🔮</div>
-            <p className="text-gold text-base font-bold mb-2">카드를 해석하고 있어요</p>
-            <p className="text-foreground/30 text-sm">달빛이 카드 위를 비추고 있어요...</p>
-            <div className="flex gap-1.5 mt-4">
-              {[0, 1, 2].map((i) => (
-                <div key={i} className="w-2 h-2 bg-gold/60 rounded-full pulse-glow" style={{ animationDelay: `${i * 0.3}s` }} />
-              ))}
-            </div>
+          <div className="text-4xl mb-4 pulse-glow">🔮</div>
+          <p className="text-gold text-base font-bold mb-2">카드를 해석하고 있어요</p>
+          <p className="text-foreground/30 text-sm">달빛이 카드 위를 비추고 있어요...</p>
+          <div className="flex gap-1.5 mt-4">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="w-2 h-2 bg-gold/60 rounded-full pulse-glow" style={{ animationDelay: `${i * 0.3}s` }} />
+            ))}
           </div>
         </div>
       )}
