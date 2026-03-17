@@ -53,7 +53,7 @@ export const MAJOR_ARCANA_CLASSIC = [
 export const CARD_BACK_IMAGE = "/cards/card-back.svg";
 
 // 카테고리별 카드 덱 선택
-const CLASSIC_CATEGORIES = ["love", "couple", "exam", "study", "career", "health", "pastlife"];
+const CLASSIC_CATEGORIES = ["love", "couple", "exam", "study", "career", "health", "pastlife", "office"];
 
 export function getCardDeck(categoryId: string) {
   return CLASSIC_CATEGORIES.includes(categoryId) ? MAJOR_ARCANA_CLASSIC : MAJOR_ARCANA;
@@ -70,6 +70,7 @@ export const CATEGORIES = [
   { id: "career", label: "이직운", icon: "💼", description: "이직 및 직장 운세" },
   { id: "health", label: "건강운", icon: "🏥", description: "건강 관련 운세" },
   { id: "pastlife", label: "전생운", icon: "🔄", description: "나의 전생과 인연 운세" },
+  { id: "office", label: "회사운", icon: "🏢", description: "오늘 하루 어떻게 버틸까?" },
 ];
 
 // 카드 20장 랜덤 셔플
