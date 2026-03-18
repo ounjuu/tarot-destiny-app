@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { CARD_BACK_IMAGE, getShuffledCards, getCardDeck } from "@/data/tarot-cards";
+import { CARD_BACK_IMAGE, getShuffledCards, getCardDeck, MAJOR_ARCANA, MAJOR_ARCANA_CLASSIC } from "@/data/tarot-cards";
 import CardSpreadLayout from "./CardSpreadLayout";
 
 interface TarotSpreadProps {
@@ -23,7 +23,36 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
   const [readingId, setReadingId] = useState<string | null>(null);
   const [hasError, setHasError] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [todayResult, setTodayResult] = useState(false);
   const MAX_CARDS = 6;
+
+  // 오늘 이미 본 카테고리인지 체크
+  useEffect(() => {
+    async function checkTodayReading() {
+      if (!session?.user?.id) return;
+      try {
+        const response = await fetch("/api/tarot/check", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ category: categoryId, userId: session.user.id }),
+        });
+        const data = await response.json();
+        if (data.exists) {
+          setReading(data.reading);
+          setReadingId(data.readingId);
+          // 저장된 카드 이름으로 카드 데이터 복원
+          const allCards = [...MAJOR_ARCANA, ...MAJOR_ARCANA_CLASSIC];
+          const restored = (data.cards as string[]).map((name: string) => {
+            return allCards.find((c) => c.nameKo === name) || deck[0];
+          });
+          setSelectedCards(restored.map((c) => c.id));
+          setTodayResult(true);
+          setPhase("result");
+        }
+      } catch {}
+    }
+    checkTodayReading();
+  }, []);
 
   const remainingCards = cards.filter((c) => !selectedCards.includes(c.id));
 
@@ -242,7 +271,11 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
       {/* 결과 */}
       {phase === "result" && (
         <div className="fade-in px-5 pt-4 pb-6 overflow-y-auto">
-          <h2 className="text-center text-gold text-lg font-bold mb-5">✨ {categoryLabel} 결과 ✨</h2>
+          <h2 className="text-center text-gold text-lg font-bold mb-1">✨ {categoryLabel} 결과 ✨</h2>
+          {todayResult && (
+            <p className="text-center text-foreground/30 text-[11px] mb-4">오늘 이미 확인한 결과예요</p>
+          )}
+          {!todayResult && <div className="mb-5" />}
 
           {/* 카드 스프레드 */}
           <CardSpreadLayout categoryId={categoryId} cards={selectedCardData} />
