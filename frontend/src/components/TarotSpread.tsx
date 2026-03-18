@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 import { CARD_BACK_IMAGE, getShuffledCards, getCardDeck } from "@/data/tarot-cards";
 import CardSpreadLayout from "./CardSpreadLayout";
 
@@ -12,12 +13,14 @@ interface TarotSpreadProps {
 }
 
 export default function TarotSpread({ categoryId, categoryLabel, onBack }: TarotSpreadProps) {
+  const { data: session } = useSession();
   const [cards] = useState(() => getShuffledCards(20, categoryId));
   const deck = getCardDeck(categoryId);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [phase, setPhase] = useState<"select" | "flipping" | "loading" | "result">("select");
   const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
   const [reading, setReading] = useState("");
+  const [readingId, setReadingId] = useState<string | null>(null);
   const [hasError, setHasError] = useState(false);
   const [copied, setCopied] = useState(false);
   const MAX_CARDS = 6;
@@ -63,11 +66,13 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
           category: categoryId,
           categoryLabel,
           cards: selectedCardData.map((c) => c.nameKo),
+          userId: session?.user?.id,
         }),
       });
 
       const data = await response.json();
       setReading(data.reading || "해석을 불러오지 못했습니다.");
+      setReadingId(data.readingId || null);
       setHasError(!data.success);
     } catch {
       setReading("🌙 인터넷 연결이 불안정해요.\n\n네트워크를 확인하고 다시 시도해주세요.");
@@ -82,12 +87,13 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
   );
 
   const handleShare = async () => {
-    const cardNames = selectedCardData.map((c) => c.nameKo).join(", ");
     const scoreMatch = reading.match(/(\d+)%/);
     const score = scoreMatch ? scoreMatch[0] : "";
+    const shareUrl = readingId
+      ? `${window.location.origin}/result/${readingId}`
+      : window.location.origin;
 
-    const shareText = `🌙 LunaTarot ${categoryLabel} 결과\n\n🃏 뽑은 카드: ${cardNames}\n📊 점수: ${score}\n\n나도 타로 보러 가기 👇`;
-    const shareUrl = window.location.origin;
+    const shareText = `🌙 LunaTarot ${categoryLabel} ${score}\n나의 타로 결과를 확인해보세요!`;
 
     if (navigator.share) {
       try {

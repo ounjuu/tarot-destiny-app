@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { supabase } from "@/lib/supabase";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
@@ -18,7 +19,28 @@ const SPREAD_POSITIONS: Record<string, string[]> = {
 
 export async function POST(request: Request) {
   try {
-    const { category, categoryLabel, cards } = await request.json();
+    const { category, categoryLabel, cards, userId } = await request.json();
+
+    // 하루 1회 제한 체크 (로그인 사용자만)
+    if (userId) {
+      const today = new Date().toISOString().split("T")[0];
+      const { data: existing } = await supabase
+        .from("readings")
+        .select("id")
+        .eq("user_id", userId)
+        .eq("category", category)
+        .gte("created_at", `${today}T00:00:00`)
+        .lte("created_at", `${today}T23:59:59`)
+        .limit(1);
+
+      if (existing && existing.length > 0) {
+        return NextResponse.json({
+          success: false,
+          error: "daily_limit",
+          reading: `🌙 오늘의 ${categoryLabel}은 이미 확인했어요!\n\n같은 운세는 하루에 한 번만 볼 수 있어요.\n내일 다시 카드를 뽑아보세요 ✨`,
+        });
+      }
+    }
 
     if (!GEMINI_API_KEY) {
       return NextResponse.json({
@@ -67,7 +89,32 @@ export async function POST(request: Request) {
       data.candidates?.[0]?.content?.parts?.[0]?.text ||
       "🌙 카드의 메시지를 읽어오지 못했어요.\n\n다시 시도해주세요.";
 
-    return NextResponse.json({ success: true, reading });
+    // 로그인 사용자면 결과 저장 (요약본)
+    let readingId = null;
+    if (userId) {
+      const scoreMatch = reading.match(/(\d+)%/);
+      const score = scoreMatch ? parseInt(scoreMatch[1]) : null;
+      const keywordMatch = reading.match(/행운의 키워드[^\n]*\n([^\n]+)/);
+      const keywords = keywordMatch ? keywordMatch[1].trim() : "";
+
+      const { data: inserted } = await supabase
+        .from("readings")
+        .insert({
+          user_id: userId,
+          category,
+          category_label: categoryLabel,
+          cards,
+          reading,
+          score,
+          keywords,
+        })
+        .select("id")
+        .single();
+
+      readingId = inserted?.id;
+    }
+
+    return NextResponse.json({ success: true, reading, readingId });
   } catch (error) {
     return NextResponse.json(
       { success: false, error: "server_error", reading: "🌙 서버와의 연결이 불안정해요.\n\n잠시 후 다시 시도해주세요." },

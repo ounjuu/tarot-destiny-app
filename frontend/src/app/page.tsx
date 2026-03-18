@@ -1,15 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import StarBackground from "@/components/StarBackground";
 import CategorySelect from "@/components/CategorySelect";
 import TarotSpread from "@/components/TarotSpread";
 import { CATEGORIES } from "@/data/tarot-cards";
 
 export default function Home() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const category = CATEGORIES.find((c) => c.id === selectedCategory);
+
+  useEffect(() => {
+    if (status !== "loading" && !session) {
+      router.push("/login");
+    }
+  }, [session, status, router]);
+
+  if (status === "loading" || !session) {
+    return (
+      <div className="app-container bg-background">
+        <StarBackground />
+        <div className="relative z-10 flex-1 flex items-center justify-center">
+          <div className="text-4xl pulse-glow">🔮</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="app-container bg-background">
@@ -29,6 +50,16 @@ export default function Home() {
           <h1 className="text-xl font-bold text-gold tracking-wider">
             🌙 LunaTarot
           </h1>
+        </div>
+        <div className="absolute right-3">
+          {!selectedCategory && (
+            <button
+              onClick={() => signOut({ callbackUrl: "/login" })}
+              className="text-gold/40 text-[10px] cursor-pointer"
+            >
+              로그아웃
+            </button>
+          )}
         </div>
         {selectedCategory && (
           <span className="absolute right-4 text-gold/40 text-xs">
