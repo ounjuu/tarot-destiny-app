@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     const { category, categoryLabel, cards, userId } = await request.json();
 
     // 하루 1회 제한 체크 (로그인 사용자만)
-    if (userId) {
+    if (userId && supabase) {
       const today = new Date().toISOString().split("T")[0];
       const { data: existing } = await supabase
         .from("readings")
@@ -91,7 +91,7 @@ export async function POST(request: Request) {
 
     // 로그인 사용자면 결과 저장 (요약본)
     let readingId = null;
-    if (userId) {
+    if (userId && supabase) {
       const scoreMatch = reading.match(/(\d+)%/);
       const score = scoreMatch ? parseInt(scoreMatch[1]) : null;
       const keywordMatch = reading.match(/행운의 키워드[^\n]*\n([^\n]+)/);

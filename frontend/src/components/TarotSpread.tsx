@@ -182,7 +182,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
             {phase === "select" && selectedCards.length === MAX_CARDS && (
               <button
                 onClick={handleFlipAll}
-                className="slide-up mt-5 px-8 py-3 bg-gradient-to-r from-purple to-gold/80 rounded-2xl text-white font-bold text-sm tracking-wider active:scale-[0.98] transition-transform cursor-pointer shadow-lg shadow-purple/30"
+                className="slide-up mt-8 mb-[-20px] px-8 py-3 bg-gradient-to-r from-purple to-gold/80 rounded-2xl text-white font-bold text-sm tracking-wider active:scale-[0.98] transition-transform cursor-pointer shadow-lg shadow-purple/30"
               >
                 ✨ 카드 뒤집기
               </button>
@@ -191,7 +191,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
 
           {/* 하단: 부채꼴 카드 (작게) */}
           {phase === "select" && (
-            <div className="relative h-[180px] sm:h-[200px] flex-shrink-0">
+            <div className="relative h-[200px] sm:h-[220px] flex-shrink-0">
               <div className="absolute bottom-0 left-1/2 w-0 h-0">
                 {remainingCards.map((card, index) => {
                   const angle = totalRemaining > 1

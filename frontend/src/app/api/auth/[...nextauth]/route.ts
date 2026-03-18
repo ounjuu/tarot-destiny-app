@@ -22,7 +22,7 @@ const handler = NextAuth({
       if (!account) return true;
 
       // Supabase에 사용자 저장 (이미 있으면 업데이트)
-      const { error } = await supabase
+      const { error } = await supabase!
         .from("users")
         .upsert({
           id: `${account.provider}_${user.id}`,
@@ -37,13 +37,14 @@ const handler = NextAuth({
     },
     async session({ session, token }) {
       if (session.user && token.sub) {
-        session.user.id = `${token.provider}_${token.sub}`;
+        session.user.id = `${token.provider || "unknown"}_${token.sub}`;
       }
       return session;
     },
-    async jwt({ token, account }) {
+    async jwt({ token, account, profile }) {
       if (account) {
         token.provider = account.provider;
+        token.providerId = account.providerAccountId;
       }
       return token;
     },
