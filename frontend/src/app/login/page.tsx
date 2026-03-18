@@ -11,8 +11,11 @@ export default function LoginPage() {
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6">
         {/* 로고 */}
         <div className="text-center mb-10">
+          <div className="flex justify-center mb-5 mt-4">
+            <img src="/logo.png" alt="LunaTarot" className="w-44 h-44" />
+          </div>
           <h1 className="text-4xl font-bold text-gold tracking-wider mb-2">
-            🌙 LunaTarot
+            LunaTarot
           </h1>
           <p className="text-foreground/40 text-sm">달빛이 비추는 당신의 운명</p>
         </div>

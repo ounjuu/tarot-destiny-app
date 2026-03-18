@@ -47,8 +47,9 @@ export default function Home() {
           </button>
         ) : null}
         <div className="text-center">
-          <h1 className="text-xl font-bold text-gold tracking-wider">
-            🌙 LunaTarot
+          <h1 className="text-xl font-bold text-gold tracking-wider flex items-center gap-1 justify-center">
+            <img src="/logo.png" alt="LunaTarot" className="w-7 h-7 -mb-0.5 -ml-3 -mt-0.5" />
+            LunaTarot
           </h1>
         </div>
         <div className="absolute right-3">

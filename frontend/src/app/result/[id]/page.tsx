@@ -21,6 +21,7 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
 
   useEffect(() => {
     async function fetchReading() {
+      if (!supabase) return;
       const { data: reading } = await supabase
         .from("readings")
         .select("category_label, cards, reading, score, keywords, created_at")
@@ -69,7 +70,7 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
       <StarBackground />
 
       <header className="safe-top relative z-20 flex items-center justify-center pt-3 pb-3 border-b border-gold/10 min-h-[52px]">
-        <h1 className="text-xl font-bold text-gold tracking-wider">🌙 LunaTarot</h1>
+        <h1 className="text-xl font-bold text-gold tracking-wider flex items-center gap-1.5 justify-center"><img src="/logo.png" alt="LunaTarot" className="w-6 h-6" /> LunaTarot</h1>
       </header>
 
       <div className="app-content relative z-10 px-5 pt-6 pb-8">
