@@ -234,7 +234,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
                   const angle = totalRemaining > 1
                     ? startAngle + (fanAngle / (totalRemaining - 1)) * index
                     : 0;
-                  const radius = 150;
+                  const radius = 130;
 
                   return (
                     <div
