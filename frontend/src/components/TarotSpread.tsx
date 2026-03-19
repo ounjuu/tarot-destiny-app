@@ -48,6 +48,9 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
           setSelectedCards(restored.map((c) => c.id));
           setTodayResult(true);
           setPhase("result");
+          if (data.readingId) {
+            window.history.replaceState(null, "", `/result/${data.readingId}`);
+          }
         }
       } catch {}
     }
@@ -103,6 +106,11 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
       setReading(data.reading || "해석을 불러오지 못했습니다.");
       setReadingId(data.readingId || null);
       setHasError(!data.success);
+
+      // 결과 URL로 변경
+      if (data.readingId) {
+        window.history.replaceState(null, "", `/result/${data.readingId}`);
+      }
     } catch {
       setReading("🌙 인터넷 연결이 불안정해요.\n\n네트워크를 확인하고 다시 시도해주세요.");
       setHasError(true);
@@ -307,17 +315,9 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
                 {copied ? "✅ 복사 완료!" : "📤 결과 공유하기"}
               </button>
             )}
-            <div className="flex gap-3">
-              <button onClick={onBack} className="flex-1 py-3.5 border border-gold/20 rounded-2xl text-gold/60 text-sm active:scale-[0.98] transition-all cursor-pointer">
-                ☽ 다른 운세 보기
-              </button>
-              <button
-                onClick={() => { setSelectedCards([]); setFlippedCards(new Set()); setHasError(false); setCopied(false); setPhase("select"); }}
-                className="flex-1 py-3.5 bg-purple-dark/50 border border-gold/20 rounded-2xl text-gold text-sm active:scale-[0.98] transition-all cursor-pointer"
-              >
-                ☾ 다시 뽑기
-              </button>
-            </div>
+            <button onClick={() => { onBack(); window.history.replaceState(null, "", "/"); }} className="w-full py-3.5 border border-gold/20 rounded-2xl text-gold/60 text-sm active:scale-[0.98] transition-all cursor-pointer">
+              ☽ 다른 운세 보기
+            </button>
           </div>
         </div>
       )}
