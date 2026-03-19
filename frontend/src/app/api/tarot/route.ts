@@ -20,8 +20,11 @@ const SPREAD_POSITIONS: Record<string, string[]> = {
 };
 
 export async function POST(request: Request) {
+  let category = "";
   try {
-    const { category, categoryLabel, cards, userId } = await request.json();
+    const body = await request.json();
+    category = body.category;
+    const { categoryLabel, cards, userId } = body;
 
     // 하루 1회 제한 체크 - 이미 봤으면 기존 결과 반환
     if (userId && supabase) {
@@ -72,15 +75,11 @@ export async function POST(request: Request) {
 
     const data = await response.json();
 
-    // API 에러 처리
+    // API 에러 시 DB에서 랜덤 결과 가져오기
     if (data.error) {
-      const code = data.error.code;
-      if (code === 429) {
-        return NextResponse.json({
-          success: false,
-          error: "rate_limit",
-          reading: "🌙 지금 너무 많은 분들이 타로를 보고 있어요!\n\n잠시 후(약 1분) 다시 시도해주세요.\n루나가 기다리고 있을게요 ✨",
-        });
+      const fallback = await getRandomReading(category);
+      if (fallback) {
+        return NextResponse.json({ success: true, reading: fallback.reading, readingId: fallback.id });
       }
       return NextResponse.json({
         success: false,
@@ -120,6 +119,10 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true, reading, readingId });
   } catch (error) {
+    const fallback = await getRandomReading(category);
+    if (fallback) {
+      return NextResponse.json({ success: true, reading: fallback.reading, readingId: fallback.id });
+    }
     return NextResponse.json(
       { success: false, error: "server_error", reading: "🌙 서버와의 연결이 불안정해요.\n\n잠시 후 다시 시도해주세요." },
       { status: 500 }
@@ -224,4 +227,21 @@ ${categoryLabel}에 대해 카드들이 긍정적인 에너지를 보여주고 �
 
 🔮 행운의 키워드
 희망, 새로운 시작, 성장`;
+}
+
+// DB에서 같은 카테고리 과거 결과 랜덤 가져오기
+async function getRandomReading(category: string) {
+  if (!supabase) return null;
+
+  const { data } = await supabase
+    .from("readings")
+    .select("id, reading")
+    .eq("category", category)
+    .order("created_at", { ascending: false })
+    .limit(50);
+
+  if (!data || data.length === 0) return null;
+
+  const randomIndex = Math.floor(Math.random() * data.length);
+  return data[randomIndex];
 }
