@@ -228,7 +228,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
 
           {/* 하단: 부채꼴 카드 (작게) */}
           {phase === "select" && (
-            <div className="relative h-[200px] sm:h-[220px] flex-shrink-0">
+            <div className="relative h-[200px] sm:h-[220px] flex-shrink-0 mt-4">
               <div className="absolute bottom-0 left-1/2 w-0 h-0">
                 {remainingCards.map((card, index) => {
                   const angle = totalRemaining > 1
