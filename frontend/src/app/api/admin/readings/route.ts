@@ -18,6 +18,7 @@ export async function GET(request: Request) {
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "20");
   const category = searchParams.get("category");
+  const userId = searchParams.get("userId");
   const offset = (page - 1) * limit;
 
   let query = supabase
@@ -26,9 +27,8 @@ export async function GET(request: Request) {
     .order("created_at", { ascending: false })
     .range(offset, offset + limit - 1);
 
-  if (category) {
-    query = query.eq("category", category);
-  }
+  if (category) query = query.eq("category", category);
+  if (userId) query = query.eq("user_id", userId);
 
   const { data, count, error } = await query;
 
@@ -36,5 +36,25 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  return NextResponse.json({ readings: data, total: count, page, limit });
+  // 사용자 이름 매핑
+  const userIds = [...new Set(data?.map((r) => r.user_id) || [])];
+  let userMap: Record<string, string> = {};
+
+  if (userIds.length > 0) {
+    const { data: users } = await supabase
+      .from("users")
+      .select("id, name, provider")
+      .in("id", userIds);
+
+    users?.forEach((u) => {
+      userMap[u.id] = u.name || u.id;
+    });
+  }
+
+  const readings = data?.map((r) => ({
+    ...r,
+    user_name: userMap[r.user_id] || r.user_id,
+  }));
+
+  return NextResponse.json({ readings, total: count, page, limit });
 }

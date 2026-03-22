@@ -34,6 +34,7 @@ interface UserData {
 interface ReadingData {
   id: string;
   user_id: string;
+  user_name: string;
   category: string;
   category_label: string;
   score: number;
@@ -61,6 +62,7 @@ export default function AdminPage() {
   const [readingsTotal, setReadingsTotal] = useState(0);
   const [readingsPage, setReadingsPage] = useState(1);
   const [categoryFilter, setCategoryFilter] = useState("");
+  const [userFilter, setUserFilter] = useState("");
   const [fallbackLogs, setFallbackLogs] = useState<FallbackLog[]>([]);
   const [fallbackTotal, setFallbackTotal] = useState(0);
   const [fallbackPage, setFallbackPage] = useState(1);
@@ -93,8 +95,9 @@ export default function AdminPage() {
     if (tab === "dashboard" && !stats) fetchStats();
     if (tab === "users" && users.length === 0) fetchUsers();
     if (tab === "readings") fetchReadings();
+    if (tab === "readings" && users.length === 0) fetchUsers();
     if (tab === "fallback") fetchFallbackLogs();
-  }, [tab, readingsPage, categoryFilter, fallbackPage]);
+  }, [tab, readingsPage, categoryFilter, userFilter, fallbackPage]);
 
   async function fetchStats() {
     const res = await fetch("/api/admin/stats");
@@ -112,6 +115,7 @@ export default function AdminPage() {
   async function fetchReadings() {
     const params = new URLSearchParams({ page: String(readingsPage), limit: "20" });
     if (categoryFilter) params.set("category", categoryFilter);
+    if (userFilter) params.set("userId", userFilter);
     const res = await fetch(`/api/admin/readings?${params}`);
     if (res.ok) {
       const data = await res.json();
@@ -308,15 +312,25 @@ export default function AdminPage() {
         {tab === "readings" && (
           <div className="space-y-3">
             {/* 필터 */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <select
                 value={categoryFilter}
                 onChange={(e) => { setCategoryFilter(e.target.value); setReadingsPage(1); }}
-                className="bg-purple-dark/30 border border-gold/10 rounded-lg px-3 py-1.5 text-sm text-foreground/60"
+                className="bg-purple-dark/30 border border-gold/10 rounded-lg px-3 py-1.5 text-xs text-foreground/60"
               >
                 <option value="">전체 카테고리</option>
                 {Object.entries(CATEGORY_LABELS).map(([key, label]) => (
                   <option key={key} value={key}>{label}</option>
+                ))}
+              </select>
+              <select
+                value={userFilter}
+                onChange={(e) => { setUserFilter(e.target.value); setReadingsPage(1); }}
+                className="bg-purple-dark/30 border border-gold/10 rounded-lg px-3 py-1.5 text-xs text-foreground/60"
+              >
+                <option value="">전체 사용자</option>
+                {users.map((u) => (
+                  <option key={u.id} value={u.id}>{u.name || u.id}</option>
                 ))}
               </select>
               <span className="text-foreground/30 text-xs">총 {readingsTotal}건</span>
@@ -332,7 +346,7 @@ export default function AdminPage() {
                   <span className="text-xs px-2 py-0.5 rounded-full bg-purple/20 text-purple/80 shrink-0">
                     {CATEGORY_LABELS[r.category] || r.category}
                   </span>
-                  <span className="text-foreground/50 text-xs truncate flex-1">{r.user_id}</span>
+                  <span className="text-foreground/50 text-xs truncate flex-1">{r.user_name}</span>
                   {r.score && <span className="text-gold/60 text-xs shrink-0">{r.score}%</span>}
                   <span className="text-foreground/20 text-[10px] shrink-0">
                     {new Date(r.created_at).toLocaleDateString("ko-KR")}
