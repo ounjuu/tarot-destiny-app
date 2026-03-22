@@ -79,7 +79,10 @@ export default function History() {
   if (readings.length === 0) {
     return (
       <div className="flex flex-col justify-center items-center h-full px-5">
-        <p className="text-foreground/20 text-4xl mb-4">🌙</p>
+        <div className="relative w-12 h-12 mb-4 opacity-20">
+          <div className="absolute inset-0 rounded-full border-2 border-gold/40" />
+          <div className="absolute inset-0 flex items-center justify-center text-gold/60 text-sm">✦</div>
+        </div>
         <p className="text-foreground/40 text-sm mb-1">아직 타로 기록이 없어요</p>
         <p className="text-foreground/20 text-xs">운세를 뽑으면 여기에 기록이 남아요</p>
       </div>

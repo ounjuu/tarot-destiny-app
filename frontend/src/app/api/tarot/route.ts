@@ -29,10 +29,10 @@ export async function POST(request: Request) {
     cards = body.cards;
     const { categoryLabel, userId } = body;
 
-    // 사용자 정보 저장 (로그인 시 누락된 경우 대비, 이미 있으면 무시)
+    // 사용자 정보 저장 (로그인 시 누락된 경우 대비, 이름 없으면 업데이트)
     if (userId && supabase) {
       const { data: existingUser } = await supabase
-        .from("users").select("id").eq("id", userId).limit(1);
+        .from("users").select("id, name").eq("id", userId).limit(1);
       if (!existingUser || existingUser.length === 0) {
         await supabase.from("users").insert(
           { id: userId, provider: userId.split("_")[0] }
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
     const data = await response.json();
 
     // API 에러 시 DB fallback에서 랜덤 제공
-    if (data.error) {
+    if (!response.ok || data.error) {
       const fallback = await getFallbackReading(category);
       if (fallback) {
         await logFallback(category, "api_error", userId, fallback.id);
@@ -104,9 +104,22 @@ export async function POST(request: Request) {
       });
     }
 
-    const reading =
-      data.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "🌙 카드의 메시지를 읽어오지 못했어요.\n\n다시 시도해주세요.";
+    const reading = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+    // 빈 응답이면 fallback
+    if (!reading) {
+      const fallback = await getFallbackReading(category);
+      if (fallback) {
+        await logFallback(category, "empty_response", userId, fallback.id);
+        const fallbackReadingId = await saveFallbackReading(userId, category, categoryLabel, cards, fallback.reading);
+        return NextResponse.json({ success: true, reading: fallback.reading, readingId: fallbackReadingId });
+      }
+      return NextResponse.json({
+        success: false,
+        error: "api_error",
+        reading: "🌙 카드의 메시지를 읽어오지 못했어요.\n\n다시 시도해주세요.",
+      });
+    }
 
     // 로그인 사용자면 결과 저장 (요약본)
     let readingId = null;
