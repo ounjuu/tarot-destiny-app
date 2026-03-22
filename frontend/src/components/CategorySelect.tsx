@@ -24,7 +24,7 @@ export default function CategorySelect({ onSelect }: CategorySelectProps) {
             className="fade-in flex items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-purple-dark/30 border border-gold/15 rounded-2xl active:scale-95 active:bg-purple-dark/50 transition-all cursor-pointer"
             style={{ animationDelay: `${index * 0.05}s` }}
           >
-            <span className="text-2xl sm:text-3xl w-8 sm:w-10 text-center">{category.icon}</span>
+            <img src={category.icon} alt={category.label} className="w-7 h-7 sm:w-8 sm:h-8" />
             <div className="text-left">
               <p className="text-gold font-bold text-xs sm:text-sm">{category.label}</p>
               <p className="text-foreground/30 text-[10px] sm:text-[11px] mt-0.5">{category.description}</p>

@@ -128,18 +128,18 @@ export function getCardDeck(categoryId: string) {
 
 // 운세 카테고리
 export const CATEGORIES = [
-  { id: "love", label: "연애운", icon: "💘", description: "솔로의 연애 운세" },
-  { id: "couple", label: "커플운", icon: "💑", description: "연인과의 관계 운세" },
-  { id: "friendship", label: "우정운", icon: "🤝", description: "친구와의 관계 운세" },
-  { id: "exam", label: "시험운", icon: "📝", description: "시험 및 합격 운세" },
-  { id: "aptitude", label: "적성운", icon: "🧭", description: "나에게 맞는 진로 운세" },
-  { id: "study", label: "학업운", icon: "📚", description: "학업 성취 운세" },
-  { id: "career", label: "이직운", icon: "💼", description: "이직 및 직장 운세" },
-  { id: "health", label: "건강운", icon: "🏥", description: "건강 관련 운세" },
-  { id: "pastlife", label: "전생운", icon: "🔄", description: "나의 전생과 인연 운세" },
-  { id: "office", label: "회사운", icon: "🏢", description: "오늘 하루 어떻게 버틸까?" },
-  { id: "reunion", label: "재회운", icon: "🥀", description: "그 사람과 다시 만날 수 있을까?" },
-  { id: "remarriage", label: "재혼운", icon: "💍", description: "새로운 인연과 다시 시작할 수 있을까?" },
+  { id: "love", label: "연애운", icon: "/icons/love.svg", description: "솔로의 연애 운세" },
+  { id: "couple", label: "커플운", icon: "/icons/couple.svg", description: "연인과의 관계 운세" },
+  { id: "friendship", label: "우정운", icon: "/icons/friendship.svg", description: "친구와의 관계 운세" },
+  { id: "exam", label: "시험운", icon: "/icons/exam.svg", description: "시험 및 합격 운세" },
+  { id: "aptitude", label: "적성운", icon: "/icons/aptitude.svg", description: "나에게 맞는 진로 운세" },
+  { id: "study", label: "학업운", icon: "/icons/study.svg", description: "학업 성취 운세" },
+  { id: "career", label: "이직운", icon: "/icons/career.svg", description: "이직 및 직장 운세" },
+  { id: "health", label: "건강운", icon: "/icons/health.svg", description: "건강 관련 운세" },
+  { id: "pastlife", label: "전생운", icon: "/icons/pastlife.svg", description: "나의 전생과 인연 운세" },
+  { id: "office", label: "회사운", icon: "/icons/office.svg", description: "오늘 하루 어떻게 버틸까?" },
+  { id: "reunion", label: "재회운", icon: "/icons/reunion.svg", description: "그 사람과 다시 만날 수 있을까?" },
+  { id: "remarriage", label: "재혼운", icon: "/icons/remarriage.svg", description: "새로운 인연과 다시 시작할 수 있을까?" },
 ];
 
 // crypto 기반 균등 랜덤 (Math.random보다 편향 없음)
