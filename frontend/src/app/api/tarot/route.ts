@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 
+
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 // 카테고리별 스프레드 포지션
@@ -77,11 +78,11 @@ export async function POST(request: Request) {
 
     const data = await response.json();
 
-    // API 에러 시 DB에서 같은 카드 조합 결과 가져오기
+    // API 에러 시 fallback JSON에서 랜덤 제공
     if (data.error) {
-      const fallback = await getMatchingReading(category, cards);
+      const fallback = await getFallbackReading(category);
       if (fallback) {
-        return NextResponse.json({ success: true, reading: fallback.reading, readingId: fallback.id });
+        return NextResponse.json({ success: true, reading: fallback });
       }
       return NextResponse.json({
         success: false,
@@ -121,9 +122,9 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true, reading, readingId });
   } catch (error) {
-    const fallback = await getMatchingReading(category, cards);
+    const fallback = await getFallbackReading(category);
     if (fallback) {
-      return NextResponse.json({ success: true, reading: fallback.reading, readingId: fallback.id });
+      return NextResponse.json({ success: true, reading: fallback });
     }
     return NextResponse.json(
       { success: false, error: "server_error", reading: "🌙 서버와의 연결이 불안정해요.\n\n잠시 후 다시 시도해주세요." },
@@ -231,20 +232,21 @@ ${categoryLabel}에 대해 카드들이 긍정적인 에너지를 보여주고 �
 희망, 새로운 시작, 성장`;
 }
 
-// DB에서 같은 카테고리 + 같은 카드 조합의 과거 결과 가져오기
-async function getMatchingReading(category: string, cards: string[]) {
-  if (!supabase || !cards || cards.length === 0) return null;
+// DB에서 카테고리별 랜덤 fallback 해석 가져오기
+async function getFallbackReading(category: string): Promise<string | null> {
+  if (!supabase) return null;
 
-  const { data } = await supabase
-    .from("readings")
-    .select("id, reading")
-    .eq("category", category)
-    .contains("cards", cards)
-    .order("created_at", { ascending: false })
-    .limit(10);
+  try {
+    const { data } = await supabase
+      .from("fallback_readings")
+      .select("reading")
+      .eq("category", category);
 
-  if (!data || data.length === 0) return null;
+    if (data && data.length > 0) {
+      const randomIndex = Math.floor(Math.random() * data.length);
+      return data[randomIndex].reading;
+    }
+  } catch {}
 
-  const randomIndex = Math.floor(Math.random() * data.length);
-  return data[randomIndex];
+  return null;
 }

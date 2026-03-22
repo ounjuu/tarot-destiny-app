@@ -157,7 +157,11 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
       {/* 체크 중 */}
       {phase === "checking" && (
         <div className="flex-1 flex flex-col items-center justify-center">
-          <div className="text-4xl mb-4 pulse-glow">🌙</div>
+          <div className="relative w-16 h-16 mb-4">
+            <div className="absolute inset-0 rounded-full border-2 border-gold/20" />
+            <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-gold/60 animate-spin" />
+            <div className="absolute inset-0 flex items-center justify-center text-gold/50 text-lg">✦</div>
+          </div>
           <p className="text-foreground/30 text-sm">카드를 준비하고 있어요...</p>
         </div>
       )}
@@ -278,14 +282,14 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
       {phase === "loading" && (
         <div className="flex-1 flex flex-col items-center justify-center px-5">
           <CardSpreadLayout categoryId={categoryId} cards={selectedCardData} />
-          <div className="text-4xl mb-4 pulse-glow">🔮</div>
+          <div className="relative w-14 h-14 mb-4">
+            <div className="absolute inset-0 rounded-full border-2 border-purple/30" />
+            <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-gold/70 animate-spin" />
+            <div className="absolute inset-[-6px] rounded-full border border-transparent border-b-purple/30 animate-spin" style={{ animationDirection: "reverse", animationDuration: "1.5s" }} />
+            <div className="absolute inset-0 flex items-center justify-center text-gold/60 text-sm pulse-glow">✦</div>
+          </div>
           <p className="text-gold text-base font-bold mb-2">카드를 해석하고 있어요</p>
           <p className="text-foreground/30 text-sm">달빛이 카드 위를 비추고 있어요...</p>
-          <div className="flex gap-1.5 mt-4">
-            {[0, 1, 2].map((i) => (
-              <div key={i} className="w-2 h-2 bg-gold/60 rounded-full pulse-glow" style={{ animationDelay: `${i * 0.3}s` }} />
-            ))}
-          </div>
         </div>
       )}
 
