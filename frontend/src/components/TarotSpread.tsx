@@ -135,7 +135,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
       ? `${window.location.origin}/result/${readingId}`
       : window.location.origin;
 
-    const shareText = `🌙 LunaTarot ${categoryLabel} ${score}\n나의 타로 결과를 확인해보세요!`;
+    const shareText = `🌙 LunaTarot ${categoryLabel} ${score}\n타로 결과를 확인해보세요!`;
 
     if (navigator.share) {
       try {
