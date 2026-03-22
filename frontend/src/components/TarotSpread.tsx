@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { CARD_BACK_IMAGE, getShuffledCards, getCardDeck, MAJOR_ARCANA, MAJOR_ARCANA_CLASSIC } from "@/data/tarot-cards";
+import { CARD_BACK_IMAGE, getShuffledCards, getCardDeck, MAJOR_ARCANA, MAJOR_ARCANA_CLASSIC, MINOR_ARCANA_CLASSIC } from "@/data/tarot-cards";
 import CardSpreadLayout from "./CardSpreadLayout";
 
 interface TarotSpreadProps {
@@ -17,7 +17,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
   const [cards] = useState(() => getShuffledCards(20, categoryId));
   const deck = getCardDeck(categoryId);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
-  const [phase, setPhase] = useState<"select" | "flipping" | "loading" | "result">("select");
+  const [phase, setPhase] = useState<"checking" | "select" | "flipping" | "loading" | "result">("checking");
   const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
   const [reading, setReading] = useState("");
   const [readingId, setReadingId] = useState<string | null>(null);
@@ -29,7 +29,10 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
   // 오늘 이미 본 카테고리인지 체크
   useEffect(() => {
     async function checkTodayReading() {
-      if (!session?.user?.id) return;
+      if (!session?.user?.id) {
+        setPhase("select");
+        return;
+      }
       try {
         const response = await fetch("/api/tarot/check", {
           method: "POST",
@@ -41,7 +44,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
           setReading(data.reading);
           setReadingId(data.readingId);
           // 저장된 카드 이름으로 카드 데이터 복원
-          const allCards = [...MAJOR_ARCANA, ...MAJOR_ARCANA_CLASSIC];
+          const allCards = [...MAJOR_ARCANA, ...MAJOR_ARCANA_CLASSIC, ...MINOR_ARCANA_CLASSIC];
           const restored = (data.cards as string[]).map((name: string) => {
             return allCards.find((c) => c.nameKo === name) || deck[0];
           });
@@ -51,8 +54,10 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
           if (data.readingId) {
             window.history.replaceState(null, "", `/result/${data.readingId}`);
           }
+          return;
         }
       } catch {}
+      setPhase("select");
     }
     checkTodayReading();
   }, []);
@@ -149,6 +154,14 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
 
   return (
     <div className="flex flex-col h-full">
+      {/* 체크 중 */}
+      {phase === "checking" && (
+        <div className="flex-1 flex flex-col items-center justify-center">
+          <div className="text-4xl mb-4 pulse-glow">🌙</div>
+          <p className="text-foreground/30 text-sm">카드를 준비하고 있어요...</p>
+        </div>
+      )}
+
       {/* 카드 선택 & 뒤집기 화면 */}
       {(phase === "select" || phase === "flipping") && (
         <div className="flex flex-col h-full">

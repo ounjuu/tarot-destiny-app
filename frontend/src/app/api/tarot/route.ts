@@ -5,7 +5,7 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 // 카테고리별 스프레드 포지션
 const SPREAD_POSITIONS: Record<string, string[]> = {
-  love: ["나의 마음", "상대의 마음", "두 사람의 현재", "장애물", "숨겨진 감정", "결말"],
+  love: ["나의 마음", "다가올 인연", "현재 연애 흐름", "장애물", "숨겨진 감정", "결말"],
   couple: ["나의 상태", "상대의 상태", "관계의 현재", "갈등 요인", "해결의 열쇠", "관계의 미래"],
   friendship: ["나의 입장", "친구의 입장", "우정의 현재", "시련", "서로에게 필요한 것", "우정의 방향"],
   exam: ["현재 실력", "숨은 잠재력", "방해 요소", "도움이 되는 것", "시험 당일 흐름", "최종 결과"],
@@ -21,10 +21,12 @@ const SPREAD_POSITIONS: Record<string, string[]> = {
 
 export async function POST(request: Request) {
   let category = "";
+  let cards: string[] = [];
   try {
     const body = await request.json();
     category = body.category;
-    const { categoryLabel, cards, userId } = body;
+    cards = body.cards;
+    const { categoryLabel, userId } = body;
 
     // 하루 1회 제한 체크 - 이미 봤으면 기존 결과 반환
     if (userId && supabase) {
@@ -75,9 +77,9 @@ export async function POST(request: Request) {
 
     const data = await response.json();
 
-    // API 에러 시 DB에서 랜덤 결과 가져오기
+    // API 에러 시 DB에서 같은 카드 조합 결과 가져오기
     if (data.error) {
-      const fallback = await getRandomReading(category);
+      const fallback = await getMatchingReading(category, cards);
       if (fallback) {
         return NextResponse.json({ success: true, reading: fallback.reading, readingId: fallback.id });
       }
@@ -119,7 +121,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true, reading, readingId });
   } catch (error) {
-    const fallback = await getRandomReading(category);
+    const fallback = await getMatchingReading(category, cards);
     if (fallback) {
       return NextResponse.json({ success: true, reading: fallback.reading, readingId: fallback.id });
     }
@@ -141,7 +143,7 @@ function buildPrompt(category: string, categoryLabel: string, cards: string[]) {
 유튜브와 오프라인에서 실제로 타로 상담을 해주는 전문 리더입니다.
 당신은 기계적인 해석이 아니라, 당신 앞에 앉은 사람의 마음을 읽고 공감하면서 이야기를 풀어나갑니다.
 
-사용자가 "${categoryLabel}"에 대해 타로 카드를 뽑았습니다.
+${category === "love" ? "현재 연인이 없는 솔로인 사용자가 연애운(새로운 인연, 다가올 사랑)에 대해 타로 카드를 뽑았습니다." : `사용자가 "${categoryLabel}"에 대해 타로 카드를 뽑았습니다.`}
 
 스프레드 배치:
 ${positions.map((pos, i) => `${i + 1}번 위치 [${pos}]: ${cards[i]}`).join("\n")}
@@ -229,16 +231,17 @@ ${categoryLabel}에 대해 카드들이 긍정적인 에너지를 보여주고 �
 희망, 새로운 시작, 성장`;
 }
 
-// DB에서 같은 카테고리 과거 결과 랜덤 가져오기
-async function getRandomReading(category: string) {
-  if (!supabase) return null;
+// DB에서 같은 카테고리 + 같은 카드 조합의 과거 결과 가져오기
+async function getMatchingReading(category: string, cards: string[]) {
+  if (!supabase || !cards || cards.length === 0) return null;
 
   const { data } = await supabase
     .from("readings")
     .select("id, reading")
     .eq("category", category)
+    .contains("cards", cards)
     .order("created_at", { ascending: false })
-    .limit(50);
+    .limit(10);
 
   if (!data || data.length === 0) return null;
 

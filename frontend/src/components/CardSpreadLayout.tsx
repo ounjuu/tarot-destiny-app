@@ -30,7 +30,7 @@ export default function CardSpreadLayout({ categoryId, cards }: CardSpreadLayout
   // 연애운/커플운: 하트 모양 배치 (반응형)
   if (isLoveCategory(categoryId)) {
     return (
-      <div className="relative w-full max-w-[280px] h-[200px] sm:h-[220px] mx-auto mb-6">
+      <div className="relative w-full max-w-[320px] h-[220px] sm:h-[260px] mx-auto mb-6">
         {[
           { x: "20%", y: "0%" },
           { x: "59%", y: "0%" },
@@ -44,10 +44,10 @@ export default function CardSpreadLayout({ categoryId, cards }: CardSpreadLayout
             className="absolute fade-in flex flex-col items-center"
             style={{ left: pos.x, top: pos.y, animationDelay: `${i * 0.12}s` }}
           >
-            <div className="w-[42px] h-[63px] sm:w-[52px] sm:h-[78px] rounded-lg overflow-hidden border border-gold/40 shadow-md">
+            <div className="w-[52px] h-[78px] sm:w-[62px] sm:h-[93px] rounded-lg overflow-hidden border border-gold/40 shadow-md">
               <Image src={cards[i].image} alt={cards[i].nameKo} width={52} height={78} className="w-full h-full object-cover" />
             </div>
-            <span className="text-[7px] sm:text-[8px] text-gold/40 mt-0.5 text-center w-[50px]">{labels[i]}</span>
+            <span className="text-[9px] sm:text-[11px] text-gold/40 mt-0.5 text-center w-[55px]">{labels[i]}</span>
           </div>
         ))}
         <svg className="absolute inset-0 pointer-events-none" viewBox="0 0 280 220" fill="none">
@@ -59,13 +59,13 @@ export default function CardSpreadLayout({ categoryId, cards }: CardSpreadLayout
 
   // 기본: 2x3 그리드 (반응형)
   return (
-    <div className="grid grid-cols-3 gap-2 sm:gap-3 justify-items-center mx-auto mb-6 max-w-[220px] sm:max-w-[240px]">
+    <div className="grid grid-cols-3 gap-2 sm:gap-3 justify-items-center mx-auto mb-6 max-w-[250px] sm:max-w-[280px]">
       {cards.map((card, i) => (
         <div key={card.id} className="fade-in flex flex-col items-center" style={{ animationDelay: `${i * 0.1}s` }}>
-          <div className="w-[42px] h-[63px] sm:w-[52px] sm:h-[78px] rounded-lg overflow-hidden border border-gold/40 shadow-md">
+          <div className="w-[52px] h-[78px] sm:w-[62px] sm:h-[93px] rounded-lg overflow-hidden border border-gold/40 shadow-md">
             <Image src={card.image} alt={card.nameKo} width={52} height={78} className="w-full h-full object-cover" />
           </div>
-          <span className="text-[7px] sm:text-[8px] text-gold/40 mt-0.5 text-center w-[50px]">{labels[i]}</span>
+          <span className="text-[9px] sm:text-[11px] text-gold/40 mt-0.5 text-center w-[55px]">{labels[i]}</span>
         </div>
       ))}
     </div>
