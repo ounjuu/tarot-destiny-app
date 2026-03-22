@@ -27,7 +27,7 @@ export default function Home() {
     return (
       <div className="app-container bg-background">
         <StarBackground />
-        <div className="relative z-10 flex-1 flex items-center justify-center">
+        <div className="absolute inset-0 z-10 flex items-center justify-center">
           <div className="relative w-14 h-14">
             <div className="absolute inset-0 rounded-full border-2 border-gold/20" />
             <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-gold/70 animate-spin" />
