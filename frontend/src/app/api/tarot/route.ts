@@ -83,7 +83,8 @@ export async function POST(request: Request) {
       const fallback = await getFallbackReading(category);
       if (fallback) {
         await logFallback(category, "api_error", userId, fallback.id);
-        return NextResponse.json({ success: true, reading: fallback.reading });
+        const fallbackReadingId = await saveFallbackReading(userId, category, categoryLabel, cards, fallback.reading);
+        return NextResponse.json({ success: true, reading: fallback.reading, readingId: fallbackReadingId });
       }
       return NextResponse.json({
         success: false,
@@ -126,7 +127,8 @@ export async function POST(request: Request) {
     const fallback = await getFallbackReading(category);
     if (fallback) {
       await logFallback(category, "server_error", undefined, fallback.id);
-      return NextResponse.json({ success: true, reading: fallback.reading });
+      const fallbackReadingId = await saveFallbackReading(undefined, category, "", cards, fallback.reading);
+      return NextResponse.json({ success: true, reading: fallback.reading, readingId: fallbackReadingId });
     }
     return NextResponse.json(
       { success: false, error: "server_error", reading: "🌙 서버와의 연결이 불안정해요.\n\n잠시 후 다시 시도해주세요." },
@@ -250,6 +252,26 @@ async function getFallbackReading(category: string): Promise<{ reading: string; 
     }
   } catch {}
 
+  return null;
+}
+
+// fallback 결과를 readings 테이블에 저장 (공유 URL 생성용)
+async function saveFallbackReading(userId: string | undefined, category: string, categoryLabel: string, cards: string[], reading: string): Promise<string | null> {
+  if (!supabase || !userId) return null;
+  try {
+    const scoreMatch = reading.match(/(\d+)%/);
+    const score = scoreMatch ? parseInt(scoreMatch[1]) : null;
+    const keywordMatch = reading.match(/행운의 키워드[^\n]*\n([^\n]+)/);
+    const keywords = keywordMatch ? keywordMatch[1].trim() : "";
+
+    const { data } = await supabase
+      .from("readings")
+      .insert({ user_id: userId, category, category_label: categoryLabel, cards, reading, score, keywords })
+      .select("id")
+      .single();
+
+    return data?.id || null;
+  } catch {}
   return null;
 }
 
