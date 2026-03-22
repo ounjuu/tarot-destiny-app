@@ -29,6 +29,14 @@ export async function POST(request: Request) {
     cards = body.cards;
     const { categoryLabel, userId } = body;
 
+    // 사용자 정보 저장 (로그인 시 누락된 경우 대비)
+    if (userId && supabase) {
+      await supabase.from("users").upsert(
+        { id: userId, provider: userId.split("_")[0], name: null },
+        { onConflict: "id" }
+      ).then(() => {});
+    }
+
     // 하루 1회 제한 체크 - 이미 봤으면 기존 결과 반환
     if (userId && supabase) {
       const today = new Date().toISOString().split("T")[0];
