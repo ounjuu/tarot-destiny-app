@@ -290,7 +290,7 @@ async function saveFallbackReading(userId: string | undefined, category: string,
 
     const { data } = await supabase
       .from("readings")
-      .insert({ user_id: userId, category, category_label: categoryLabel, cards, reading, score, keywords })
+      .insert({ user_id: userId, category, category_label: categoryLabel, cards, reading, score, keywords, source: "fallback" })
       .select("id")
       .single();
 

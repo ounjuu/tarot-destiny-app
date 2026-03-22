@@ -41,6 +41,7 @@ interface ReadingData {
   keywords: string;
   created_at: string;
   reading: string;
+  source: string;
 }
 
 interface FallbackLog {
@@ -347,6 +348,9 @@ export default function AdminPage() {
                     {CATEGORY_LABELS[r.category] || r.category}
                   </span>
                   <span className="text-foreground/50 text-xs truncate flex-1">{r.user_name}</span>
+                  {r.source === "fallback" && (
+                    <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-orange-500/20 text-orange-400 shrink-0">FB</span>
+                  )}
                   {r.score && <span className="text-gold/60 text-xs shrink-0">{r.score}%</span>}
                   <span className="text-foreground/20 text-[10px] shrink-0">
                     {new Date(r.created_at).toLocaleDateString("ko-KR")}
