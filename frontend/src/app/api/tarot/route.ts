@@ -78,7 +78,7 @@ export async function POST(request: Request) {
 
     const data = await response.json();
 
-    // API 에러 시 fallback JSON에서 랜덤 제공
+    // API 에러 시 DB fallback에서 랜덤 제공
     if (data.error) {
       const fallback = await getFallbackReading(category);
       if (fallback) {
