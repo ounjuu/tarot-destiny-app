@@ -16,13 +16,18 @@ LunaTarot은 타로 카드를 뽑고, AI가 카드 조합을 분석하여 맞춤
 
 ### 주요 기능
 
-- 🎴 **10가지 운세 카테고리** — 연애운, 커플운, 우정운, 시험운, 적성운, 학업운, 이직운, 건강운, 전생운, 회사운
-- 🃏 **부채꼴 카드 뽑기** — 20장 중 6장을 선택하는 인터랙티브 UI
+- 🎴 **12가지 운세 카테고리** — 연애운, 커플운, 우정운, 시험운, 적성운, 학업운, 이직운, 건강운, 전생운, 회사운, 재회운, 재혼운
+- 🃏 **78장 타로 덱** — 메이저 아르카나 22장 + 마이너 아르카나 56장 (완드/컵/소드/펜타클)
+- 🎯 **부채꼴 카드 뽑기** — 78장 중 20장을 crypto 기반 균등 셔플로 제공, 6장 선택
 - ✨ **카드 뒤집기 애니메이션** — 6장을 뽑은 후 한 장씩 순차적으로 공개
 - 🔮 **AI 타로 해석** — Gemini AI를 활용한 카드 조합 기반 맞춤형 리딩
 - 📊 **운세 점수** — 카테고리별 운세 점수(%) 제공
-- 💕 **카테고리별 스프레드** — 연애운은 하트 배치, 나머지는 2x3 그리드
-- 📱 **모바일 앱뷰** — 모바일 최적화 반응형 UI
+- 💕 **카테고리별 스프레드** — 연애운/커플운은 하트 배치, 나머지는 2x3 그리드
+- 🔒 **카카오/구글 로그인** — NextAuth 기반 소셜 로그인
+- 💾 **결과 저장** — Supabase DB에 타로 결과 저장 및 카테고리별 하루 1회 제한
+- 📤 **결과 공유** — 모바일 Web Share API, PC 클립보드 복사, 고유 URL 공유
+- 📱 **모바일 앱뷰** — 모바일 최적화 반응형 UI (카카오톡 인앱 브라우저 대응)
+- 🖼️ **OG 태그** — 카카오톡/트위터/페이스북 미리보기 지원
 
 ## 기술 스택
 
@@ -30,7 +35,9 @@ LunaTarot은 타로 카드를 뽑고, AI가 카드 조합을 분석하여 맞춤
 |------|------|
 | **프론트엔드** | Next.js, React, TypeScript |
 | **스타일링** | Tailwind CSS |
-| **AI** | Google Gemini API |
+| **AI** | Google Gemini API (gemini-2.5-flash) |
+| **인증** | NextAuth (카카오/구글 OAuth) |
+| **DB** | Supabase |
 | **패키지 매니저** | Yarn |
 | **배포** | Vercel |
 
@@ -40,16 +47,22 @@ LunaTarot은 타로 카드를 뽑고, AI가 카드 조합을 분석하여 맞춤
 tarot-destiny-app/
 ├── frontend/
 │   ├── public/cards/              # 파스텔 동물 카드 SVG (22장)
-│   │   └── rider-waite/           # Rider-Waite 클래식 카드 (22장)
+│   │   └── rider-waite/           # Rider-Waite 클래식 카드
+│   │       ├── *.jpg              # 메이저 아르카나 (22장)
+│   │       └── minor/             # 마이너 아르카나 (56장)
 │   ├── src/
 │   │   ├── app/
-│   │   │   ├── api/tarot/         # AI 타로 해석 API
+│   │   │   ├── api/
+│   │   │   │   ├── tarot/         # AI 타로 해석 API
+│   │   │   │   └── auth/          # NextAuth 인증 API
+│   │   │   ├── login/             # 로그인 페이지
+│   │   │   ├── result/[id]/       # 결과 공유 페이지
 │   │   │   ├── page.tsx           # 메인 페이지
 │   │   │   ├── layout.tsx         # 레이아웃
 │   │   │   └── globals.css        # 글로벌 스타일
 │   │   ├── components/            # UI 컴포넌트
-│   │   ├── data/                  # 타로 카드 데이터
-│   │   └── lib/                   # 유틸리티
+│   │   ├── data/                  # 타로 카드 데이터 (78장)
+│   │   └── lib/                   # Supabase 클라이언트 등
 │   └── package.json
 └── shared/types/                  # 공유 타입
 ```
@@ -69,13 +82,19 @@ yarn install
 cp .env.example .env
 ```
 
-`.env` 파일에 Gemini API 키를 입력합니다:
+`.env` 파일에 필요한 키를 입력합니다:
 
 ```
-GEMINI_API_KEY=your_api_key_here
+GEMINI_API_KEY=your_gemini_api_key
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NEXTAUTH_SECRET=your_nextauth_secret
+NEXTAUTH_URL=http://localhost:3000
+KAKAO_CLIENT_ID=your_kakao_client_id
+KAKAO_CLIENT_SECRET=your_kakao_client_secret
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
 ```
-
-API 키는 [Google AI Studio](https://aistudio.google.com/apikey)에서 발급받을 수 있습니다.
 
 ### 3. 개발 서버 실행
 
@@ -87,12 +106,14 @@ yarn dev
 
 ## 카드 디자인
 
-두 가지 카드 디자인을 카테고리별로 사용합니다.
+78장의 타로 카드를 두 가지 디자인으로 사용합니다.
 
-### Rider-Waite 클래식
-연애운, 커플운, 시험운, 학업운, 이직운, 건강운, 전생운, 회사운에서 사용됩니다.
+### Rider-Waite 클래식 (78장)
+연애운, 커플운, 시험운, 학업운, 이직운, 건강운, 전생운, 회사운, 재회운, 재혼운에서 사용됩니다.
 퍼블릭 도메인인 Rider-Waite 타로 카드 이미지를 활용했습니다.
+- 메이저 아르카나 22장 (The Fool ~ The World)
+- 마이너 아르카나 56장 (완드/컵/소드/펜타클 × 14장)
 
-### 파스텔 동물 카드
+### 파스텔 동물 카드 (22장)
 우정운, 적성운에서 사용됩니다.
 메이저 아르카나 22장을 파스텔 스타일의 귀여운 동물 캐릭터로 디자인했습니다.
