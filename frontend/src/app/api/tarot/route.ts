@@ -82,7 +82,8 @@ export async function POST(request: Request) {
     if (data.error) {
       const fallback = await getFallbackReading(category);
       if (fallback) {
-        return NextResponse.json({ success: true, reading: fallback });
+        await logFallback(category, "api_error", userId, fallback.id);
+        return NextResponse.json({ success: true, reading: fallback.reading });
       }
       return NextResponse.json({
         success: false,
@@ -124,7 +125,8 @@ export async function POST(request: Request) {
   } catch (error) {
     const fallback = await getFallbackReading(category);
     if (fallback) {
-      return NextResponse.json({ success: true, reading: fallback });
+      await logFallback(category, "server_error", undefined, fallback.id);
+      return NextResponse.json({ success: true, reading: fallback.reading });
     }
     return NextResponse.json(
       { success: false, error: "server_error", reading: "🌙 서버와의 연결이 불안정해요.\n\n잠시 후 다시 시도해주세요." },
@@ -233,20 +235,33 @@ ${categoryLabel}에 대해 카드들이 긍정적인 에너지를 보여주고 �
 }
 
 // DB에서 카테고리별 랜덤 fallback 해석 가져오기
-async function getFallbackReading(category: string): Promise<string | null> {
+async function getFallbackReading(category: string): Promise<{ reading: string; id: string } | null> {
   if (!supabase) return null;
 
   try {
     const { data } = await supabase
       .from("fallback_readings")
-      .select("reading")
+      .select("id, reading")
       .eq("category", category);
 
     if (data && data.length > 0) {
       const randomIndex = Math.floor(Math.random() * data.length);
-      return data[randomIndex].reading;
+      return { reading: data[randomIndex].reading, id: data[randomIndex].id };
     }
   } catch {}
 
   return null;
+}
+
+// fallback 발생 로그 기록
+async function logFallback(category: string, errorType: string, userId?: string, fallbackReadingId?: string) {
+  if (!supabase) return;
+  try {
+    await supabase.from("fallback_logs").insert({
+      category,
+      error_type: errorType,
+      user_id: userId || null,
+      fallback_reading_id: fallbackReadingId || null,
+    });
+  } catch {}
 }
