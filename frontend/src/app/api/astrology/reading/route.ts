@@ -263,7 +263,7 @@ async function getExistingReading(userId: string, category: string) {
 
   const now = new Date();
 
-  if (category === "daily" || category === "love-star" || category === "marriage-star" || category === "compatibility") {
+  if (category === "daily" || category === "love-star" || category === "compatibility") {
     // 하루 1회 (자정 기준)
     fromDate = now.toISOString().split("T")[0] + "T00:00:00";
   } else if (category === "weekly") {
@@ -275,7 +275,7 @@ async function getExistingReading(userId: string, category: string) {
   } else if (category === "monthly") {
     // 월 1회 (1일 기준)
     fromDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01T00:00:00`;
-  } else if (category === "yearly") {
+  } else if (category === "yearly" || category === "marriage-star") {
     // 년 1회 (1월 1일 기준)
     fromDate = `${now.getFullYear()}-01-01T00:00:00`;
   } else {
