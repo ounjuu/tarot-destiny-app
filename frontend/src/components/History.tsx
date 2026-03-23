@@ -144,7 +144,7 @@ export default function History() {
                         }}
                         className="mt-3 w-full py-2 text-xs text-gold/50 border border-gold/10 rounded-lg cursor-pointer active:scale-[0.98] transition-transform"
                       >
-                        📤 결과 공유하기
+                        ✦ 결과 공유하기
                       </button>
                     </div>
                   )}

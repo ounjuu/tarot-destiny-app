@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tarot-destiny-app.vercel.app";
 
   if (!supabaseUrl || !supabaseAnonKey) {
-    return { title: "LunaTarot - AI 타로 리딩" };
+    return { title: "LunaTarot - 타로 리딩" };
   }
 
   const supabase = createClient(supabaseUrl, supabaseAnonKey);
@@ -20,10 +20,10 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     .single();
 
   if (!data) {
-    return { title: "LunaTarot - AI 타로 리딩" };
+    return { title: "LunaTarot - 타로 리딩" };
   }
 
-  const title = `🌙 ${data.category_label} ${data.score || ""}% - LunaTarot`;
+  const title = `${data.category_label} ${data.score || ""}% - LunaTarot`;
   const description = `뽑은 카드: ${data.cards.join(", ")}`;
 
   return {

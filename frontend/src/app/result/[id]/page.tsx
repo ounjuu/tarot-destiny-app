@@ -82,7 +82,7 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
       <div className="app-content relative z-10 px-5 pt-6 pb-8">
         {/* 제목 */}
         <div className="text-center mb-6">
-          <h2 className="text-gold text-lg font-bold mb-1">✨ {data.category_label} 결과 ✨</h2>
+          <h2 className="text-gold text-lg font-bold mb-1">✦ {data.category_label} 결과 ✦</h2>
           <p className="text-foreground/30 text-xs">{date}</p>
         </div>
 
@@ -117,13 +117,13 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
             href="/"
             className="inline-block px-8 py-3 bg-gradient-to-r from-purple to-gold/80 rounded-2xl text-white font-bold text-sm tracking-wider"
           >
-            🌙 나도 타로 보러 가기
+            ✦ 나도 타로 보러 가기
           </Link>
         </div>
       </div>
 
       <footer className="safe-bottom relative z-20 py-3 text-center border-t border-gold/10 bg-background/80 backdrop-blur-sm">
-        <p className="text-foreground/20 text-[10px] tracking-wider">LUNA TAROT · AI 타로 리딩</p>
+        <p className="text-foreground/20 text-[10px] tracking-wider">LUNA TAROT · 타로 리딩</p>
       </footer>
     </div>
   );

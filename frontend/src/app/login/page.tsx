@@ -56,7 +56,7 @@ export default function LoginPage() {
       {/* 하단 */}
       <footer className="safe-bottom relative z-10 py-3 text-center">
         <p className="text-foreground/15 text-[10px] tracking-wider">
-          LUNA TAROT · AI 타로 리딩
+          LUNA TAROT · 타로 리딩
         </p>
       </footer>
     </div>

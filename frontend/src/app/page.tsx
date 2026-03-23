@@ -154,7 +154,7 @@ export default function Home() {
       {service === "tarot" && selectedCategory && (
         <footer className="safe-bottom relative z-20 py-3 text-center border-t border-gold/10 bg-background/80 backdrop-blur-sm">
           <p className="text-foreground/20 text-[10px] tracking-wider">
-            LUNA TAROT · AI 타로 리딩
+            LUNA TAROT · 타로 리딩
           </p>
         </footer>
       )}
@@ -163,7 +163,7 @@ export default function Home() {
       {(!service || service === "astrology") && (
         <footer className="safe-bottom relative z-20 py-3 text-center border-t border-gold/10 bg-background/80 backdrop-blur-sm">
           <p className="text-foreground/20 text-[10px] tracking-wider">
-            LUNA · AI 운세 리딩
+            LUNA · 운세 리딩
           </p>
         </footer>
       )}

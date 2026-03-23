@@ -117,7 +117,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
         window.history.replaceState(null, "", `/result/${data.readingId}`);
       }
     } catch {
-      setReading("🌙 인터넷 연결이 불안정해요.\n\n네트워크를 확인하고 다시 시도해주세요.");
+      setReading("별들의 신호가 불안정해요.\n\n네트워크를 확인하고 다시 시도해주세요.");
       setHasError(true);
     }
 
@@ -237,7 +237,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
                 onClick={handleFlipAll}
                 className="slide-up mt-8 mb-[-20px] px-8 py-3 bg-gradient-to-r from-purple to-gold/80 rounded-2xl text-white font-bold text-sm tracking-wider active:scale-[0.98] transition-transform cursor-pointer shadow-lg shadow-purple/30"
               >
-                ✨ 카드 뒤집기
+                ✦ 카드 뒤집기
               </button>
             )}
           </div>
@@ -295,7 +295,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
       {/* 결과 */}
       {phase === "result" && (
         <div className="fade-in px-5 pt-4 pb-6 overflow-y-auto">
-          <h2 className="text-center text-gold text-lg font-bold mb-1">✨ {categoryLabel} 결과 ✨</h2>
+          <h2 className="text-center text-gold text-lg font-bold mb-1">✦ {categoryLabel} 결과 ✦</h2>
           {todayResult && (
             <p className="text-center text-foreground/30 text-[11px] mb-4">오늘 이미 확인한 결과예요</p>
           )}
@@ -304,7 +304,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
           {/* 카드 스프레드 */}
           <CardSpreadLayout categoryId={categoryId} cards={selectedCardData} />
 
-          {/* AI 해석 */}
+          {/* 해석 결과 */}
           <div className="relative p-5 bg-gradient-to-b from-purple-dark/30 to-purple-dark/10 rounded-2xl border border-gold/15 mb-6">
             <div className="absolute top-2 left-3 text-gold/20 text-[10px]">✦</div>
             <div className="absolute top-2 right-3 text-gold/20 text-[10px]">✦</div>
@@ -320,7 +320,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
                 onClick={() => { setHasError(false); fetchReading(); }}
                 className="w-full py-3.5 bg-gradient-to-r from-purple to-gold/80 rounded-2xl text-white font-bold text-sm active:scale-[0.98] transition-all cursor-pointer shadow-lg shadow-purple/30"
               >
-                ✨ 다시 해석하기
+                ✦ 다시 해석하기
               </button>
             )}
             {!hasError && (
@@ -328,11 +328,11 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
                 onClick={handleShare}
                 className="w-full py-3.5 bg-gradient-to-r from-purple to-gold/80 rounded-2xl text-white font-bold text-sm active:scale-[0.98] transition-all cursor-pointer shadow-lg shadow-purple/30"
               >
-                {copied ? "✅ 복사 완료!" : "📤 결과 공유하기"}
+                {copied ? "✧ 복사 완료!" : "✦ 결과 공유하기"}
               </button>
             )}
             <button onClick={() => { onBack(); window.history.replaceState(null, "", "/"); }} className="w-full py-3.5 border border-gold/20 rounded-2xl text-gold/60 text-sm active:scale-[0.98] transition-all cursor-pointer">
-              ☽ 다른 운세 보기
+              ✧ 다른 운세 보기
             </button>
           </div>
         </div>
