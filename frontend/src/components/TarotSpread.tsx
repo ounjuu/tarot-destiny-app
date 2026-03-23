@@ -215,7 +215,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
                             <div className="card-front rounded-md overflow-hidden border-2 border-[#c9a84c]/30 shadow-md">
                               <Image src={CARD_BACK_IMAGE} alt="카드 뒷면" width={56} height={84} className="w-full h-full object-cover" />
                             </div>
-                            <div className="card-back rounded-md overflow-hidden border-2 border-gold/50 shadow-md">
+                            <div className="card-back rounded-md overflow-hidden border-2 border-gold/50 shadow-md card-reveal">
                               <Image src={card.image} alt={card.nameKo} width={56} height={84} className="w-full h-full object-cover" />
                             </div>
                           </div>
@@ -305,7 +305,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
           <CardSpreadLayout categoryId={categoryId} cards={selectedCardData} />
 
           {/* 해석 결과 */}
-          <div className="relative p-5 bg-gradient-to-b from-purple-dark/30 to-purple-dark/10 rounded-2xl border border-gold/15 mb-6">
+          <div className="relative p-5 bg-gradient-to-b from-purple-dark/30 to-purple-dark/10 rounded-2xl border border-gold/15 mb-6 result-glow shimmer">
             <div className="absolute top-2 left-3 text-gold/20 text-[10px]">✦</div>
             <div className="absolute top-2 right-3 text-gold/20 text-[10px]">✦</div>
             <div className="absolute bottom-2 left-3 text-gold/20 text-[10px]">✦</div>

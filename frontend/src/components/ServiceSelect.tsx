@@ -22,7 +22,7 @@ export default function ServiceSelect({ onSelect }: ServiceSelectProps) {
       <div className="w-full max-w-[320px] space-y-4">
         <button
           onClick={() => onSelect("tarot")}
-          className="fade-in w-full p-5 bg-purple-dark/30 border border-gold/15 rounded-2xl active:scale-[0.97] hover:bg-purple-dark/50 hover:border-gold/30 hover:scale-[1.02] transition-all duration-300 cursor-pointer flex items-center gap-4 group"
+          className="fade-in w-full p-5 bg-purple-dark/30 border border-gold/15 rounded-2xl active:scale-[0.97] hover:bg-purple-dark/50 hover:border-gold/30 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(201,168,76,0.1)] transition-all duration-300 cursor-pointer flex items-center gap-4 group"
           style={{ animationDelay: "0.1s" }}
         >
           <img src="/icons/tarot-service.svg" alt="" className="w-11 h-11 sm:w-14 sm:h-14 group-hover:scale-110 transition-transform duration-300" />
@@ -34,7 +34,7 @@ export default function ServiceSelect({ onSelect }: ServiceSelectProps) {
 
         <button
           onClick={() => onSelect("astrology")}
-          className="fade-in w-full p-5 bg-purple-dark/30 border border-gold/15 rounded-2xl active:scale-[0.97] hover:bg-purple-dark/50 hover:border-gold/30 hover:scale-[1.02] transition-all duration-300 cursor-pointer flex items-center gap-4 group"
+          className="fade-in w-full p-5 bg-purple-dark/30 border border-gold/15 rounded-2xl active:scale-[0.97] hover:bg-purple-dark/50 hover:border-gold/30 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(201,168,76,0.1)] transition-all duration-300 cursor-pointer flex items-center gap-4 group"
           style={{ animationDelay: "0.2s" }}
         >
           <img src="/icons/astrology-service.svg" alt="" className="w-11 h-11 sm:w-14 sm:h-14 group-hover:scale-110 transition-transform duration-300" />
@@ -45,7 +45,7 @@ export default function ServiceSelect({ onSelect }: ServiceSelectProps) {
         </button>
         <button
           onClick={() => onSelect("saju")}
-          className="fade-in w-full p-5 bg-purple-dark/30 border border-gold/15 rounded-2xl active:scale-[0.97] hover:bg-purple-dark/50 hover:border-gold/30 hover:scale-[1.02] transition-all duration-300 cursor-pointer flex items-center gap-4 group"
+          className="fade-in w-full p-5 bg-purple-dark/30 border border-gold/15 rounded-2xl active:scale-[0.97] hover:bg-purple-dark/50 hover:border-gold/30 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(201,168,76,0.1)] transition-all duration-300 cursor-pointer flex items-center gap-4 group"
           style={{ animationDelay: "0.3s" }}
         >
           <img src="/icons/saju-service.svg" alt="" className="w-11 h-11 sm:w-14 sm:h-14 group-hover:scale-110 transition-transform duration-300" />

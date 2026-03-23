@@ -103,7 +103,7 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
         )}
 
         {/* 해석 */}
-        <div className="relative p-4 sm:p-5 bg-gradient-to-b from-purple-dark/30 to-purple-dark/10 rounded-2xl border border-gold/15 mb-6">
+        <div className="relative p-4 sm:p-5 bg-gradient-to-b from-purple-dark/30 to-purple-dark/10 rounded-2xl border border-gold/15 mb-6 result-glow shimmer">
           <div className="absolute top-2 left-3 text-gold/20 text-[10px]">✦</div>
           <div className="absolute top-2 right-3 text-gold/20 text-[10px]">✦</div>
           <div className="absolute bottom-2 left-3 text-gold/20 text-[10px]">✦</div>

@@ -166,6 +166,97 @@ html, body {
   animation: cardPop 0.3s ease-out forwards;
 }
 
+/* 결과 등장 글로우 */
+@keyframes resultGlow {
+  0% { opacity: 0; transform: scale(0.95); box-shadow: none; }
+  50% { box-shadow: 0 0 30px rgba(201, 168, 76, 0.15), 0 0 60px rgba(107, 63, 160, 0.1); }
+  100% { opacity: 1; transform: scale(1); box-shadow: none; }
+}
+
+.result-glow {
+  animation: resultGlow 0.8s ease-out forwards;
+}
+
+/* 점수 카운트업 */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px) scale(0.8); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.count-up {
+  animation: countUp 0.6s ease-out forwards;
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+/* 시머 (빛나는 효과) */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.08), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* 부드러운 등장 (stagger용) */
+@keyframes softAppear {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.soft-appear {
+  animation: softAppear 0.4s ease-out forwards;
+}
+
+/* 버튼 성공 피드백 */
+@keyframes successPulse {
+  0% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.4); }
+  70% { box-shadow: 0 0 0 12px rgba(201, 168, 76, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0); }
+}
+
+.success-pulse {
+  animation: successPulse 0.6s ease-out;
+}
+
+/* 카드 뒤집기 완료 후 빛남 */
+@keyframes cardReveal {
+  0% { box-shadow: 0 0 0 rgba(201, 168, 76, 0); }
+  50% { box-shadow: 0 0 20px rgba(201, 168, 76, 0.3), 0 0 40px rgba(107, 63, 160, 0.15); }
+  100% { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); }
+}
+
+.card-reveal {
+  animation: cardReveal 0.8s ease-out forwards;
+}
+
+/* 서비스 카드 호버 글로우 */
+@keyframes hoverGlow {
+  0% { box-shadow: 0 0 0 rgba(201, 168, 76, 0); }
+  100% { box-shadow: 0 0 20px rgba(201, 168, 76, 0.1), 0 2px 12px rgba(107, 63, 160, 0.1); }
+}
+
+/* 포커스 링 */
+input:focus, select:focus {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.1);
+  outline: none;
+}
+
+/* 스케일 바운스 */
+@keyframes scaleBounce {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.scale-bounce {
+  animation: scaleBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
 /* Safe area - 카카오톡 인앱 브라우저 등 대응 */
 .safe-top {
   padding-top: max(env(safe-area-inset-top, 0px), 8px);
