@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import StarBackground from "@/components/StarBackground";
+import ServiceSelect from "@/components/ServiceSelect";
 import CategorySelect from "@/components/CategorySelect";
 import TarotSpread from "@/components/TarotSpread";
 import History from "@/components/History";
@@ -12,6 +13,7 @@ import { CATEGORIES } from "@/data/tarot-cards";
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [service, setService] = useState<"tarot" | "astrology" | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentTab, setCurrentTab] = useState<"home" | "history">("home");
 
@@ -38,22 +40,33 @@ export default function Home() {
     );
   }
 
+  // 뒤로가기 핸들러
+  const handleBack = () => {
+    if (selectedCategory) {
+      setSelectedCategory(null);
+    } else if (currentTab === "history") {
+      setCurrentTab("home");
+    } else if (service) {
+      setService(null);
+      setCurrentTab("home");
+    }
+  };
+
+  // 뒤로가기 버튼 표시 조건
+  const showBack = selectedCategory || currentTab === "history" || service;
+
+  // 헤더 타이틀
+  const headerTitle = service === "astrology" ? "점성술" : "LunaTarot";
+
   return (
     <div className="app-container bg-background">
       <StarBackground />
 
       {/* 상단 헤더 */}
       <header className="safe-top relative z-20 flex items-center justify-center pt-3 pb-3 border-b border-gold/10 min-h-[52px]">
-        {selectedCategory ? (
+        {showBack ? (
           <button
-            onClick={() => setSelectedCategory(null)}
-            className="absolute left-4 text-gold/60 text-sm cursor-pointer"
-          >
-            ← 뒤로
-          </button>
-        ) : currentTab === "history" ? (
-          <button
-            onClick={() => setCurrentTab("home")}
+            onClick={handleBack}
             className="absolute left-4 text-gold/60 text-sm cursor-pointer"
           >
             ← 뒤로
@@ -61,12 +74,13 @@ export default function Home() {
         ) : null}
         <div className="text-center">
           <h1 className="text-xl font-bold text-gold tracking-wider flex items-center gap-1 justify-center">
-            <img src="/logo.png" alt="LunaTarot" className="w-7 h-7 -mb-0.5 -ml-3 -mt-0.5" />
-            LunaTarot
+            {!service && <img src="/logo.png" alt="Luna" className="w-7 h-7 -mb-0.5 -ml-3 -mt-0.5" />}
+            {service === "tarot" && <img src="/logo.png" alt="Luna" className="w-7 h-7 -mb-0.5 -ml-3 -mt-0.5" />}
+            {service === "tarot" ? "LunaTarot" : service === "astrology" ? "LunaStars" : "Luna"}
           </h1>
         </div>
         <div className="absolute right-3">
-          {!selectedCategory && currentTab === "home" && (
+          {!service && !selectedCategory && currentTab === "home" && (
             <button
               onClick={() => signOut({ callbackUrl: "/login" })}
               className="text-gold/40 text-[10px] cursor-pointer"
@@ -84,21 +98,34 @@ export default function Home() {
 
       {/* 본문 */}
       <div className="app-content relative z-10">
-        {currentTab === "history" ? (
-          <History />
-        ) : !selectedCategory ? (
-          <CategorySelect onSelect={setSelectedCategory} />
+        {/* 서비스 선택 */}
+        {!service ? (
+          <ServiceSelect onSelect={setService} />
+        ) : service === "tarot" ? (
+          // 타로 서비스
+          currentTab === "history" ? (
+            <History />
+          ) : !selectedCategory ? (
+            <CategorySelect onSelect={setSelectedCategory} />
+          ) : (
+            <TarotSpread
+              categoryId={selectedCategory}
+              categoryLabel={category!.label}
+              onBack={() => setSelectedCategory(null)}
+            />
+          )
         ) : (
-          <TarotSpread
-            categoryId={selectedCategory}
-            categoryLabel={category!.label}
-            onBack={() => setSelectedCategory(null)}
-          />
+          // 점성술 (준비 중)
+          <div className="flex flex-col justify-center items-center h-full px-5">
+            <img src="/icons/astrology-service.svg" alt="" className="w-20 h-20 mb-4 opacity-30" />
+            <p className="text-gold/60 text-base font-bold mb-2">준비 중이에요</p>
+            <p className="text-foreground/30 text-xs">별자리 운세가 곧 찾아올 거예요</p>
+          </div>
         )}
       </div>
 
-      {/* 하단 탭 바 */}
-      {!selectedCategory && (
+      {/* 하단 탭 바 (타로 서비스 + 카테고리 미선택 시) */}
+      {service === "tarot" && !selectedCategory && (
         <footer className="safe-bottom relative z-20 border-t border-gold/10 bg-background/80 backdrop-blur-sm">
           <div className="flex">
             <button
@@ -123,11 +150,20 @@ export default function Home() {
         </footer>
       )}
 
-      {/* 카드 뽑기 중에는 기존 footer */}
-      {selectedCategory && (
+      {/* 카드 뽑기 중 footer */}
+      {service === "tarot" && selectedCategory && (
         <footer className="safe-bottom relative z-20 py-3 text-center border-t border-gold/10 bg-background/80 backdrop-blur-sm">
           <p className="text-foreground/20 text-[10px] tracking-wider">
             LUNA TAROT · AI 타로 리딩
+          </p>
+        </footer>
+      )}
+
+      {/* 서비스 선택 / 점성술 footer */}
+      {(!service || service === "astrology") && (
+        <footer className="safe-bottom relative z-20 py-3 text-center border-t border-gold/10 bg-background/80 backdrop-blur-sm">
+          <p className="text-foreground/20 text-[10px] tracking-wider">
+            LUNA · AI 운세 리딩
           </p>
         </footer>
       )}

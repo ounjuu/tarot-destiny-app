@@ -135,14 +135,13 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
       ? `${window.location.origin}/result/${readingId}`
       : window.location.origin;
 
-    const shareText = `🌙 LunaTarot ${categoryLabel} ${score}\n타로 결과를 확인해보세요!`;
-
     if (navigator.share) {
       try {
-        await navigator.share({ title: `LunaTarot ${categoryLabel}`, text: shareText, url: shareUrl });
+        // URL만 공유하면 카카오톡이 OG 태그에서 제목/설명/이미지를 가져옴
+        await navigator.share({ url: shareUrl });
       } catch {}
     } else {
-      await navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
+      await navigator.clipboard.writeText(shareUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }

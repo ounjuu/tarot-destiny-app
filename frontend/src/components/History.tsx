@@ -137,7 +137,7 @@ export default function History() {
                         onClick={() => {
                           const url = `${window.location.origin}/result/${r.id}`;
                           if (navigator.share) {
-                            navigator.share({ title: `LunaTarot ${CATEGORY_LABELS[r.category]}`, url });
+                            navigator.share({ url });
                           } else {
                             navigator.clipboard.writeText(url);
                           }
