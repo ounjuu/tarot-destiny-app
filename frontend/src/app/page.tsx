@@ -14,7 +14,7 @@ import { CATEGORIES } from "@/data/tarot-cards";
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [service, setService] = useState<"tarot" | "astrology" | null>(null);
+  const [service, setService] = useState<"tarot" | "astrology" | "saju" | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentTab, setCurrentTab] = useState<"home" | "history">("home");
 
@@ -77,7 +77,7 @@ export default function Home() {
           <h1 className="text-xl font-bold text-gold tracking-wider flex items-center gap-1 justify-center">
             {!service && <img src="/logo.png" alt="Luna" className="w-7 h-7 -mb-0.5 -ml-3 -mt-0.5" />}
             {service === "tarot" && <img src="/logo.png" alt="Luna" className="w-7 h-7 -mb-0.5 -ml-3 -mt-0.5" />}
-            {service === "tarot" ? "LunaTarot" : service === "astrology" ? "LunaStars" : "Luna"}
+            {service === "tarot" ? "LunaTarot" : service === "astrology" ? "LunaStars" : service === "saju" ? "LunaSaju" : "Luna"}
           </h1>
         </div>
         <div className="absolute right-3">
@@ -115,13 +115,20 @@ export default function Home() {
               onBack={() => setSelectedCategory(null)}
             />
           )
-        ) : (
+        ) : service === "astrology" ? (
           // 점성술 서비스
           currentTab === "history" ? (
             <History defaultTab="astrology" />
           ) : (
             <AstrologyMain />
           )
+        ) : (
+          // 사주 (준비 중)
+          <div className="absolute inset-0 flex flex-col items-center justify-center px-5">
+            <img src="/icons/saju-service.svg" alt="" className="w-16 h-16 mb-4 opacity-30" />
+            <p className="text-gold/60 text-base font-bold mb-2">준비 중이에요</p>
+            <p className="text-foreground/30 text-xs">사주팔자 운세가 곧 찾아올 거예요</p>
+          </div>
         )}
       </div>
 
@@ -135,8 +142,8 @@ export default function Home() {
                 currentTab === "home" ? "text-gold" : "text-foreground/25"
               }`}
             >
-              <img src={service === "tarot" ? "/icons/tarot-tab.svg" : "/icons/astrology-service.svg"} alt="" className={`w-5 h-5 ${currentTab === "home" ? "opacity-100" : "opacity-30"}`} />
-              <span className="text-[9px]">{service === "tarot" ? "타로" : "점성술"}</span>
+              <img src={service === "tarot" ? "/icons/tarot-tab.svg" : service === "astrology" ? "/icons/astrology-service.svg" : "/icons/saju-service.svg"} alt="" className={`w-5 h-5 ${currentTab === "home" ? "opacity-100" : "opacity-30"}`} />
+              <span className="text-[9px]">{service === "tarot" ? "타로" : service === "astrology" ? "점성술" : "사주"}</span>
             </button>
             <button
               onClick={() => setCurrentTab("history")}

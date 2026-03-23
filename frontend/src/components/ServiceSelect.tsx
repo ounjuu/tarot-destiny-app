@@ -3,7 +3,7 @@
 import { getDailyGreeting } from "@/data/greetings";
 
 interface ServiceSelectProps {
-  onSelect: (service: "tarot" | "astrology") => void;
+  onSelect: (service: "tarot" | "astrology" | "saju") => void;
 }
 
 export default function ServiceSelect({ onSelect }: ServiceSelectProps) {
@@ -41,6 +41,17 @@ export default function ServiceSelect({ onSelect }: ServiceSelectProps) {
           <div className="text-left">
             <p className="text-gold font-bold text-base">점성술</p>
             <p className="text-foreground/30 text-xs mt-1">별자리로 읽는 나의 운명</p>
+          </div>
+        </button>
+        <button
+          onClick={() => onSelect("saju")}
+          className="fade-in w-full p-5 bg-purple-dark/30 border border-gold/15 rounded-2xl active:scale-[0.97] hover:bg-purple-dark/50 hover:border-gold/30 hover:scale-[1.02] transition-all duration-300 cursor-pointer flex items-center gap-4 group"
+          style={{ animationDelay: "0.3s" }}
+        >
+          <img src="/icons/saju-service.svg" alt="" className="w-11 h-11 sm:w-14 sm:h-14 group-hover:scale-110 transition-transform duration-300" />
+          <div className="text-left">
+            <p className="text-gold font-bold text-base">사주</p>
+            <p className="text-foreground/30 text-xs mt-1">사주팔자로 보는 나의 운명</p>
           </div>
         </button>
       </div>
