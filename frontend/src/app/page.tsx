@@ -105,7 +105,7 @@ export default function Home() {
         ) : service === "tarot" ? (
           // 타로 서비스
           currentTab === "history" ? (
-            <History />
+            <History defaultTab="tarot" />
           ) : !selectedCategory ? (
             <CategorySelect onSelect={setSelectedCategory} />
           ) : (
@@ -116,12 +116,17 @@ export default function Home() {
             />
           )
         ) : (
-          <AstrologyMain />
+          // 점성술 서비스
+          currentTab === "history" ? (
+            <History defaultTab="astrology" />
+          ) : (
+            <AstrologyMain />
+          )
         )}
       </div>
 
-      {/* 하단 탭 바 (타로 서비스 + 카테고리 미선택 시) */}
-      {service === "tarot" && !selectedCategory && (
+      {/* 하단 탭 바 (서비스 선택 후 + 카드 뽑기 중 아님) */}
+      {service && !(service === "tarot" && selectedCategory) && (
         <footer className="safe-bottom relative z-20 border-t border-gold/10 bg-background/80 backdrop-blur-sm">
           <div className="flex">
             <button
@@ -130,8 +135,8 @@ export default function Home() {
                 currentTab === "home" ? "text-gold" : "text-foreground/25"
               }`}
             >
-              <img src="/icons/tarot-tab.svg" alt="" className={`w-5 h-5 ${currentTab === "home" ? "opacity-100" : "opacity-30"}`} />
-              <span className="text-[9px]">타로</span>
+              <img src={service === "tarot" ? "/icons/tarot-tab.svg" : "/icons/astrology-service.svg"} alt="" className={`w-5 h-5 ${currentTab === "home" ? "opacity-100" : "opacity-30"}`} />
+              <span className="text-[9px]">{service === "tarot" ? "타로" : "점성술"}</span>
             </button>
             <button
               onClick={() => setCurrentTab("history")}
@@ -155,8 +160,8 @@ export default function Home() {
         </footer>
       )}
 
-      {/* 서비스 선택 / 점성술 footer */}
-      {(!service || service === "astrology") && (
+      {/* 서비스 선택 footer */}
+      {!service && (
         <footer className="safe-bottom relative z-20 py-3 text-center border-t border-gold/10 bg-background/80 backdrop-blur-sm">
           <p className="text-foreground/20 text-[10px] tracking-wider">
             LUNA · 운세 리딩

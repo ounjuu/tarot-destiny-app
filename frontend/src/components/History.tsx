@@ -37,13 +37,13 @@ interface Reading {
   created_at: string;
 }
 
-export default function History() {
+export default function History({ defaultTab = "tarot" }: { defaultTab?: "tarot" | "astrology" }) {
   const { data: session } = useSession();
   const router = useRouter();
   const [readings, setReadings] = useState<Reading[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [historyTab, setHistoryTab] = useState<"tarot" | "astrology">("tarot");
+  const [historyTab, setHistoryTab] = useState<"tarot" | "astrology">(defaultTab);
 
   useEffect(() => {
     if (!session?.user?.id) return;

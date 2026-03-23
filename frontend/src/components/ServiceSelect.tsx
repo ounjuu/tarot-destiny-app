@@ -1,17 +1,21 @@
 "use client";
 
+import { getDailyGreeting } from "@/data/greetings";
+
 interface ServiceSelectProps {
   onSelect: (service: "tarot" | "astrology") => void;
 }
 
 export default function ServiceSelect({ onSelect }: ServiceSelectProps) {
+  const greeting = getDailyGreeting();
+
   return (
     <div className="flex flex-col justify-center items-center h-full px-5 py-6">
       {/* 인사말 */}
       <div className="text-center mb-10">
         <img src="/logo.png" alt="Luna" className="w-20 h-20 mx-auto mb-4" />
-        <h2 className="text-gold text-xl font-bold mb-2">어서오세요</h2>
-        <p className="text-foreground/40 text-sm">오늘은 어떤 이야기를 들려드릴까요?</p>
+        <h2 className="text-gold text-xl font-bold mb-2">{greeting.title}</h2>
+        <p className="text-foreground/40 text-sm">{greeting.sub}</p>
       </div>
 
       {/* 서비스 선택 */}
