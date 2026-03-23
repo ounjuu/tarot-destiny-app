@@ -41,7 +41,7 @@ export async function POST(request: Request) {
       const yearInfo = getPillarByHangul(saju.yearPillar);
       const monthInfo = getPillarByHangul(saju.monthPillar);
       const dayInfo = getPillarByHangul(saju.dayPillar);
-      const hourInfo = getPillarByHangul(saju.hourPillar);
+      const hourInfo = saju.hourPillar ? getPillarByHangul(saju.hourPillar) : null;
 
       // 오행 카운트
       const elements: Record<string, number> = { 목: 0, 화: 0, 토: 0, 금: 0, 수: 0 };
