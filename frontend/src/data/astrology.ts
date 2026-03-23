@@ -4,6 +4,8 @@ export const ASTROLOGY_CATEGORIES = [
   { id: "weekly", label: "이번 주 운세", icon: "/icons/astrology-service.svg", description: "이번 주의 흐름과 조언" },
   { id: "monthly", label: "이번 달 운세", icon: "/icons/astrology-service.svg", description: "이번 달의 흐름과 조언" },
   { id: "yearly", label: "올해의 운세", icon: "/icons/astrology-service.svg", description: "올해의 큰 흐름 읽기" },
+  { id: "compatibility", label: "별자리 궁합", icon: "/icons/couple.svg", description: "두 별자리의 케미는?" },
+  { id: "personality", label: "성격 분석", icon: "/icons/astrology-service.svg", description: "별자리로 보는 나의 성격" },
   { id: "love-star", label: "연애운", icon: "/icons/love.svg", description: "별이 알려주는 나의 연애" },
   { id: "marriage-star", label: "결혼운", icon: "/icons/remarriage.svg", description: "별자리로 보는 결혼 운명" },
   { id: "career-star", label: "직업 적성", icon: "/icons/career.svg", description: "별자리로 보는 나의 적성" },
