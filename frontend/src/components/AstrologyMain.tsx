@@ -75,6 +75,7 @@ export default function AstrologyMain() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           userId: session?.user?.id,
+          userName: session?.user?.name,
           category,
           birthday: birthInfo?.birthday,
           birthTime: birthInfo?.birth_time,

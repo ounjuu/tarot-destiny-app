@@ -6,7 +6,7 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 export async function POST(request: Request) {
   try {
-    const { userId, category, birthday, birthTime, birthCity, birthLat, birthLng, zodiacSign, partnerSign } = await request.json();
+    const { userId, userName, category, birthday, birthTime, birthCity, birthLat, birthLng, zodiacSign, partnerSign } = await request.json();
 
     const sign = ZODIAC_SIGNS.find((s) => s.id === zodiacSign);
     if (!sign) {
@@ -41,24 +41,36 @@ export async function POST(request: Request) {
         language: "en",
       });
 
-      // 주요 행성 위치 추출
+      // 행성 위치 추출
       const bodies = horoscope.CelestialBodies?.all || [];
       const angles = horoscope.Angles?.all || [];
 
-      const planetPositions = bodies.map((b: { label: string; Sign: { label: string } }) =>
-        `${b.label}: ${b.Sign?.label || "unknown"}`
+      const planetPositions = bodies.map((b: { label: string; Sign: { label: string }; ChartPosition?: { Ecliptic?: { DecimalDegrees?: number } } }) =>
+        `${b.label}: ${b.Sign?.label || "unknown"} ${Math.round(b.ChartPosition?.Ecliptic?.DecimalDegrees || 0)}°`
       ).join(", ");
 
       const anglePositions = angles.map((a: { label: string; Sign: { label: string } }) =>
         `${a.label}: ${a.Sign?.label || "unknown"}`
       ).join(", ");
 
-      chartData = `\n행성 위치: ${planetPositions}\n앵글: ${anglePositions}`;
+      // 하우스 배치 추출
+      const houses = horoscope.Houses?.all || [];
+      const houseData = houses.map((h: { id: number; Sign: { label: string } }) =>
+        `${h.id}하우스: ${h.Sign?.label || "unknown"}`
+      ).join(", ");
+
+      // 어스펙트(행성 간 각도) 추출
+      const aspects = horoscope.Aspects?.all || [];
+      const aspectData = aspects.slice(0, 10).map((a: { point1?: { label?: string }; point2?: { label?: string }; type?: { label?: string } }) =>
+        `${a.point1?.label || ""} ${a.type?.label || ""} ${a.point2?.label || ""}`
+      ).join(", ");
+
+      chartData = `\n행성 위치: ${planetPositions}\n앵글: ${anglePositions}\n하우스: ${houseData}\n주요 어스펙트: ${aspectData}`;
     } catch {
       chartData = "";
     }
 
-    const prompt = buildPrompt(category, sign.name, sign.symbol, birthday, birthTime, birthCity, chartData, partnerSign);
+    const prompt = buildPrompt(category, sign.name, sign.symbol, birthday, birthTime, birthCity, chartData, userName, partnerSign);
 
     if (!GEMINI_API_KEY) {
       return NextResponse.json({
@@ -147,8 +159,9 @@ function getCategoryLabel(category: string): string {
   return labels[category] || category;
 }
 
-function buildPrompt(category: string, signName: string, signSymbol: string, birthday: string, birthTime: string | null, birthCity: string, chartData: string, partnerSign?: string): string {
+function buildPrompt(category: string, signName: string, signSymbol: string, birthday: string, birthTime: string | null, birthCity: string, chartData: string, userName?: string, partnerSign?: string): string {
   const baseInfo = `사용자 정보:
+- 이름: ${userName || "알 수 없음"}
 - 태양 별자리: ${signName} ${signSymbol}
 - 생년월일: ${birthday}
 - 태어난 시간: ${birthTime || "알 수 없음"}
