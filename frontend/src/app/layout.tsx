@@ -5,13 +5,13 @@ import Providers from "./providers";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://tarot-destiny-app.vercel.app";
 
 export const metadata: Metadata = {
-  title: "LunaTarot - 타로 리딩",
-  description: "달빛 아래 펼쳐지는 타로 카드 리딩. 연애운, 회사운, 전생운 등 12가지 운세를 확인해보세요.",
+  title: "Luna - 타로 · 점성술 · 사주",
+  description: "타로 카드, 별자리 점성술, 사주팔자까지. 루나가 당신의 운명을 읽어드려요.",
   openGraph: {
-    title: "LunaTarot - 타로 리딩",
-    description: "달빛이 비추는 당신의 운명. 카드를 뽑고 루나가 해석해드려요.",
+    title: "Luna - 타로 · 점성술 · 사주",
+    description: "타로 카드, 별자리 점성술, 사주팔자까지. 루나가 당신의 운명을 읽어드려요.",
     url: SITE_URL,
-    siteName: "LunaTarot",
+    siteName: "Luna",
     images: [
       {
         url: `${SITE_URL}/og-image.png`,
@@ -25,14 +25,14 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "LunaTarot - 타로 리딩",
-    description: "달빛이 비추는 당신의 운명. 카드를 뽑고 루나가 해석해드려요.",
+    title: "Luna - 타로 · 점성술 · 사주",
+    description: "타로 카드, 별자리 점성술, 사주팔자까지. 루나가 당신의 운명을 읽어드려요.",
     images: [`${SITE_URL}/og-image.png`],
   },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "LunaTarot",
+    title: "Luna",
   },
 };
 
