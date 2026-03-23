@@ -34,7 +34,6 @@ export default function BirthChart({ birthday, birthTime, birthLat, birthLng }: 
 
         const horoscope = new Horoscope({
           origin,
-          hpieces: 12,
           zodiac: "tropical",
           aspectPoints: ["bodies", "points", "angles"],
           aspectWithPoints: ["bodies", "points", "angles"],

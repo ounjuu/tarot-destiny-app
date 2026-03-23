@@ -33,7 +33,6 @@ export async function POST(request: Request) {
 
       const horoscope = new Horoscope({
         origin,
-        hpieces: 12,
         zodiac: "tropical",
         aspectPoints: ["bodies", "points", "angles"],
         aspectWithPoints: ["bodies", "points", "angles"],
@@ -136,6 +135,7 @@ function getCategoryLabel(category: string): string {
   const labels: Record<string, string> = {
     "my-chart": "나의 별자리",
     daily: "오늘의 운세",
+    weekly: "이번 주 운세",
     personality: "성격 분석",
     "love-star": "연애운",
     "marriage-star": "결혼운",
@@ -165,6 +165,16 @@ ${chartData ? `- 출생 차트 데이터: ${chartData}` : ""}`;
 
   if (category === "my-chart") {
     return `${rules}\n\n${baseInfo}\n\n이 사람의 출생 차트를 기반으로 타고난 인생 운명을 종합적으로 분석해주세요. 전생부터 이어진 영혼의 목적, 이번 생의 과제, 타고난 재능, 인생의 큰 흐름을 읽어주세요.\n\n형식:\n✦ ${signName}의 인생 지도\n\n☽ 타고난 성향과 영혼의 목적\n(5-6문장, 태양/달/상승 별자리 조합으로 이 사람이 태어난 이유와 영혼이 원하는 방향)\n\n✧ 타고난 재능과 강점\n(3-4문장, 행성 배치로 보는 숨겨진 재능)\n\n★ 인생의 전환점\n(3-4문장, 인생에서 중요한 시기와 변화의 흐름)\n\n☽ 주의해야 할 약점\n(2-3문장, 극복해야 할 과제)\n\n★ 루나가 읽은 당신의 운명\n(3-4문장, 종합적인 인생 메시지)\n\n✦ 인생 키워드\n(5개)`;
+  }
+
+  if (category === "weekly") {
+    const now = new Date();
+    const weekStart = new Date(now);
+    weekStart.setDate(now.getDate() - now.getDay() + 1);
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekStart.getDate() + 6);
+    const weekRange = `${weekStart.getMonth() + 1}/${weekStart.getDate()} - ${weekEnd.getMonth() + 1}/${weekEnd.getDate()}`;
+    return `${rules}\n\n${baseInfo}\n\n이번 주(${weekRange}) 운세를 해석해주세요.\n\n형식:\n✦ ${signName} 이번 주 운세\n\n✦ 이번 주 점수\n(20~100% + 한 줄 코멘트. 가끔 낮은 점수도)\n\n☽ 주간 흐름\n(5-6문장, 요일별 흐름이나 주 초반/중반/후반으로 나눠서)\n\n✧ 주의할 점\n(2-3문장)\n\n★ 루나의 한마디\n(2-3문장)\n\n✦ 행운의 키워드\n(3개)`;
   }
 
   if (category === "daily") {
