@@ -13,6 +13,19 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "invalid_sign" }, { status: 400 });
     }
 
+    // 기존 결과 확인 (카테고리별 기간 제한)
+    if (userId && supabase) {
+      const existing = await getExistingReading(userId, category);
+      if (existing) {
+        return NextResponse.json({
+          success: true,
+          reading: existing.reading,
+          readingId: existing.id,
+          cached: true,
+        });
+      }
+    }
+
     // 출생 차트 계산
     let chartData = "";
     try {
@@ -237,4 +250,57 @@ ${chartData ? `- 출생 차트 데이터: ${chartData}` : ""}`;
   }
 
   return `${rules}\n\n${baseInfo}\n\n이 사람의 별자리 운세를 해석해주세요.`;
+}
+
+// 카테고리별 기간 제한 체크
+async function getExistingReading(userId: string, category: string) {
+  if (!supabase) return null;
+
+  const fullCategory = `astro_${category}`;
+  let fromDate: string;
+
+  if (category === "my-chart" || category === "personality" || category === "career-star") {
+    // 영구: 한번 보면 계속 같은 결과
+    const { data } = await supabase
+      .from("readings")
+      .select("id, reading")
+      .eq("user_id", userId)
+      .eq("category", fullCategory)
+      .order("created_at", { ascending: false })
+      .limit(1);
+    return data && data.length > 0 ? data[0] : null;
+  }
+
+  const now = new Date();
+
+  if (category === "daily" || category === "love-star" || category === "marriage-star" || category === "compatibility") {
+    // 하루 1회 (자정 기준)
+    fromDate = now.toISOString().split("T")[0] + "T00:00:00";
+  } else if (category === "weekly") {
+    // 주 1회 (월요일 기준)
+    const monday = new Date(now);
+    const day = monday.getDay();
+    monday.setDate(monday.getDate() - (day === 0 ? 6 : day - 1));
+    fromDate = monday.toISOString().split("T")[0] + "T00:00:00";
+  } else if (category === "monthly") {
+    // 월 1회 (1일 기준)
+    fromDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01T00:00:00`;
+  } else if (category === "yearly") {
+    // 년 1회 (1월 1일 기준)
+    fromDate = `${now.getFullYear()}-01-01T00:00:00`;
+  } else {
+    // 기본: 하루 1회
+    fromDate = now.toISOString().split("T")[0] + "T00:00:00";
+  }
+
+  const { data } = await supabase
+    .from("readings")
+    .select("id, reading")
+    .eq("user_id", userId)
+    .eq("category", fullCategory)
+    .gte("created_at", fromDate)
+    .order("created_at", { ascending: false })
+    .limit(1);
+
+  return data && data.length > 0 ? data[0] : null;
 }
