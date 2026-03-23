@@ -260,7 +260,7 @@ async function getExistingSajuReading(userId: string, category: string) {
   const fullCategory = `saju_${category}`;
 
   // 영구: 한번 보면 계속 같은 결과
-  if (category === "saju-chart" || category === "saju-career") {
+  if (category === "saju-chart" || category === "saju-career" || category === "saju-love" || category === "saju-wealth") {
     const { data } = await supabase
       .from("readings")
       .select("id, reading")
@@ -274,7 +274,7 @@ async function getExistingSajuReading(userId: string, category: string) {
   const now = new Date();
   let fromDate: string;
 
-  if (category === "saju-daily" || category === "saju-love" || category === "saju-wealth") {
+  if (category === "saju-daily") {
     fromDate = now.toISOString().split("T")[0] + "T00:00:00";
   } else if (category === "saju-weekly") {
     const monday = new Date(now);
