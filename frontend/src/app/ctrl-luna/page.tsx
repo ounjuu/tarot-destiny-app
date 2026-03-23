@@ -136,7 +136,7 @@ export default function AdminPage() {
 
   if (status === "loading" || !session?.user?.id || !isAdmin(session.user.id)) {
     return (
-      <div className="min-h-screen bg-[#0a0a1a] flex items-center justify-center">
+      <div className="fixed inset-0 bg-[#0a0a1a] flex items-center justify-center">
         <div className="relative w-14 h-14">
           <div className="absolute inset-0 rounded-full border-2 border-gold/20" />
           <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-gold/70 animate-spin" />
