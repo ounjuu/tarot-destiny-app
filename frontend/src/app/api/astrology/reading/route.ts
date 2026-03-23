@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { ZODIAC_SIGNS } from "@/data/astrology";
-
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+import { callAI } from "@/lib/ai";
 
 export async function POST(request: Request) {
   try {
@@ -85,40 +84,31 @@ export async function POST(request: Request) {
 
     const prompt = buildPrompt(category, sign.name, sign.symbol, birthday, birthTime, birthCity, chartData, userName, partnerSign);
 
-    if (!GEMINI_API_KEY) {
-      return NextResponse.json({
-        success: true,
-        reading: `✦ ${sign.name} ${sign.symbol}\n\n별자리 해석 서비스를 준비 중이에요. 곧 만나요!`,
+    // AI 호출 (Gemini → Groq 폴백)
+    const { text: reading, source, geminiFailed, groqFailed } = await callAI(prompt);
+
+    // Gemini만 실패하고 Groq 성공 시 로그
+    if (geminiFailed && !groqFailed && reading && supabase) {
+      await supabase.from("fallback_logs").insert({
+        category: `astro_${category}`,
+        error_type: "gemini_failed_groq_success",
+        user_id: userId || null,
       });
     }
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-        }),
+    // 둘 다 실패 시 로그 + 에러 반환
+    if (!reading) {
+      if (supabase) {
+        await supabase.from("fallback_logs").insert({
+          category: `astro_${category}`,
+          error_type: geminiFailed && groqFailed ? "all_failed" : "ai_failed",
+          user_id: userId || null,
+        });
       }
-    );
-
-    const data = await response.json();
-
-    if (!response.ok || data.error) {
       return NextResponse.json({
         success: false,
         error: "api_error",
         reading: "별들의 신호가 잠시 불안정해요.\n\n잠시 후 다시 시도해주세요.",
-      });
-    }
-
-    const reading = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!reading) {
-      return NextResponse.json({
-        success: false,
-        error: "empty_response",
-        reading: "별의 메시지를 읽어오지 못했어요.\n\n다시 시도해주세요.",
       });
     }
 
@@ -138,7 +128,7 @@ export async function POST(request: Request) {
           reading,
           score,
           keywords: "",
-          source: "gemini",
+          source: source || "gemini",
         })
         .select("id")
         .single();

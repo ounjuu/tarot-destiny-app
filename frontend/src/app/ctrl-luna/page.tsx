@@ -9,6 +9,19 @@ const CATEGORY_LABELS: Record<string, string> = {
   love: "연애운", couple: "커플운", friendship: "우정운", exam: "시험운",
   aptitude: "적성운", study: "학업운", career: "이직운", health: "건강운",
   pastlife: "전생운", office: "회사운", reunion: "재회운", remarriage: "재혼운",
+  astro_daily: "오늘의 운세", astro_weekly: "이번 주 운세", astro_monthly: "이번 달 운세",
+  astro_yearly: "올해의 운세", astro_compatibility: "별자리 궁합", astro_personality: "성격 분석",
+  "astro_love-star": "연애운", "astro_marriage-star": "결혼운",
+  "astro_career-star": "직업 적성", "astro_my-chart": "나의 별자리",
+};
+
+const ERROR_TYPE_LABELS: Record<string, string> = {
+  api_error: "Gemini 에러",
+  empty_response: "Gemini 빈 응답",
+  ai_failed: "AI 실패",
+  server_error: "서버 에러",
+  gemini_failed_groq_success: "Gemini 실패 → Groq 대체",
+  all_failed: "Gemini + Groq 모두 실패",
 };
 
 type Tab = "dashboard" | "users" | "readings" | "fallback";
@@ -407,9 +420,11 @@ export default function AdminPage() {
                   onClick={() => setExpandedLog(expandedLog === log.id ? null : log.id)}
                 >
                   <span className={`text-xs px-2 py-0.5 rounded-full shrink-0 ${
-                    log.error_type === "api_error" ? "bg-orange-500/20 text-orange-400" : "bg-red-500/20 text-red-400"
+                    log.error_type === "all_failed" ? "bg-red-500/20 text-red-400"
+                    : log.error_type === "gemini_failed_groq_success" ? "bg-blue-500/20 text-blue-400"
+                    : "bg-orange-500/20 text-orange-400"
                   }`}>
-                    {log.error_type}
+                    {ERROR_TYPE_LABELS[log.error_type] || log.error_type}
                   </span>
                   <span className="text-xs text-purple/60 shrink-0">
                     {CATEGORY_LABELS[log.category] || log.category}
