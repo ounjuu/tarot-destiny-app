@@ -79,7 +79,7 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
         </h1>
       </header>
 
-      <div className="app-content relative z-10 px-5 pt-6 pb-8">
+      <div className="app-content relative z-10 px-4 sm:px-5 pt-5 sm:pt-6 pb-6 sm:pb-8">
         {/* 제목 */}
         <div className="text-center mb-6">
           <h2 className="text-gold text-lg font-bold mb-1">✦ {data.category_label} 결과 ✦</h2>
@@ -87,7 +87,7 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
         </div>
 
         {/* 카드 목록 */}
-        <div className="flex flex-wrap justify-center gap-2 mb-5">
+        <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-5">
           {data.cards.map((card, i) => (
             <span key={i} className="text-xs text-gold/60 bg-purple-dark/30 px-3 py-1.5 rounded-full border border-gold/10">
               {card}
@@ -103,7 +103,7 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
         )}
 
         {/* 해석 */}
-        <div className="relative p-5 bg-gradient-to-b from-purple-dark/30 to-purple-dark/10 rounded-2xl border border-gold/15 mb-6">
+        <div className="relative p-4 sm:p-5 bg-gradient-to-b from-purple-dark/30 to-purple-dark/10 rounded-2xl border border-gold/15 mb-6">
           <div className="absolute top-2 left-3 text-gold/20 text-[10px]">✦</div>
           <div className="absolute top-2 right-3 text-gold/20 text-[10px]">✦</div>
           <div className="absolute bottom-2 left-3 text-gold/20 text-[10px]">✦</div>

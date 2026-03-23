@@ -8,6 +8,11 @@ const CATEGORY_LABELS: Record<string, string> = {
   love: "연애운", couple: "커플운", friendship: "우정운", exam: "시험운",
   aptitude: "적성운", study: "학업운", career: "이직운", health: "건강운",
   pastlife: "전생운", office: "회사운", reunion: "재회운", remarriage: "재혼운",
+  astro_daily: "오늘의 운세", astro_personality: "성격 분석",
+  "astro_love-star": "연애운", "astro_marriage-star": "결혼운",
+  astro_compatibility: "별자리 궁합", astro_monthly: "이번 달 운세",
+  astro_yearly: "올해의 운세", "astro_career-star": "직업 적성",
+  "astro_my-chart": "나의 별자리",
 };
 
 const CATEGORY_ICONS: Record<string, string> = {
@@ -15,6 +20,11 @@ const CATEGORY_ICONS: Record<string, string> = {
   exam: "/icons/exam.svg", aptitude: "/icons/aptitude.svg", study: "/icons/study.svg",
   career: "/icons/career.svg", health: "/icons/health.svg", pastlife: "/icons/pastlife.svg",
   office: "/icons/office.svg", reunion: "/icons/reunion.svg", remarriage: "/icons/remarriage.svg",
+  astro_daily: "/icons/astrology-service.svg", astro_personality: "/icons/astrology-service.svg",
+  "astro_love-star": "/icons/love.svg", "astro_marriage-star": "/icons/remarriage.svg",
+  astro_compatibility: "/icons/astrology-service.svg", astro_monthly: "/icons/astrology-service.svg",
+  astro_yearly: "/icons/astrology-service.svg", "astro_career-star": "/icons/career.svg",
+  "astro_my-chart": "/icons/astrology-service.svg",
 };
 
 interface Reading {
@@ -33,6 +43,7 @@ export default function History() {
   const [readings, setReadings] = useState<Reading[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [historyTab, setHistoryTab] = useState<"tarot" | "astrology">("tarot");
 
   useEffect(() => {
     if (!session?.user?.id) return;
@@ -54,9 +65,14 @@ export default function History() {
     setLoading(false);
   }
 
+  // 탭별 필터
+  const filtered = readings.filter((r) =>
+    historyTab === "astrology" ? r.category.startsWith("astro_") : !r.category.startsWith("astro_")
+  );
+
   // 날짜별 그룹핑
   const grouped: Record<string, Reading[]> = {};
-  readings.forEach((r) => {
+  filtered.forEach((r) => {
     const date = new Date(r.created_at).toLocaleDateString("ko-KR", {
       year: "numeric", month: "long", day: "numeric",
     });
@@ -83,7 +99,7 @@ export default function History() {
           <div className="absolute inset-0 rounded-full border-2 border-gold/40" />
           <div className="absolute inset-0 flex items-center justify-center text-gold/60 text-sm">✦</div>
         </div>
-        <p className="text-foreground/40 text-sm mb-1">아직 타로 기록이 없어요</p>
+        <p className="text-foreground/40 text-sm mb-1">아직 기록이 없어요</p>
         <p className="text-foreground/20 text-xs">운세를 뽑으면 여기에 기록이 남아요</p>
       </div>
     );
@@ -91,10 +107,43 @@ export default function History() {
 
   return (
     <div className="flex flex-col h-full px-4 py-4 overflow-y-auto" style={{ WebkitOverflowScrolling: "touch" }}>
-      <div className="text-center mb-5">
-        <h2 className="text-gold text-lg font-bold">나의 타로 기록</h2>
-        <p className="text-foreground/30 text-xs mt-1">총 {readings.length}건의 기록</p>
+      <div className="text-center mb-4">
+        <h2 className="text-gold text-base sm:text-lg font-bold">나의 기록</h2>
       </div>
+
+      {/* 타로 / 점성술 탭 */}
+      <div className="flex gap-1 mb-4 bg-purple-dark/20 p-1 rounded-xl">
+        <button
+          onClick={() => setHistoryTab("tarot")}
+          className={`flex-1 py-1.5 text-xs rounded-lg transition-all cursor-pointer ${
+            historyTab === "tarot"
+              ? "bg-gradient-to-r from-purple/50 to-gold/20 text-gold font-bold"
+              : "text-foreground/40"
+          }`}
+        >
+          타로
+        </button>
+        <button
+          onClick={() => setHistoryTab("astrology")}
+          className={`flex-1 py-1.5 text-xs rounded-lg transition-all cursor-pointer ${
+            historyTab === "astrology"
+              ? "bg-gradient-to-r from-purple/50 to-gold/20 text-gold font-bold"
+              : "text-foreground/40"
+          }`}
+        >
+          점성술
+        </button>
+      </div>
+
+      <p className="text-foreground/30 text-xs mb-3 pl-1">총 {filtered.length}건</p>
+
+      {filtered.length === 0 && (
+        <div className="flex flex-col items-center py-12">
+          <p className="text-foreground/20 text-sm">
+            {historyTab === "tarot" ? "타로 기록이 없어요" : "점성술 기록이 없어요"}
+          </p>
+        </div>
+      )}
 
       <div className="space-y-5">
         {Object.entries(grouped).map(([date, items]) => (
@@ -113,7 +162,7 @@ export default function History() {
                       }
                     }}
                   >
-                    <img src={CATEGORY_ICONS[r.category] || "/icons/love.svg"} alt="" className="w-6 h-6 shrink-0" />
+                    <img src={CATEGORY_ICONS[r.category] || "/icons/love.svg"} alt="" className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-foreground/80">{CATEGORY_LABELS[r.category] || r.category}</p>
                       {r.keywords && (

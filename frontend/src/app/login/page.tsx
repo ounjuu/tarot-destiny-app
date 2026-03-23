@@ -12,7 +12,7 @@ export default function LoginPage() {
         {/* 로고 */}
         <div className="text-center mb-10">
           <div className="flex justify-center mb-5 mt-4">
-            <img src="/logo.png" alt="LunaTarot" className="w-44 h-44" />
+            <img src="/logo.png" alt="LunaTarot" className="w-32 h-32 sm:w-44 sm:h-44" />
           </div>
           <h1 className="text-4xl font-bold text-gold tracking-wider mb-2">
             LunaTarot

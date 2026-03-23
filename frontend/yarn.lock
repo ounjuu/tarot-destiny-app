@@ -7,6 +7,11 @@
   resolved "https://registry.npmjs.org/@alloc/quick-lru/-/quick-lru-5.2.0.tgz#7bf68b20c0a350f936915fcae06f58e32007ce30"
   integrity sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==
 
+"@astrodraw/astrochart@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/@astrodraw/astrochart/-/astrochart-3.0.2.tgz#965db9df1c1d4bd7ad82b72600fed3310ad4b0a9"
+  integrity sha512-LopHZSXjL4FZm5xLeti6kp9z+x08vte8yA+imstZu5c1XpGyU0YR7cdML56FY594AWvNfafN8fkt2YNtwo2pzQ==
+
 "@auth/core@0.41.1":
   version "0.41.1"
   resolved "https://registry.npmjs.org/@auth/core/-/core-0.41.1.tgz#31f8ce7b0ded266fed54b9407596304cbbd14c65"
@@ -1234,6 +1239,15 @@ chalk@^4.0.0:
   dependencies:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
+
+circular-natal-horoscope-js@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/circular-natal-horoscope-js/-/circular-natal-horoscope-js-1.1.0.tgz#8b7846833bfac6eb977c8e1f5b46c913ec4d82e7"
+  integrity sha512-MsOrwRa6pgDpv9tgnhB7sKhjQcWInSW0DnbF9XFnByKLFBJGHyLZOZGBS3JBDUvL1Ot+8eotqWMx9D3VxpkqxA==
+  dependencies:
+    moment "^2.24.0"
+    moment-timezone "^0.5.26"
+    tz-lookup "^6.1.24"
 
 client-only@0.0.1:
   version "0.0.1"
@@ -2491,6 +2505,18 @@ minimist@^1.2.0, minimist@^1.2.6:
   resolved "https://registry.npmjs.org/minimist/-/minimist-1.2.8.tgz#c1a464e7693302e082a075cee0c057741ac4772c"
   integrity sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==
 
+moment-timezone@^0.5.26:
+  version "0.5.48"
+  resolved "https://registry.npmjs.org/moment-timezone/-/moment-timezone-0.5.48.tgz#111727bb274734a518ae154b5ca589283f058967"
+  integrity sha512-f22b8LV1gbTO2ms2j2z13MuPogNoh5UzxL3nzNAYKGraILnbGc9NEE6dyiiiLv46DGRb8A4kg8UKWLjPthxBHw==
+  dependencies:
+    moment "^2.29.4"
+
+moment@^2.24.0, moment@^2.29.4:
+  version "2.30.1"
+  resolved "https://registry.npmjs.org/moment/-/moment-2.30.1.tgz#f8c91c07b7a786e30c59926df530b4eac96974ae"
+  integrity sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==
+
 ms@^2.1.1, ms@^2.1.3:
   version "2.1.3"
   resolved "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
@@ -3277,6 +3303,11 @@ typescript@^5:
   version "5.9.3"
   resolved "https://registry.npmjs.org/typescript/-/typescript-5.9.3.tgz#5b4f59e15310ab17a216f5d6cf53ee476ede670f"
   integrity sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==
+
+tz-lookup@^6.1.24:
+  version "6.1.25"
+  resolved "https://registry.npmjs.org/tz-lookup/-/tz-lookup-6.1.25.tgz#34d68a7e1ccfcb51f29a9893d2d48e4118d873cd"
+  integrity sha512-fFewT9o1uDzsW1QnUU1ValqaihFnwiUiiHr1S79/fxOzKXYYvX+EHeRnpvQJ9B3Qg67wPXT6QF2Esc4pFOrvLg==
 
 unbox-primitive@^1.1.0:
   version "1.1.0"

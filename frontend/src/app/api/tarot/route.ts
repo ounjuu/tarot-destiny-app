@@ -100,7 +100,7 @@ export async function POST(request: Request) {
       return NextResponse.json({
         success: false,
         error: "api_error",
-        reading: "🌙 별들의 신호가 잠시 불안정해요.\n\n잠시 후 다시 시도해주세요.",
+        reading: "✦ 별들의 신호가 잠시 불안정해요.\n\n잠시 후 다시 시도해주세요.",
       });
     }
 
@@ -117,7 +117,7 @@ export async function POST(request: Request) {
       return NextResponse.json({
         success: false,
         error: "api_error",
-        reading: "🌙 카드의 메시지를 읽어오지 못했어요.\n\n다시 시도해주세요.",
+        reading: "✦ 카드의 메시지를 읽어오지 못했어요.\n\n다시 시도해주세요.",
       });
     }
 
@@ -155,7 +155,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true, reading: fallback.reading, readingId: fallbackReadingId });
     }
     return NextResponse.json(
-      { success: false, error: "server_error", reading: "🌙 서버와의 연결이 불안정해요.\n\n잠시 후 다시 시도해주세요." },
+      { success: false, error: "server_error", reading: "✦ 서버와의 연결이 불안정해요.\n\n잠시 후 다시 시도해주세요." },
       { status: 500 }
     );
   }
@@ -191,19 +191,19 @@ ${positions.map((pos, i) => `${i + 1}번 위치 [${pos}]: ${cards[i]}`).join("\n
 
 다음 형식으로 해석해주세요:
 
-📊 ${categoryLabel} 점수
+✦ ${categoryLabel} 점수
 (카드 조합으로 ${categoryLabel} 점수를 20~100% 사이로 매기세요. 점수 옆에 한 줄 코멘트. 매번 다양한 점수를 주세요. 부정적인 카드 조합이면 40%대나 30%대도 가끔 주세요. 예시: 35%, 48%, 56%, 67%, 78%, 91% 등)
 
-🌙 카드가 들려주는 이야기
+☽ 카드가 들려주는 이야기
 (실제 타로 상담사가 앞에서 말해주듯이 5-6문장으로 자연스럽게. "자, 카드를 보니까요..." 이런 식으로 시작해도 좋아요. 카드 조합의 흐름을 스토리로 풀어주세요. 시간의 흐름이나 상황 변화를 구체적으로 짚어주세요.)
 
-💫 이 카드 조합이 특별한 이유
+✧ 이 카드 조합이 특별한 이유
 (이 6장의 조합에서만 읽히는 독특한 메시지 2-3문장. "보통 이런 조합은 흔하지 않은데요..." 같은 느낌으로)
 
-⭐ 루나의 한마디
+★ 루나의 한마디
 (친한 언니/오빠가 조언해주듯이 따뜻하면서도 현실적인 조언 2-3문장. "제가 봤을 때는요..." 같은 느낌으로)
 
-🔮 행운의 키워드
+✦ 행운의 키워드
 (3개의 키워드)
 
 진심을 담아서, 듣는 사람이 "와 진짜 내 이야기 같다"고 느낄 수 있도록 해석해주세요.`;
@@ -224,39 +224,39 @@ ${positions.map((pos, i) => `${i + 1}번 [${pos}]: ${cards[i]}`).join("\n")}
 
 다음 형식으로 짧게 해석해주세요:
 
-📊 오늘의 회사운 점수
+✦ 오늘의 회사운 점수
 (20~100% + 한 줄 코멘트. 낮은 점수도 골고루 주세요. 30%대, 40%대도 가능)
 
-🏢 오늘 한 줄 요약
+☽ 오늘 한 줄 요약
 (오늘 회사 분위기를 한 줄로 요약)
 
-🍀 오늘의 좋은 일
+✧ 오늘의 좋은 일
 (오늘 생길 수 있는 좋은 일 1-2가지. 간식, 칭찬, 상사 외근, 일찍 퇴근 등)
 
-⚠️ 이것만 조심!
+※ 이것만 조심!
 (주의할 것 한 줄)
 
-🔮 퇴근 운세
+★ 퇴근 운세
 (한 줄로)
 
 전체 5-6줄 이내로 간결하게!`;
 }
 
 function generateFallbackReading(categoryLabel: string, cards: string[]) {
-  return `📊 ${categoryLabel} 점수
+  return `✦ ${categoryLabel} 점수
 75% - 전체적으로 긍정적인 흐름이에요.
 
-🌙 카드가 들려주는 이야기
+☽ 카드가 들려주는 이야기
 ${cards.join(", ")} 카드가 나왔습니다.
 ${categoryLabel}에 대해 카드들이 긍정적인 에너지를 보여주고 있어요.
 
-💫 핵심 메시지
+✧ 핵심 메시지
 곧 더 자세한 해석이 준비될 예정이에요. 조금만 기다려주세요!
 
-⭐ 루나의 조언
+★ 루나의 조언
 지금 뽑은 카드의 에너지를 믿고, 긍정적인 마음으로 하루를 보내보세요.
 
-🔮 행운의 키워드
+✦ 행운의 키워드
 희망, 새로운 시작, 성장`;
 }
 

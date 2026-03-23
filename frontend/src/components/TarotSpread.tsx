@@ -181,7 +181,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
 
             {/* 프로그레스 바 */}
             {phase === "select" && (
-              <div className="w-48 h-1 bg-purple-dark/30 rounded-full overflow-hidden mb-5">
+              <div className="w-40 sm:w-48 h-1 bg-purple-dark/30 rounded-full overflow-hidden mb-5">
                 <div
                   className="h-full bg-gradient-to-r from-purple to-gold rounded-full transition-all duration-500"
                   style={{ width: `${(selectedCards.length / MAX_CARDS) * 100}%` }}
@@ -235,7 +235,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
             {phase === "select" && selectedCards.length === MAX_CARDS && (
               <button
                 onClick={handleFlipAll}
-                className="slide-up mt-8 mb-[-20px] px-8 py-3 bg-gradient-to-r from-purple to-gold/80 rounded-2xl text-white font-bold text-sm tracking-wider active:scale-[0.98] transition-transform cursor-pointer shadow-lg shadow-purple/30"
+                className="slide-up mt-8 mb-[-20px] px-6 sm:px-8 py-3 bg-gradient-to-r from-purple to-gold/80 rounded-2xl text-white font-bold text-sm tracking-wider active:scale-[0.98] transition-transform cursor-pointer shadow-lg shadow-purple/30"
               >
                 ✦ 카드 뒤집기
               </button>
@@ -294,7 +294,7 @@ export default function TarotSpread({ categoryId, categoryLabel, onBack }: Tarot
 
       {/* 결과 */}
       {phase === "result" && (
-        <div className="fade-in px-5 pt-4 pb-6 overflow-y-auto">
+        <div className="fade-in px-4 sm:px-5 pt-4 pb-6 overflow-y-auto">
           <h2 className="text-center text-gold text-lg font-bold mb-1">✦ {categoryLabel} 결과 ✦</h2>
           {todayResult && (
             <p className="text-center text-foreground/30 text-[11px] mb-4">오늘 이미 확인한 결과예요</p>

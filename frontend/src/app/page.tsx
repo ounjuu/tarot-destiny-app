@@ -8,6 +8,7 @@ import ServiceSelect from "@/components/ServiceSelect";
 import CategorySelect from "@/components/CategorySelect";
 import TarotSpread from "@/components/TarotSpread";
 import History from "@/components/History";
+import AstrologyMain from "@/components/AstrologyMain";
 import { CATEGORIES } from "@/data/tarot-cards";
 
 export default function Home() {
@@ -90,7 +91,7 @@ export default function Home() {
           )}
         </div>
         {selectedCategory && (
-          <span className="absolute right-4 text-gold/40 text-xs">
+          <span className="absolute right-4 text-gold/40 text-xs truncate max-w-[80px]">
             {category?.label}
           </span>
         )}
@@ -115,12 +116,7 @@ export default function Home() {
             />
           )
         ) : (
-          // 점성술 (준비 중)
-          <div className="flex flex-col justify-center items-center h-full px-5">
-            <img src="/icons/astrology-service.svg" alt="" className="w-20 h-20 mb-4 opacity-30" />
-            <p className="text-gold/60 text-base font-bold mb-2">준비 중이에요</p>
-            <p className="text-foreground/30 text-xs">별자리 운세가 곧 찾아올 거예요</p>
-          </div>
+          <AstrologyMain />
         )}
       </div>
 
