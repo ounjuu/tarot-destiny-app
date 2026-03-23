@@ -13,6 +13,10 @@ const CATEGORY_LABELS: Record<string, string> = {
   astro_compatibility: "별자리 궁합", astro_monthly: "이번 달 운세",
   astro_yearly: "올해의 운세", "astro_career-star": "직업 적성",
   "astro_my-chart": "나의 별자리",
+  "saju_saju-chart": "나의 사주", "saju_saju-daily": "오늘의 운세",
+  "saju_saju-weekly": "이번 주 운세", "saju_saju-monthly": "이번 달 운세",
+  "saju_saju-yearly": "올해의 운세", "saju_saju-love": "연애운",
+  "saju_saju-career": "직업운", "saju_saju-wealth": "재물운",
 };
 
 const CATEGORY_ICONS: Record<string, string> = {
@@ -25,6 +29,10 @@ const CATEGORY_ICONS: Record<string, string> = {
   astro_compatibility: "/icons/astrology-service.svg", astro_monthly: "/icons/astrology-service.svg",
   astro_yearly: "/icons/astrology-service.svg", "astro_career-star": "/icons/career.svg",
   "astro_my-chart": "/icons/astrology-service.svg",
+  "saju_saju-chart": "/icons/saju-service.svg", "saju_saju-daily": "/icons/saju-service.svg",
+  "saju_saju-weekly": "/icons/saju-service.svg", "saju_saju-monthly": "/icons/saju-service.svg",
+  "saju_saju-yearly": "/icons/saju-service.svg", "saju_saju-love": "/icons/love.svg",
+  "saju_saju-career": "/icons/career.svg", "saju_saju-wealth": "/icons/saju-service.svg",
 };
 
 interface Reading {
@@ -37,13 +45,13 @@ interface Reading {
   created_at: string;
 }
 
-export default function History({ defaultTab = "tarot" }: { defaultTab?: "tarot" | "astrology" }) {
+export default function History({ defaultTab = "tarot" }: { defaultTab?: "tarot" | "astrology" | "saju" }) {
   const { data: session } = useSession();
   const router = useRouter();
   const [readings, setReadings] = useState<Reading[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [historyTab, setHistoryTab] = useState<"tarot" | "astrology">(defaultTab);
+  const [historyTab, setHistoryTab] = useState<"tarot" | "astrology" | "saju">(defaultTab);
 
   useEffect(() => {
     if (!session?.user?.id) return;
@@ -67,7 +75,9 @@ export default function History({ defaultTab = "tarot" }: { defaultTab?: "tarot"
 
   // 탭별 필터
   const filtered = readings.filter((r) =>
-    historyTab === "astrology" ? r.category.startsWith("astro_") : !r.category.startsWith("astro_")
+    historyTab === "astrology" ? r.category.startsWith("astro_")
+    : historyTab === "saju" ? r.category.startsWith("saju_")
+    : !r.category.startsWith("astro_") && !r.category.startsWith("saju_")
   );
 
   // 날짜별 그룹핑
@@ -133,6 +143,16 @@ export default function History({ defaultTab = "tarot" }: { defaultTab?: "tarot"
         >
           점성술
         </button>
+        <button
+          onClick={() => setHistoryTab("saju")}
+          className={`flex-1 py-1.5 text-xs rounded-lg transition-all cursor-pointer ${
+            historyTab === "saju"
+              ? "bg-gradient-to-r from-purple/50 to-gold/20 text-gold font-bold"
+              : "text-foreground/40"
+          }`}
+        >
+          사주
+        </button>
       </div>
 
       <p className="text-foreground/30 text-xs mb-3 pl-1">총 {filtered.length}건</p>
@@ -140,7 +160,7 @@ export default function History({ defaultTab = "tarot" }: { defaultTab?: "tarot"
       {filtered.length === 0 && (
         <div className="flex flex-col items-center py-12">
           <p className="text-foreground/20 text-sm">
-            {historyTab === "tarot" ? "타로 기록이 없어요" : "점성술 기록이 없어요"}
+            {historyTab === "tarot" ? "타로 기록이 없어요" : historyTab === "astrology" ? "점성술 기록이 없어요" : "사주 기록이 없어요"}
           </p>
         </div>
       )}

@@ -9,6 +9,7 @@ import CategorySelect from "@/components/CategorySelect";
 import TarotSpread from "@/components/TarotSpread";
 import History from "@/components/History";
 import AstrologyMain from "@/components/AstrologyMain";
+import SajuMain from "@/components/SajuMain";
 import { CATEGORIES } from "@/data/tarot-cards";
 
 export default function Home() {
@@ -123,12 +124,12 @@ export default function Home() {
             <AstrologyMain />
           )
         ) : (
-          // 사주 (준비 중)
-          <div className="absolute inset-0 flex flex-col items-center justify-center px-5">
-            <img src="/icons/saju-service.svg" alt="" className="w-16 h-16 mb-4 opacity-30" />
-            <p className="text-gold/60 text-base font-bold mb-2">준비 중이에요</p>
-            <p className="text-foreground/30 text-xs">사주팔자 운세가 곧 찾아올 거예요</p>
-          </div>
+          // 사주 서비스
+          currentTab === "history" ? (
+            <History defaultTab="saju" />
+          ) : (
+            <SajuMain />
+          )
         )}
       </div>
 

@@ -264,6 +264,11 @@
     "@eslint/core" "^0.17.0"
     levn "^0.4.1"
 
+"@fullstackfamily/manseryeok@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/@fullstackfamily/manseryeok/-/manseryeok-1.0.7.tgz#31f4b4e0e0d93801b2fea5489fbe74fa944664aa"
+  integrity sha512-YnrphKxMp4oCObDhQXiGOJvj694tAR20BQj5r/2jYBP4l5ssfOS8CKPn8DwR59uMMc5cq53/DrqeOOKRN/svxA==
+
 "@humanfs/core@^0.19.1":
   version "0.19.1"
   resolved "https://registry.npmjs.org/@humanfs/core/-/core-0.19.1.tgz#17c55ca7d426733fe3c561906b8173c336b40a77"

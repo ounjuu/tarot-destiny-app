@@ -13,6 +13,10 @@ const CATEGORY_LABELS: Record<string, string> = {
   astro_yearly: "올해의 운세", astro_compatibility: "별자리 궁합", astro_personality: "성격 분석",
   "astro_love-star": "연애운", "astro_marriage-star": "결혼운",
   "astro_career-star": "직업 적성", "astro_my-chart": "나의 별자리",
+  "saju_saju-chart": "나의 사주", "saju_saju-daily": "오늘의 운세",
+  "saju_saju-weekly": "이번 주 운세", "saju_saju-monthly": "이번 달 운세",
+  "saju_saju-yearly": "올해의 운세", "saju_saju-love": "연애운",
+  "saju_saju-career": "직업운", "saju_saju-wealth": "재물운",
 };
 
 const ERROR_TYPE_LABELS: Record<string, string> = {
