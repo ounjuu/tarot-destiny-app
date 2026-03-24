@@ -12,17 +12,17 @@ export default function ServiceSelect({ onSelect }: ServiceSelectProps) {
   return (
     <div className="flex flex-col justify-center items-center h-full px-5 py-6">
       {/* 인사말 */}
-      <div className="text-center mb-10">
-        <img src="/logo.png" alt="Luna" className="w-20 h-20 mx-auto mb-4" />
-        <h2 className="text-gold text-xl font-bold mb-2">{greeting.title}</h2>
-        <p className="text-foreground/40 text-sm">{greeting.sub}</p>
+      <div className="text-center mb-6 sm:mb-10">
+        <img src="/logo.png" alt="Luna" className="w-14 h-14 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-4" />
+        <h2 className="text-gold text-lg sm:text-xl font-bold mb-1.5 sm:mb-2">{greeting.title}</h2>
+        <p className="text-foreground/40 text-xs sm:text-sm">{greeting.sub}</p>
       </div>
 
       {/* 서비스 선택 */}
-      <div className="w-full max-w-[320px] space-y-4">
+      <div className="w-full max-w-[320px] space-y-3 sm:space-y-4">
         <button
           onClick={() => onSelect("tarot")}
-          className="fade-in w-full p-5 bg-purple-dark/30 border border-gold/15 rounded-2xl active:scale-[0.97] hover:bg-purple-dark/50 hover:border-gold/30 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(201,168,76,0.1)] transition-all duration-300 cursor-pointer flex items-center gap-4 group"
+          className="fade-in w-full p-4 sm:p-5 bg-purple-dark/30 border border-gold/15 rounded-2xl active:scale-[0.97] hover:bg-purple-dark/50 hover:border-gold/30 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(201,168,76,0.1)] transition-all duration-300 cursor-pointer flex items-center gap-4 group"
           style={{ animationDelay: "0.1s" }}
         >
           <img src="/icons/tarot-service.svg" alt="" className="w-11 h-11 sm:w-14 sm:h-14 group-hover:scale-110 transition-transform duration-300" />
@@ -34,7 +34,7 @@ export default function ServiceSelect({ onSelect }: ServiceSelectProps) {
 
         <button
           onClick={() => onSelect("astrology")}
-          className="fade-in w-full p-5 bg-purple-dark/30 border border-gold/15 rounded-2xl active:scale-[0.97] hover:bg-purple-dark/50 hover:border-gold/30 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(201,168,76,0.1)] transition-all duration-300 cursor-pointer flex items-center gap-4 group"
+          className="fade-in w-full p-4 sm:p-5 bg-purple-dark/30 border border-gold/15 rounded-2xl active:scale-[0.97] hover:bg-purple-dark/50 hover:border-gold/30 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(201,168,76,0.1)] transition-all duration-300 cursor-pointer flex items-center gap-4 group"
           style={{ animationDelay: "0.2s" }}
         >
           <img src="/icons/astrology-service.svg" alt="" className="w-11 h-11 sm:w-14 sm:h-14 group-hover:scale-110 transition-transform duration-300" />
@@ -45,7 +45,7 @@ export default function ServiceSelect({ onSelect }: ServiceSelectProps) {
         </button>
         <button
           onClick={() => onSelect("saju")}
-          className="fade-in w-full p-5 bg-purple-dark/30 border border-gold/15 rounded-2xl active:scale-[0.97] hover:bg-purple-dark/50 hover:border-gold/30 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(201,168,76,0.1)] transition-all duration-300 cursor-pointer flex items-center gap-4 group"
+          className="fade-in w-full p-4 sm:p-5 bg-purple-dark/30 border border-gold/15 rounded-2xl active:scale-[0.97] hover:bg-purple-dark/50 hover:border-gold/30 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(201,168,76,0.1)] transition-all duration-300 cursor-pointer flex items-center gap-4 group"
           style={{ animationDelay: "0.3s" }}
         >
           <img src="/icons/saju-service.svg" alt="" className="w-11 h-11 sm:w-14 sm:h-14 group-hover:scale-110 transition-transform duration-300" />
@@ -57,7 +57,7 @@ export default function ServiceSelect({ onSelect }: ServiceSelectProps) {
       </div>
 
       {/* 하단 장식 */}
-      <div className="mt-10 flex gap-3">
+      <div className="mt-6 sm:mt-10 flex gap-3">
         {[0, 1, 2].map((i) => (
           <span key={i} className="text-gold/15 text-xs">✦</span>
         ))}
