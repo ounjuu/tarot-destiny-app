@@ -10,6 +10,7 @@ interface BirthInfoFormProps {
     birthLat: number;
     birthLng: number;
     gender: string;
+    calendarType: string;
   }) => void;
 }
 
@@ -30,6 +31,7 @@ export default function BirthInfoForm({ onSubmit }: BirthInfoFormProps) {
   const [cityResults, setCityResults] = useState<CityResult[]>([]);
   const [selectedCity, setSelectedCity] = useState<CityResult | null>(null);
   const [gender, setGender] = useState("");
+  const [calendarType, setCalendarType] = useState("solar");
   const [searching, setSearching] = useState(false);
   const searchTimeout = useRef<NodeJS.Timeout | null>(null);
 
@@ -72,6 +74,7 @@ export default function BirthInfoForm({ onSubmit }: BirthInfoFormProps) {
       birthLat: parseFloat(selectedCity.lat),
       birthLng: parseFloat(selectedCity.lon),
       gender,
+      calendarType,
     });
   };
 
@@ -93,7 +96,25 @@ export default function BirthInfoForm({ onSubmit }: BirthInfoFormProps) {
       <div className="w-full max-w-[320px] mx-auto space-y-5">
         {/* 생년월일 */}
         <div>
-          <label className="text-gold/60 text-xs mb-2 block">생년월일</label>
+          <div className="flex items-center justify-between mb-2">
+            <label className="text-gold/60 text-xs">생년월일</label>
+            <div className="flex gap-1 bg-purple-dark/20 p-0.5 rounded-lg">
+              {[{ value: "solar", label: "양력" }, { value: "lunar", label: "음력" }].map((c) => (
+                <button
+                  key={c.value}
+                  type="button"
+                  onClick={() => setCalendarType(c.value)}
+                  className={`px-2.5 py-1 text-[10px] rounded-md transition-all cursor-pointer ${
+                    calendarType === c.value
+                      ? "bg-gradient-to-r from-purple/50 to-gold/20 text-gold font-bold"
+                      : "text-foreground/30"
+                  }`}
+                >
+                  {c.label}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="flex gap-1.5 sm:gap-2">
             <select
               value={year}

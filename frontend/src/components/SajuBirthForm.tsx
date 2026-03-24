@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 interface SajuBirthFormProps {
-  onSubmit: (data: { birthday: string; birthTime: string | null; gender: string }) => void;
+  onSubmit: (data: { birthday: string; birthTime: string | null; gender: string; calendarType: string }) => void;
 }
 
 export default function SajuBirthForm({ onSubmit }: SajuBirthFormProps) {
@@ -14,6 +14,7 @@ export default function SajuBirthForm({ onSubmit }: SajuBirthFormProps) {
   const [minute, setMinute] = useState("");
   const [unknownTime, setUnknownTime] = useState(false);
   const [gender, setGender] = useState("");
+  const [calendarType, setCalendarType] = useState("solar");
 
   const isValid = year && month && day && (unknownTime || (hour && minute)) && gender;
 
@@ -23,6 +24,7 @@ export default function SajuBirthForm({ onSubmit }: SajuBirthFormProps) {
       birthday: `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`,
       birthTime: unknownTime ? null : `${hour.padStart(2, "0")}:${minute.padStart(2, "0")}`,
       gender,
+      calendarType,
     });
   };
 
@@ -43,7 +45,25 @@ export default function SajuBirthForm({ onSubmit }: SajuBirthFormProps) {
       <div className="w-full max-w-[320px] mx-auto space-y-5">
         {/* 생년월일 */}
         <div>
-          <label className="text-gold/60 text-[11px] sm:text-xs mb-2 block">생년월일 (양력)</label>
+          <div className="flex items-center justify-between mb-2">
+            <label className="text-gold/60 text-[11px] sm:text-xs">생년월일</label>
+            <div className="flex gap-1 bg-purple-dark/20 p-0.5 rounded-lg">
+              {[{ value: "solar", label: "양력" }, { value: "lunar", label: "음력" }].map((c) => (
+                <button
+                  key={c.value}
+                  type="button"
+                  onClick={() => setCalendarType(c.value)}
+                  className={`px-2.5 py-1 text-[10px] rounded-md transition-all cursor-pointer ${
+                    calendarType === c.value
+                      ? "bg-gradient-to-r from-purple/50 to-gold/20 text-gold font-bold"
+                      : "text-foreground/30"
+                  }`}
+                >
+                  {c.label}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="flex gap-1.5 sm:gap-2">
             <select value={year} onChange={(e) => setYear(e.target.value)}
               className="flex-1 bg-purple-dark/30 border border-gold/15 rounded-xl px-2 sm:px-3 py-2.5 text-xs sm:text-sm text-foreground/70 appearance-none">

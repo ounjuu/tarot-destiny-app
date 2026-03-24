@@ -4,7 +4,7 @@ import { callAI } from "@/lib/ai";
 
 export async function POST(request: Request) {
   try {
-    const { userId, userName, category, birthday, birthTime, gender } = await request.json();
+    const { userId, userName, category, birthday, birthTime, gender, calendarType } = await request.json();
 
     if (!birthday) {
       return NextResponse.json({ error: "invalid" }, { status: 400 });
@@ -26,12 +26,22 @@ export async function POST(request: Request) {
     // 사주팔자 계산
     let sajuData = "";
     try {
-      const { calculateSaju, getPillarByHangul, solarToLunar } = await import("@fullstackfamily/manseryeok");
+      const { calculateSaju, getPillarByHangul, solarToLunar, lunarToSolar } = await import("@fullstackfamily/manseryeok");
 
-      const [year, month, day] = birthday.split("-").map(Number);
+      let [year, month, day] = birthday.split("-").map(Number);
       let hour = 12;
       if (birthTime) {
         hour = parseInt(birthTime.split(":")[0]);
+      }
+
+      // 음력이면 양력으로 변환 (사주 계산은 양력 기준)
+      if (calendarType === "lunar") {
+        try {
+          const converted = lunarToSolar(year, month, day, false);
+          year = converted.solar.year;
+          month = converted.solar.month;
+          day = converted.solar.day;
+        } catch {}
       }
 
       const saju = calculateSaju(year, month, day, hour);
@@ -76,7 +86,7 @@ ${getElementAnalysis(elements)}
       sajuData = "";
     }
 
-    const prompt = buildSajuPrompt(category, birthday, birthTime, sajuData, userName, gender);
+    const prompt = buildSajuPrompt(category, birthday, birthTime, sajuData, userName, gender, calendarType);
 
     const { text: reading, source, geminiFailed, groqFailed } = await callAI(prompt);
 
@@ -180,11 +190,12 @@ function getElementAnalysis(elements: Record<string, number>): string {
   return analysis;
 }
 
-function buildSajuPrompt(category: string, birthday: string, birthTime: string | null, sajuData: string, userName?: string, gender?: string): string {
+function buildSajuPrompt(category: string, birthday: string, birthTime: string | null, sajuData: string, userName?: string, gender?: string, calendarType?: string): string {
   const genderStr = gender === "male" ? "남성" : gender === "female" ? "여성" : "알 수 없음";
+  const calendarStr = calendarType === "lunar" ? "음력" : "양력";
   const baseInfo = `사용자 정보:
 - 성별: ${genderStr}
-- 생년월일: ${birthday}
+- 생년월일 (${calendarStr}): ${birthday}
 - 태어난 시간: ${birthTime || "알 수 없음"}
 ${sajuData}`;
 

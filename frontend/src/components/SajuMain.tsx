@@ -9,6 +9,7 @@ interface BirthInfo {
   birthday: string;
   birth_time: string | null;
   gender: string | null;
+  calendarType: string;
 }
 
 export default function SajuMain() {
@@ -32,14 +33,14 @@ export default function SajuMain() {
       const res = await fetch(`/api/astrology/birth-info?userId=${session?.user?.id}`);
       const data = await res.json();
       if (data.exists && data.birthday) {
-        setBirthInfo({ birthday: data.birthday, birth_time: data.birth_time, gender: data.gender });
+        setBirthInfo({ birthday: data.birthday, birth_time: data.birth_time, gender: data.gender, calendarType: "solar" });
       }
     } catch {}
     setLoading(false);
   }
 
   // 출생 정보 저장
-  async function handleBirthInfoSubmit(data: { birthday: string; birthTime: string | null; gender: string }) {
+  async function handleBirthInfoSubmit(data: { birthday: string; birthTime: string | null; gender: string; calendarType: string }) {
     // users 테이블에 저장
     if (session?.user?.id) {
       await fetch("/api/astrology/birth-info", {
@@ -56,7 +57,7 @@ export default function SajuMain() {
         }),
       });
     }
-    setBirthInfo({ birthday: data.birthday, birth_time: data.birthTime, gender: data.gender });
+    setBirthInfo({ birthday: data.birthday, birth_time: data.birthTime, gender: data.gender, calendarType: data.calendarType });
   }
 
   // 해석 요청
@@ -74,6 +75,7 @@ export default function SajuMain() {
           birthday: birthInfo?.birthday,
           birthTime: birthInfo?.birth_time,
           gender: birthInfo?.gender,
+          calendarType: birthInfo?.calendarType,
         }),
       });
       const data = await res.json();
