@@ -10,7 +10,7 @@ export default function CategorySelect({ onSelect }: CategorySelectProps) {
   return (
     <div className="flex flex-col justify-center h-full px-5 py-6">
       {/* 인사말 */}
-      <div className="text-center mb-8">
+      <div className="text-center mb-8 mt-4 sm:mt-0">
         <p className="text-foreground/60 text-sm mb-1">오늘의 운세를 확인해보세요</p>
         <h2 className="text-gold text-xl font-bold">어떤 운세가 궁금하신가요?</h2>
       </div>
