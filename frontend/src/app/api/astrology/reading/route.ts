@@ -5,7 +5,7 @@ import { callAI } from "@/lib/ai";
 
 export async function POST(request: Request) {
   try {
-    const { userId, userName, category, birthday, birthTime, birthCity, birthLat, birthLng, zodiacSign, partnerSign } = await request.json();
+    const { userId, userName, category, birthday, birthTime, birthCity, birthLat, birthLng, zodiacSign, gender, partnerSign } = await request.json();
 
     const sign = ZODIAC_SIGNS.find((s) => s.id === zodiacSign);
     if (!sign) {
@@ -82,7 +82,7 @@ export async function POST(request: Request) {
       chartData = "";
     }
 
-    const prompt = buildPrompt(category, sign.name, sign.symbol, birthday, birthTime, birthCity, chartData, userName, partnerSign);
+    const prompt = buildPrompt(category, sign.name, sign.symbol, birthday, birthTime, birthCity, chartData, userName, gender, partnerSign);
 
     // AI 호출 (Gemini → Groq 폴백)
     const { text: reading, source, geminiFailed, groqFailed } = await callAI(prompt);
@@ -162,8 +162,10 @@ function getCategoryLabel(category: string): string {
   return labels[category] || category;
 }
 
-function buildPrompt(category: string, signName: string, signSymbol: string, birthday: string, birthTime: string | null, birthCity: string, chartData: string, userName?: string, partnerSign?: string): string {
+function buildPrompt(category: string, signName: string, signSymbol: string, birthday: string, birthTime: string | null, birthCity: string, chartData: string, userName?: string, gender?: string, partnerSign?: string): string {
+  const genderStr = gender === "male" ? "남성" : gender === "female" ? "여성" : "알 수 없음";
   const baseInfo = `사용자 정보:
+- 성별: ${genderStr}
 - 태양 별자리: ${signName} ${signSymbol}
 - 생년월일: ${birthday}
 - 태어난 시간: ${birthTime || "알 수 없음"}

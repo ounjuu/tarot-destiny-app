@@ -13,6 +13,7 @@ interface BirthInfo {
   birth_lat: number;
   birth_lng: number;
   zodiac_sign: string;
+  gender: string | null;
 }
 
 export default function AstrologyMain() {
@@ -46,7 +47,7 @@ export default function AstrologyMain() {
   }
 
   // 출생 정보 저장
-  async function handleBirthInfoSubmit(data: { birthday: string; birthTime: string | null; birthCity: string; birthLat: number; birthLng: number }) {
+  async function handleBirthInfoSubmit(data: { birthday: string; birthTime: string | null; birthCity: string; birthLat: number; birthLng: number; gender: string }) {
     const res = await fetch("/api/astrology/birth-info", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -61,6 +62,7 @@ export default function AstrologyMain() {
         birth_lat: data.birthLat,
         birth_lng: data.birthLng,
         zodiac_sign: result.zodiacSign,
+        gender: data.gender,
       });
     }
   }
@@ -83,6 +85,7 @@ export default function AstrologyMain() {
           birthLat: birthInfo?.birth_lat,
           birthLng: birthInfo?.birth_lng,
           zodiacSign: birthInfo?.zodiac_sign,
+          gender: birthInfo?.gender,
           partnerSign: category === "compatibility" ? partnerSign : undefined,
         }),
       });

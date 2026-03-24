@@ -5,7 +5,7 @@ import { getZodiacSign } from "@/data/astrology";
 // 출생 정보 저장
 export async function POST(request: Request) {
   try {
-    const { userId, birthday, birthTime, birthCity, birthLat, birthLng } = await request.json();
+    const { userId, birthday, birthTime, birthCity, birthLat, birthLng, gender } = await request.json();
 
     if (!userId || !supabase) {
       return NextResponse.json({ error: "invalid" }, { status: 400 });
@@ -23,6 +23,7 @@ export async function POST(request: Request) {
         birth_lat: birthLat,
         birth_lng: birthLng,
         zodiac_sign: zodiacSign,
+        gender: gender || null,
       })
       .eq("id", userId);
 
@@ -47,7 +48,7 @@ export async function GET(request: Request) {
 
   const { data } = await supabase
     .from("users")
-    .select("birthday, birth_time, birth_city, birth_lat, birth_lng, zodiac_sign")
+    .select("birthday, birth_time, birth_city, birth_lat, birth_lng, zodiac_sign, gender")
     .eq("id", userId)
     .single();
 

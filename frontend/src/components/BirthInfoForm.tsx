@@ -9,6 +9,7 @@ interface BirthInfoFormProps {
     birthCity: string;
     birthLat: number;
     birthLng: number;
+    gender: string;
   }) => void;
 }
 
@@ -28,6 +29,7 @@ export default function BirthInfoForm({ onSubmit }: BirthInfoFormProps) {
   const [cityQuery, setCityQuery] = useState("");
   const [cityResults, setCityResults] = useState<CityResult[]>([]);
   const [selectedCity, setSelectedCity] = useState<CityResult | null>(null);
+  const [gender, setGender] = useState("");
   const [searching, setSearching] = useState(false);
   const searchTimeout = useRef<NodeJS.Timeout | null>(null);
 
@@ -59,7 +61,7 @@ export default function BirthInfoForm({ onSubmit }: BirthInfoFormProps) {
     setCityResults([]);
   };
 
-  const isValid = year && month && day && (unknownTime || (hour && minute)) && selectedCity;
+  const isValid = year && month && day && (unknownTime || (hour && minute)) && selectedCity && gender;
 
   const handleSubmit = () => {
     if (!isValid || !selectedCity) return;
@@ -69,6 +71,7 @@ export default function BirthInfoForm({ onSubmit }: BirthInfoFormProps) {
       birthCity: selectedCity.display_name.split(",")[0],
       birthLat: parseFloat(selectedCity.lat),
       birthLng: parseFloat(selectedCity.lon),
+      gender,
     });
   };
 
@@ -158,6 +161,27 @@ export default function BirthInfoForm({ onSubmit }: BirthInfoFormProps) {
           >
             {unknownTime ? "✦ 시간을 모르겠어요" : "✧ 시간을 모르겠어요"}
           </button>
+        </div>
+
+        {/* 성별 */}
+        <div>
+          <label className="text-gold/60 text-[11px] sm:text-xs mb-2 block">성별</label>
+          <div className="flex gap-2">
+            {[{ value: "male", label: "남성" }, { value: "female", label: "여성" }].map((g) => (
+              <button
+                key={g.value}
+                type="button"
+                onClick={() => setGender(g.value)}
+                className={`flex-1 py-2.5 rounded-xl text-xs sm:text-sm transition-all cursor-pointer ${
+                  gender === g.value
+                    ? "bg-gradient-to-r from-purple/50 to-gold/20 border border-gold/30 text-gold font-bold"
+                    : "bg-purple-dark/30 border border-gold/15 text-foreground/40"
+                }`}
+              >
+                {g.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* 태어난 장소 */}

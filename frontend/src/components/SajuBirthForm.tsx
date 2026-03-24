@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 interface SajuBirthFormProps {
-  onSubmit: (data: { birthday: string; birthTime: string | null }) => void;
+  onSubmit: (data: { birthday: string; birthTime: string | null; gender: string }) => void;
 }
 
 export default function SajuBirthForm({ onSubmit }: SajuBirthFormProps) {
@@ -13,14 +13,16 @@ export default function SajuBirthForm({ onSubmit }: SajuBirthFormProps) {
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("");
   const [unknownTime, setUnknownTime] = useState(false);
+  const [gender, setGender] = useState("");
 
-  const isValid = year && month && day && (unknownTime || (hour && minute));
+  const isValid = year && month && day && (unknownTime || (hour && minute)) && gender;
 
   const handleSubmit = () => {
     if (!isValid) return;
     onSubmit({
       birthday: `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`,
       birthTime: unknownTime ? null : `${hour.padStart(2, "0")}:${minute.padStart(2, "0")}`,
+      gender,
     });
   };
 
@@ -84,6 +86,27 @@ export default function SajuBirthForm({ onSubmit }: SajuBirthFormProps) {
           >
             {unknownTime ? "✦ 시간을 모르겠어요" : "✧ 시간을 모르겠어요"}
           </button>
+        </div>
+
+        {/* 성별 */}
+        <div>
+          <label className="text-gold/60 text-[11px] sm:text-xs mb-2 block">성별</label>
+          <div className="flex gap-2">
+            {[{ value: "male", label: "남성" }, { value: "female", label: "여성" }].map((g) => (
+              <button
+                key={g.value}
+                type="button"
+                onClick={() => setGender(g.value)}
+                className={`flex-1 py-2.5 rounded-xl text-xs sm:text-sm transition-all cursor-pointer ${
+                  gender === g.value
+                    ? "bg-gradient-to-r from-purple/50 to-gold/20 border border-gold/30 text-gold font-bold"
+                    : "bg-purple-dark/30 border border-gold/15 text-foreground/40"
+                }`}
+              >
+                {g.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         <button
