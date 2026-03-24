@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luna - 오프라인</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a1a;
+      color: #e8e0d4;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+    .container { max-width: 300px; }
+    .icon { color: #c9a84c; font-size: 40px; margin-bottom: 16px; opacity: 0.4; }
+    h1 { color: #c9a84c; font-size: 18px; margin-bottom: 8px; opacity: 0.7; }
+    p { font-size: 13px; opacity: 0.4; line-height: 1.6; }
+    button {
+      margin-top: 24px;
+      background: linear-gradient(to right, #6b3fa0, rgba(201, 168, 76, 0.8));
+      color: white;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 16px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">✦</div>
+    <h1>오프라인이에요</h1>
+    <p>인터넷 연결을 확인하고<br>다시 시도해주세요</p>
+    <button onclick="location.reload()">다시 시도</button>
+  </div>
+</body>
+</html>

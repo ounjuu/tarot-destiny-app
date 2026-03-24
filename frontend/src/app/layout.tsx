@@ -51,7 +51,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="antialiased"><Providers>{children}</Providers></body>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#0a0a1a" />
+      </head>
+      <body className="antialiased">
+        <Providers>{children}</Providers>
+        <script dangerouslySetInnerHTML={{ __html: `
+          if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+              navigator.serviceWorker.register('/sw.js');
+            });
+          }
+        `}} />
+      </body>
     </html>
   );
 }

@@ -1,0 +1,24 @@
+{
+  "name": "Luna - 타로 · 점성술 · 사주",
+  "short_name": "Luna",
+  "description": "타로 카드, 별자리 점성술, 사주팔자까지. 루나가 당신의 운명을 읽어드려요.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a1a",
+  "theme_color": "#0a0a1a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

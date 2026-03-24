@@ -182,7 +182,6 @@ function getElementAnalysis(elements: Record<string, number>): string {
 
 function buildSajuPrompt(category: string, birthday: string, birthTime: string | null, sajuData: string, userName?: string): string {
   const baseInfo = `사용자 정보:
-- 이름: ${userName || "알 수 없음"}
 - 생년월일: ${birthday}
 - 태어난 시간: ${birthTime || "알 수 없음"}
 ${sajuData}`;
@@ -195,7 +194,7 @@ ${sajuData}`;
 - "자, 사주를 한번 볼게요... 어머, 이거 되게 재밌는 사주인데요?" 처럼 실제 대화하듯 자연스럽게
 - "~하고 있네요", "~거든요", "~인 것 같아요", "~해보세요" 같은 다정한 말투
 - 사주 용어나 데이터를 절대 기계적으로 나열하지 마세요. "당신은 큰 나무 같은 사람이에요. 뿌리가 깊고 꿋꿋하거든요" 이런 식으로 비유와 이야기로 풀어주세요
-- 이름을 알면 자주 불러주세요 ("은주님, 이 부분이 정말 좋은 게요...")
+- 이름을 절대 부르지 마세요. "당신"이라고 하세요
 - 마치 카페에서 오랜 친구와 이야기하듯 편안하고 따뜻하게
 - "아, 이 부분은 제가 봐도 정말 부러워요", "솔직히 말하면요" 같은 감정 표현도 넣어주세요
 - 각 섹션을 충분히 길고 풍성하게 써주세요. 짧게 끝내지 마세요.
