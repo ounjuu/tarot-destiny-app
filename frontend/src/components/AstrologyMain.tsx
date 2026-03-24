@@ -127,8 +127,8 @@ export default function AstrologyMain() {
           <h2 className="text-gold text-lg font-bold mt-1">✦ {sign?.name} ✦</h2>
         </div>
 
-        {/* 나의 별자리 - 출생 차트 시각화 */}
-        {selectedCategory === "my-chart" && birthInfo && (
+        {/* 출생 차트 시각화 */}
+        {birthInfo && birthInfo.birth_lat !== 0 && (
           <BirthChart
             birthday={birthInfo.birthday}
             birthTime={birthInfo.birth_time}
