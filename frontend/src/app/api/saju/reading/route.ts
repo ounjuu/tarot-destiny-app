@@ -25,6 +25,7 @@ export async function POST(request: Request) {
 
     // 사주팔자 계산
     let sajuData = "";
+    let sajuChart = null;
     try {
       const { calculateSaju, getPillarByHangul, solarToLunar, lunarToSolar } = await import("@fullstackfamily/manseryeok");
 
@@ -82,6 +83,16 @@ ${getElementAnalysis(elements)}
 음력: ${lunar.lunar.year}년 ${lunar.lunar.month}월 ${lunar.lunar.day}일 ${lunar.lunar.isLeapMonth ? "(윤달)" : ""}
 음양: ${yearInfo?.yinYang || ""} / ${monthInfo?.yinYang || ""} / ${dayInfo?.yinYang || ""} / ${hourInfo?.yinYang || ""}`;
 
+      sajuChart = {
+        year: { pillar: saju.yearPillar, hanja: saju.yearPillarHanja, stem: yearInfo?.tiangan?.hangul || "", branch: yearInfo?.dizhi?.hangul || "", stemElement: yearInfo?.tiangan?.element || "", branchElement: yearInfo?.dizhi?.element || "", animal: yearInfo?.dizhi?.animal || "" },
+        month: { pillar: saju.monthPillar, hanja: saju.monthPillarHanja, stem: monthInfo?.tiangan?.hangul || "", branch: monthInfo?.dizhi?.hangul || "", stemElement: monthInfo?.tiangan?.element || "", branchElement: monthInfo?.dizhi?.element || "" },
+        day: { pillar: saju.dayPillar, hanja: saju.dayPillarHanja, stem: dayInfo?.tiangan?.hangul || "", branch: dayInfo?.dizhi?.hangul || "", stemElement: dayInfo?.tiangan?.element || "", branchElement: dayInfo?.dizhi?.element || "" },
+        hour: { pillar: saju.hourPillar || "?", hanja: saju.hourPillarHanja || "?", stem: hourInfo?.tiangan?.hangul || "?", branch: hourInfo?.dizhi?.hangul || "?", stemElement: hourInfo?.tiangan?.element || "", branchElement: hourInfo?.dizhi?.element || "" },
+        elements: elements,
+        ilgan: ilgan?.hangul || "",
+        ilganElement: ilgan?.element || "",
+      };
+
     } catch {
       sajuData = "";
     }
@@ -138,7 +149,7 @@ ${getElementAnalysis(elements)}
       readingId = inserted?.id;
     }
 
-    return NextResponse.json({ success: true, reading, readingId });
+    return NextResponse.json({ success: true, reading, readingId, sajuChart });
   } catch {
     return NextResponse.json({
       success: false,

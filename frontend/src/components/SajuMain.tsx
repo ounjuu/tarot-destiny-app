@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import SajuBirthForm from "./SajuBirthForm";
+import SajuChart from "./SajuChart";
 import { SAJU_CATEGORIES } from "@/data/saju";
 
 interface BirthInfo {
@@ -19,6 +20,8 @@ export default function SajuMain() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [reading, setReading] = useState("");
   const [readingLoading, setReadingLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [sajuChart, setSajuChart] = useState<any>(null);
   const [readingId, setReadingId] = useState<string | null>(null);
   const [hasError, setHasError] = useState(false);
 
@@ -81,6 +84,7 @@ export default function SajuMain() {
       const data = await res.json();
       setReading(data.reading || "해석을 불러오지 못했어요.");
       setReadingId(data.readingId || null);
+      setSajuChart(data.sajuChart || null);
       setHasError(!data.success);
     } catch {
       setReading("별들의 신호가 불안정해요.\n\n네트워크를 확인하고 다시 시도해주세요.");
@@ -114,6 +118,19 @@ export default function SajuMain() {
           <img src="/icons/saju-service.svg" alt="" className="w-12 h-12 mx-auto" />
           <h2 className="text-gold text-lg font-bold mt-1">✦ 사주 ✦</h2>
         </div>
+
+        {/* 사주 차트 */}
+        {sajuChart && (
+          <SajuChart
+            year={sajuChart.year}
+            month={sajuChart.month}
+            day={sajuChart.day}
+            hour={sajuChart.hour}
+            elements={sajuChart.elements}
+            ilgan={sajuChart.ilgan}
+            ilganElement={sajuChart.ilganElement}
+          />
+        )}
 
         <div className="relative p-4 sm:p-5 bg-gradient-to-b from-purple-dark/30 to-purple-dark/10 rounded-2xl border border-gold/15 mb-6 result-glow shimmer">
           <div className="absolute top-2 left-3 text-gold/20 text-[10px]">✦</div>
