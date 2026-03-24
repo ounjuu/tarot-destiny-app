@@ -158,8 +158,13 @@ export default function AdminPage() {
         setSelectedReadings(new Set());
         fetchReadings();
         fetchStats();
+      } else {
+        const data = await res.json();
+        alert(`삭제 실패: ${data.error || "알 수 없는 에러"}`);
       }
-    } catch {}
+    } catch (e) {
+      alert(`삭제 에러: ${e}`);
+    }
     setDeleting(false);
   }
 
