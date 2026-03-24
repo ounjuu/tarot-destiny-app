@@ -40,7 +40,10 @@ export async function callAI(prompt: string): Promise<{ text: string | null; sou
         },
         body: JSON.stringify({
           model: "llama-3.3-70b-versatile",
-          messages: [{ role: "user", content: prompt }],
+          messages: [
+            { role: "system", content: "반드시 한국어로만 대답하세요. 영어, 중국어, 일본어 등 다른 언어를 절대 섞지 마세요. 모든 내용을 한국어로 작성해주세요." },
+            { role: "user", content: prompt },
+          ],
           temperature: 0.9,
           max_tokens: 2048,
         }),
