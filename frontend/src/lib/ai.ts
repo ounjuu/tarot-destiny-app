@@ -1,6 +1,11 @@
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
+// 마크다운 문법 제거
+function cleanMarkdown(text: string): string {
+  return text.replace(/\*\*/g, "").replace(/\*/g, "").replace(/#{1,6}\s/g, "").replace(/```[\s\S]*?```/g, "");
+}
+
 // Gemini → Groq 폴백 AI 호출
 export async function callAI(prompt: string): Promise<{ text: string | null; source: "gemini" | "groq" | null; geminiFailed: boolean; groqFailed: boolean }> {
   let geminiFailed = false;
@@ -19,7 +24,7 @@ export async function callAI(prompt: string): Promise<{ text: string | null; sou
       const data = await res.json();
       if (res.ok && !data.error) {
         const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (text) return { text, source: "gemini", geminiFailed: false, groqFailed: false };
+        if (text) return { text: cleanMarkdown(text), source: "gemini", geminiFailed: false, groqFailed: false };
       }
       geminiFailed = true;
     } catch {
@@ -51,7 +56,7 @@ export async function callAI(prompt: string): Promise<{ text: string | null; sou
       const data = await res.json();
       if (res.ok) {
         const text = data.choices?.[0]?.message?.content;
-        if (text) return { text, source: "groq", geminiFailed, groqFailed: false };
+        if (text) return { text: cleanMarkdown(text), source: "groq", geminiFailed, groqFailed: false };
       }
       groqFailed = true;
     } catch {

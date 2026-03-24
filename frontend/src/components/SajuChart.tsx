@@ -20,6 +20,16 @@ interface SajuChartProps {
   ilganElement: string;
 }
 
+const STEM_HANJA: Record<string, string> = {
+  갑: "甲", 을: "乙", 병: "丙", 정: "丁", 무: "戊",
+  기: "己", 경: "庚", 신: "辛", 임: "壬", 계: "癸",
+};
+
+const BRANCH_HANJA: Record<string, string> = {
+  자: "子", 축: "丑", 인: "寅", 묘: "卯", 진: "辰", 사: "巳",
+  오: "午", 미: "未", 신: "申", 유: "酉", 술: "戌", 해: "亥",
+};
+
 const ELEMENT_COLORS: Record<string, string> = {
   목: "#4a9e5a",
   화: "#d45050",
@@ -30,10 +40,10 @@ const ELEMENT_COLORS: Record<string, string> = {
 
 export default function SajuChart({ year, month, day, hour, elements, ilgan, ilganElement }: SajuChartProps) {
   const pillars = [
-    { label: "시주", data: hour },
-    { label: "일주", data: day },
-    { label: "월주", data: month },
-    { label: "년주", data: year },
+    { label: "時柱", sub: "시주", data: hour },
+    { label: "日柱", sub: "일주", data: day },
+    { label: "月柱", sub: "월주", data: month },
+    { label: "年柱", sub: "년주", data: year },
   ];
 
   return (
@@ -43,7 +53,8 @@ export default function SajuChart({ year, month, day, hour, elements, ilgan, ilg
         {/* 헤더 */}
         {pillars.map((p) => (
           <div key={p.label} className="text-center">
-            <span className="text-foreground/30 text-[10px]">{p.label}</span>
+            <span className="text-gold/50 text-xs font-serif">{p.label}</span>
+            <p className="text-foreground/20 text-[8px]">{p.sub}</p>
           </div>
         ))}
 
@@ -54,12 +65,12 @@ export default function SajuChart({ year, month, day, hour, elements, ilgan, ilg
             className="text-center py-2.5 rounded-t-xl border border-b-0 border-gold/15 bg-purple-dark/20"
           >
             <span
-              className="text-lg font-bold"
+              className="text-xl font-bold font-serif"
               style={{ color: ELEMENT_COLORS[p.data.stemElement] || "#c9a84c" }}
             >
-              {p.data.stem}
+              {STEM_HANJA[p.data.stem] || p.data.stem}
             </span>
-            <p className="text-[9px] text-foreground/30 mt-0.5">{p.data.stemElement}</p>
+            <p className="text-[9px] text-foreground/30 mt-0.5">{p.data.stem} · {p.data.stemElement}</p>
           </div>
         ))}
 
@@ -70,13 +81,13 @@ export default function SajuChart({ year, month, day, hour, elements, ilgan, ilg
             className="text-center py-2.5 rounded-b-xl border border-t-0 border-gold/15 bg-purple-dark/30"
           >
             <span
-              className="text-lg font-bold"
+              className="text-xl font-bold font-serif"
               style={{ color: ELEMENT_COLORS[p.data.branchElement] || "#c9a84c" }}
             >
-              {p.data.branch}
+              {BRANCH_HANJA[p.data.branch] || p.data.branch}
             </span>
             <p className="text-[9px] text-foreground/30 mt-0.5">
-              {p.data.branchElement}{p.data.animal ? ` · ${p.data.animal}` : ""}
+              {p.data.branch} · {p.data.branchElement}{p.data.animal ? ` · ${p.data.animal}` : ""}
             </p>
           </div>
         ))}
@@ -84,8 +95,9 @@ export default function SajuChart({ year, month, day, hour, elements, ilgan, ilg
 
       {/* 일간 표시 */}
       <div className="text-center mb-3">
-        <span className="text-foreground/30 text-[10px]">일간 (나 자신): </span>
-        <span className="text-sm font-bold" style={{ color: ELEMENT_COLORS[ilganElement] || "#c9a84c" }}>
+        <span className="text-gold/40 text-xs font-serif">日干</span>
+        <span className="text-foreground/20 text-[8px] ml-1">(나 자신)</span>
+        <span className="text-sm font-bold ml-2" style={{ color: ELEMENT_COLORS[ilganElement] || "#c9a84c" }}>
           {ilgan}
         </span>
         <span className="text-foreground/30 text-[10px] ml-1">({ilganElement})</span>
