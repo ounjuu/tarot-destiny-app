@@ -58,3 +58,31 @@ export async function GET(request: Request) {
 
   return NextResponse.json({ readings, total: count, page, limit });
 }
+
+export async function DELETE(request: Request) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id || !isAdmin(session.user.id)) {
+    return NextResponse.json({ error: "unauthorized" }, { status: 403 });
+  }
+
+  if (!supabase) {
+    return NextResponse.json({ error: "db_error" }, { status: 500 });
+  }
+
+  const { ids } = await request.json();
+
+  if (!ids || ids.length === 0) {
+    return NextResponse.json({ error: "no_ids" }, { status: 400 });
+  }
+
+  const { error } = await supabase
+    .from("readings")
+    .delete()
+    .in("id", ids);
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json({ success: true, deleted: ids.length });
+}

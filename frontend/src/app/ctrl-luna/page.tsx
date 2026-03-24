@@ -85,6 +85,8 @@ export default function AdminPage() {
   const [fallbackTotal, setFallbackTotal] = useState(0);
   const [fallbackPage, setFallbackPage] = useState(1);
   const [expandedReading, setExpandedReading] = useState<string | null>(null);
+  const [selectedReadings, setSelectedReadings] = useState<Set<string>>(new Set());
+  const [deleting, setDeleting] = useState(false);
   const [expandedLog, setExpandedLog] = useState<string | null>(null);
 
   // 권한 체크 + 스크롤 허용
@@ -140,6 +142,25 @@ export default function AdminPage() {
       setReadings(data.readings);
       setReadingsTotal(data.total);
     }
+  }
+
+  async function deleteReadings() {
+    if (selectedReadings.size === 0) return;
+    if (!confirm(`${selectedReadings.size}개의 기록을 삭제하시겠습니까?`)) return;
+    setDeleting(true);
+    try {
+      const res = await fetch("/api/admin/readings", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids: [...selectedReadings] }),
+      });
+      if (res.ok) {
+        setSelectedReadings(new Set());
+        fetchReadings();
+        fetchStats();
+      }
+    } catch {}
+    setDeleting(false);
   }
 
   async function fetchFallbackLogs() {
@@ -352,15 +373,49 @@ export default function AdminPage() {
                 ))}
               </select>
               <span className="text-foreground/30 text-xs">총 {readingsTotal}건</span>
+              {selectedReadings.size > 0 && (
+                <button
+                  onClick={deleteReadings}
+                  disabled={deleting}
+                  className="text-xs px-3 py-1 bg-red-500/20 text-red-400 rounded-lg cursor-pointer hover:bg-red-500/30 transition-colors"
+                >
+                  {deleting ? "삭제 중..." : `${selectedReadings.size}개 삭제`}
+                </button>
+              )}
+              <button
+                onClick={() => {
+                  if (selectedReadings.size === readings.length) {
+                    setSelectedReadings(new Set());
+                  } else {
+                    setSelectedReadings(new Set(readings.map(r => r.id)));
+                  }
+                }}
+                className="text-[10px] text-foreground/30 cursor-pointer"
+              >
+                {selectedReadings.size === readings.length ? "전체 해제" : "전체 선택"}
+              </button>
             </div>
 
             {/* 목록 */}
             {readings.map((r) => (
-              <div key={r.id} className="rounded-xl border border-gold/10 bg-purple-dark/10 overflow-hidden">
+              <div key={r.id} className={`rounded-xl border ${selectedReadings.has(r.id) ? "border-red-500/30" : "border-gold/10"} bg-purple-dark/10 overflow-hidden`}>
                 <div
-                  className="flex items-center gap-3 p-3 cursor-pointer"
+                  className="flex items-center gap-2 p-3 cursor-pointer"
                   onClick={() => setExpandedReading(expandedReading === r.id ? null : r.id)}
                 >
+                  <input
+                    type="checkbox"
+                    checked={selectedReadings.has(r.id)}
+                    onChange={(e) => {
+                      e.stopPropagation();
+                      const next = new Set(selectedReadings);
+                      if (next.has(r.id)) next.delete(r.id);
+                      else next.add(r.id);
+                      setSelectedReadings(next);
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                    className="w-3.5 h-3.5 shrink-0 accent-gold cursor-pointer"
+                  />
                   <span className="text-xs px-2 py-0.5 rounded-full bg-purple/20 text-purple/80 shrink-0">
                     {CATEGORY_LABELS[r.category] || r.category}
                   </span>
