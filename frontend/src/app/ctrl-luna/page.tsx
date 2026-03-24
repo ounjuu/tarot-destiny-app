@@ -132,8 +132,8 @@ export default function AdminPage() {
     }
   }
 
-  async function fetchReadings() {
-    const params = new URLSearchParams({ page: String(readingsPage), limit: "20" });
+  async function fetchReadings(page?: number) {
+    const params = new URLSearchParams({ page: String(page || readingsPage), limit: "20" });
     if (categoryFilter) params.set("category", categoryFilter);
     if (userFilter) params.set("userId", userFilter);
     const res = await fetch(`/api/admin/readings?${params}`);
@@ -160,7 +160,8 @@ export default function AdminPage() {
       console.log("삭제 응답:", res.status, data);
       if (res.ok && data.success) {
         setSelectedReadings(new Set());
-        await fetchReadings();
+        setReadingsPage(1);
+        await fetchReadings(1);
         await fetchStats();
         console.log("목록 새로고침 완료");
       } else {
