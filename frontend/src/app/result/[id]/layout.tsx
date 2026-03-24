@@ -35,8 +35,8 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
   if (!data) return defaultMeta;
 
-  const score = data.score ? `${data.score}%` : "";
-  const title = `${data.category_label} ${score} - Luna`;
+  const score = data.score != null && data.score > 0 ? `${data.score}%` : "";
+  const title = score ? `${data.category_label} ${score} - Luna` : `${data.category_label} - Luna`;
   const description = data.cards && data.cards.length > 0
     ? `뽑은 카드: ${data.cards.join(", ")}`
     : `${data.category_label} 결과를 확인해보세요`;
