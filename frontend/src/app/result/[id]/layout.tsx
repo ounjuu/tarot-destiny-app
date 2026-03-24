@@ -8,9 +8,23 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const { id } = await params;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tarot-destiny-app.vercel.app";
 
-  if (!supabaseUrl || !supabaseAnonKey) {
-    return { title: "LunaTarot - 타로 리딩" };
-  }
+  const ogImage = `${siteUrl}/og-image.png`;
+  const defaultMeta = {
+    title: "Luna - 타로 · 점성술 · 사주",
+    openGraph: {
+      title: "Luna - 타로 · 점성술 · 사주",
+      description: "루나가 당신의 운명을 읽어드려요.",
+      images: [{ url: ogImage, width: 1200, height: 630 }],
+      type: "website" as const,
+    },
+    twitter: {
+      card: "summary_large_image" as const,
+      title: "Luna - 타로 · 점성술 · 사주",
+      images: [ogImage],
+    },
+  };
+
+  if (!supabaseUrl || !supabaseAnonKey) return defaultMeta;
 
   const supabase = createClient(supabaseUrl, supabaseAnonKey);
   const { data } = await supabase
@@ -19,12 +33,13 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     .eq("id", id)
     .single();
 
-  if (!data) {
-    return { title: "LunaTarot - 타로 리딩" };
-  }
+  if (!data) return defaultMeta;
 
-  const title = `${data.category_label} ${data.score || ""}% - LunaTarot`;
-  const description = `뽑은 카드: ${data.cards.join(", ")}`;
+  const score = data.score ? `${data.score}%` : "";
+  const title = `${data.category_label} ${score} - Luna`;
+  const description = data.cards && data.cards.length > 0
+    ? `뽑은 카드: ${data.cards.join(", ")}`
+    : `${data.category_label} 결과를 확인해보세요`;
 
   return {
     title,
@@ -32,7 +47,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     openGraph: {
       title,
       description,
-      images: [{ url: `${siteUrl}/og-image.png`, width: 1200, height: 630 }],
+      images: [{ url: ogImage, width: 1200, height: 630 }],
       url: `${siteUrl}/result/${id}`,
       type: "website",
     },
@@ -40,7 +55,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       card: "summary_large_image",
       title,
       description,
-      images: [`${siteUrl}/og-image.png`],
+      images: [ogImage],
     },
   };
 }
