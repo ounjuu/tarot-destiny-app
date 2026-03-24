@@ -150,20 +150,17 @@ export default function AdminPage() {
     setDeleting(true);
     try {
       const ids = [...selectedReadings];
-      console.log("삭제 요청:", ids.length, "개", ids);
       const res = await fetch("/api/admin/readings", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ids }),
       });
       const data = await res.json();
-      console.log("삭제 응답:", res.status, data);
       if (res.ok && data.success) {
         setSelectedReadings(new Set());
         setReadingsPage(1);
         await fetchReadings(1);
         await fetchStats();
-        console.log("목록 새로고침 완료");
       } else {
         alert(`삭제 실패: ${data.error || "알 수 없는 에러"}`);
       }
