@@ -149,20 +149,25 @@ export default function AdminPage() {
     if (!confirm(`${selectedReadings.size}개의 기록을 삭제하시겠습니까?`)) return;
     setDeleting(true);
     try {
+      const ids = [...selectedReadings];
+      console.log("삭제 요청:", ids.length, "개", ids);
       const res = await fetch("/api/admin/readings", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ids: [...selectedReadings] }),
+        body: JSON.stringify({ ids }),
       });
-      if (res.ok) {
+      const data = await res.json();
+      console.log("삭제 응답:", res.status, data);
+      if (res.ok && data.success) {
         setSelectedReadings(new Set());
-        fetchReadings();
-        fetchStats();
+        await fetchReadings();
+        await fetchStats();
+        console.log("목록 새로고침 완료");
       } else {
-        const data = await res.json();
         alert(`삭제 실패: ${data.error || "알 수 없는 에러"}`);
       }
     } catch (e) {
+      console.error("삭제 에러:", e);
       alert(`삭제 에러: ${e}`);
     }
     setDeleting(false);
