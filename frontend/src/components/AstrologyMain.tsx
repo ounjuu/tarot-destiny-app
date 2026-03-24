@@ -117,6 +117,21 @@ export default function AstrologyMain() {
     return <BirthInfoForm onSubmit={handleBirthInfoSubmit} />;
   }
 
+  // 장소 정보 없으면 장소만 추가 입력 요청 (기존 정보 미리 채움)
+  if (!birthInfo.birth_lat || birthInfo.birth_lat === 0) {
+    return (
+      <BirthInfoForm
+        onSubmit={handleBirthInfoSubmit}
+        defaultValues={{
+          birthday: birthInfo.birthday,
+          birthTime: birthInfo.birth_time,
+          gender: birthInfo.gender,
+        }}
+        locationOnly
+      />
+    );
+  }
+
   // 해석 결과
   if (reading && selectedCategory) {
     return (

@@ -12,6 +12,12 @@ interface BirthInfoFormProps {
     gender: string;
     calendarType: string;
   }) => void;
+  defaultValues?: {
+    birthday?: string;
+    birthTime?: string | null;
+    gender?: string | null;
+  };
+  locationOnly?: boolean;
 }
 
 interface CityResult {
@@ -20,17 +26,18 @@ interface CityResult {
   lon: string;
 }
 
-export default function BirthInfoForm({ onSubmit }: BirthInfoFormProps) {
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
-  const [day, setDay] = useState("");
-  const [hour, setHour] = useState("");
-  const [minute, setMinute] = useState("");
-  const [unknownTime, setUnknownTime] = useState(false);
+export default function BirthInfoForm({ onSubmit, defaultValues, locationOnly }: BirthInfoFormProps) {
+  const dv = defaultValues;
+  const [year, setYear] = useState(dv?.birthday?.split("-")[0] || "");
+  const [month, setMonth] = useState(dv?.birthday ? String(parseInt(dv.birthday.split("-")[1])) : "");
+  const [day, setDay] = useState(dv?.birthday ? String(parseInt(dv.birthday.split("-")[2])) : "");
+  const [hour, setHour] = useState(dv?.birthTime ? String(parseInt(dv.birthTime.split(":")[0])) : "");
+  const [minute, setMinute] = useState(dv?.birthTime ? String(parseInt(dv.birthTime.split(":")[1])) : "");
+  const [unknownTime, setUnknownTime] = useState(!dv?.birthTime && !!dv?.birthday);
   const [cityQuery, setCityQuery] = useState("");
   const [cityResults, setCityResults] = useState<CityResult[]>([]);
   const [selectedCity, setSelectedCity] = useState<CityResult | null>(null);
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState(dv?.gender || "");
   const [calendarType, setCalendarType] = useState("solar");
   const [searching, setSearching] = useState(false);
   const searchTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -63,7 +70,9 @@ export default function BirthInfoForm({ onSubmit }: BirthInfoFormProps) {
     setCityResults([]);
   };
 
-  const isValid = year && month && day && (unknownTime || (hour && minute)) && selectedCity && gender;
+  const isValid = locationOnly
+    ? !!selectedCity
+    : year && month && day && (unknownTime || (hour && minute)) && selectedCity && gender;
 
   const handleSubmit = () => {
     if (!isValid || !selectedCity) return;
@@ -89,13 +98,13 @@ export default function BirthInfoForm({ onSubmit }: BirthInfoFormProps) {
     <div className="flex flex-col justify-center h-full px-5 py-6 overflow-y-auto" style={{ WebkitOverflowScrolling: "touch" }}>
       <div className="text-center mb-8">
         <img src="/icons/astrology-service.svg" alt="" className="w-16 h-16 mx-auto mb-3" />
-        <h2 className="text-gold text-lg font-bold mb-1">출생 정보 입력</h2>
-        <p className="text-foreground/30 text-xs">정확한 별자리 차트를 위해 필요해요</p>
+        <h2 className="text-gold text-lg font-bold mb-1">{locationOnly ? "태어난 장소 입력" : "출생 정보 입력"}</h2>
+        <p className="text-foreground/30 text-xs">{locationOnly ? "점성술 차트를 위해 장소가 필요해요" : "정확한 별자리 차트를 위해 필요해요"}</p>
       </div>
 
       <div className="w-full max-w-[320px] mx-auto space-y-5">
         {/* 생년월일 */}
-        <div>
+        {!locationOnly && <div>
           <div className="flex items-center justify-between mb-2">
             <label className="text-gold/60 text-xs">생년월일</label>
             <div className="flex gap-1 bg-purple-dark/20 p-0.5 rounded-lg">
@@ -147,9 +156,10 @@ export default function BirthInfoForm({ onSubmit }: BirthInfoFormProps) {
               ))}
             </select>
           </div>
-        </div>
+        </div>}
 
         {/* 태어난 시간 */}
+        {!locationOnly && <>
         <div>
           <label className="text-gold/60 text-xs mb-2 block">태어난 시간</label>
           {!unknownTime && (
@@ -204,6 +214,7 @@ export default function BirthInfoForm({ onSubmit }: BirthInfoFormProps) {
             ))}
           </div>
         </div>
+        </>}
 
         {/* 태어난 장소 */}
         <div className="relative">
@@ -246,7 +257,7 @@ export default function BirthInfoForm({ onSubmit }: BirthInfoFormProps) {
               : "bg-purple-dark/20 text-foreground/20 cursor-not-allowed"
           }`}
         >
-          ✦ 별자리 차트 보기
+          {locationOnly ? "✦ 장소 저장하기" : "✦ 별자리 차트 보기"}
         </button>
       </div>
     </div>
