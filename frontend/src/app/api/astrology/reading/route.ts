@@ -191,6 +191,7 @@ function getCategoryLabel(category: string): string {
 function buildPrompt(category: string, signName: string, signSymbol: string, birthday: string, birthTime: string | null, birthCity: string, chartData: string, userName?: string, gender?: string, partnerSign?: string): string {
   const genderStr = gender === "male" ? "남성" : gender === "female" ? "여성" : "알 수 없음";
   const baseInfo = `사용자 정보:
+- 이름: ${userName || "알 수 없음"}
 - 성별: ${genderStr}
 - 태양 별자리: ${signName} ${signSymbol}
 - 생년월일: ${birthday}
@@ -208,7 +209,7 @@ ${chartData ? `- 출생 차트 데이터: ${chartData}` : ""}`;
 - 차트 데이터를 직접 나열하지 말고, 자연스러운 이야기 흐름으로 풀어주세요
 - 뻔한 말 대신 "이 시기에는 ~하는 게 좋아요", "한 달쯤 뒤에 변화가 올 거예요" 같이 구체적으로
 - 걱정되는 내용이 있어도 다독이면서 현실적인 조언을 해요
-- 이름을 절대 부르지 마세요. "당신"이라고 하세요
+- 이름을 알면 가끔 이름을 불러주세요
 - 충분히 길고 풍성하게 해석해주세요. 짧게 끝내지 마세요.
 
 절대 지켜야 할 규칙:
