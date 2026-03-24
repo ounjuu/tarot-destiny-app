@@ -112,20 +112,21 @@ export async function POST(request: Request) {
       });
     }
 
-    // 결과 저장
+    // 결과 저장 (실패 시 텍스트 잘라서 재시도)
     let readingId = null;
     if (userId && supabase) {
       const scoreMatch = reading.match(/(\d+)%/);
       const score = scoreMatch ? parseInt(scoreMatch[1]) : null;
+      const saveReading = reading.length > 10000 ? reading.slice(0, 10000) + "\n\n(결과가 길어 일부가 생략되었어요)" : reading;
 
-      const { data: inserted } = await supabase
+      const { data: inserted, error: insertError } = await supabase
         .from("readings")
         .insert({
           user_id: userId,
           category: `astro_${category}`,
           category_label: `${sign.name} ${getCategoryLabel(category)}`,
           cards: [sign.name, sign.symbol],
-          reading,
+          reading: saveReading,
           score,
           keywords: "",
           source: source || "gemini",
@@ -133,7 +134,32 @@ export async function POST(request: Request) {
         .select("id")
         .single();
 
-      readingId = inserted?.id;
+      if (insertError) {
+        // 에러 로그 기록
+        await supabase.from("fallback_logs").insert({
+          category: `astro_${category}`,
+          error_type: `save_failed: ${insertError.message} (len: ${reading.length})`,
+          user_id: userId,
+        });
+        // 한번 더 짧게 잘라서 재시도
+        const { data: retry } = await supabase
+          .from("readings")
+          .insert({
+            user_id: userId,
+            category: `astro_${category}`,
+            category_label: `${sign.name} ${getCategoryLabel(category)}`,
+            cards: [sign.name, sign.symbol],
+            reading: reading.slice(0, 5000),
+            score,
+            keywords: "",
+            source: source || "gemini",
+          })
+          .select("id")
+          .single();
+        readingId = retry?.id;
+      } else {
+        readingId = inserted?.id;
+      }
     }
 
     return NextResponse.json({ success: true, reading, readingId });
