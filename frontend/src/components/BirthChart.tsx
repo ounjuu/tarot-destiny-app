@@ -102,14 +102,19 @@ function getSignColor(sign: string): string {
 const PLANET_KO: Record<string, string> = {
   Sun: "태양", Moon: "달", Mercury: "수성", Venus: "금성",
   Mars: "화성", Jupiter: "목성", Saturn: "토성", Uranus: "천왕성",
-  Neptune: "해왕성", Pluto: "명왕성", Ascendant: "상승궁", MC: "천정",
+  Neptune: "해왕성", Pluto: "명왕성", Chiron: "키론", Sirius: "시리우스",
+  Ascendant: "상승궁", MC: "천정", Midheaven: "천정",
+  "North Node": "북교점", "South Node": "남교점",
+  Lilith: "릴리스", Ceres: "세레스", Pallas: "팔라스",
+  Juno: "주노", Vesta: "베스타", Eris: "에리스",
 };
 
 // 차트 내 행성 심볼 (한글 1자)
 const PLANET_SYMBOL: Record<string, string> = {
   Sun: "일", Moon: "월", Mercury: "수", Venus: "금",
   Mars: "화", Jupiter: "목", Saturn: "토", Uranus: "천",
-  Neptune: "해", Pluto: "명",
+  Neptune: "해", Pluto: "명", Chiron: "키", Sirius: "시",
+  Midheaven: "정", "North Node": "북", "South Node": "남",
 };
 
 interface PlanetInfo {
