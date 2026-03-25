@@ -48,7 +48,7 @@ export default function LoginPage() {
           </button>
 
           <p className="text-center text-foreground/20 text-[10px] mt-2">
-            로그인하면 타로 결과를 저장하고 공유할 수 있어요
+            로그인하면 <a href="/privacy" className="underline">개인정보처리방침</a>에 동의하게 됩니다
           </p>
         </div>
       </div>
@@ -56,7 +56,7 @@ export default function LoginPage() {
       {/* 하단 */}
       <footer className="safe-bottom relative z-10 py-3 text-center">
         <p className="text-foreground/15 text-[10px] tracking-wider">
-          LUNA TAROT · 타로 리딩
+          LUNA · 타로 · 점성술 · 사주
         </p>
       </footer>
     </div>
