@@ -139,6 +139,7 @@ export async function POST(request: Request) {
           reading,
           score,
           keywords,
+          source: "gemini",
         })
         .select("id")
         .single();
