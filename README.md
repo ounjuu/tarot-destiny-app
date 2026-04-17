@@ -4,6 +4,8 @@
 
 > https://tarot-destiny-app.vercel.app
 
+> 📲 [Google Play 다운로드](https://play.google.com/store/apps/details?id=com.lunafortune.app)
+
 > 달빛이 비추는 당신의 운명
 
 <p align="center">
@@ -52,7 +54,6 @@ Luna는 타로 카드, 별자리 점성술, 사주팔자로 운명을 읽어주�
 - 💾 **결과 저장** — Supabase DB에 결과 저장
 - 📜 **히스토리** — 타로/점성술/사주 기록 분리 조회
 - 📤 **결과 공유** — 모바일 Web Share API, PC 클립보드 복사
-- 🛡️ **관리자 페이지** — 사용자/리딩 기록/통계/Fallback 로그 관리 (관리자 전용 접근 제어)
 - 📱 **모바일 최적화** — 반응형 UI, safe-area 대응
 - 🖼️ **OG 태그** — SNS 미리보기 지원
 - 💬 **매일 다른 인삿말** — 100가지 다정한 메시지
@@ -89,14 +90,13 @@ tarot-destiny-app/
 │   │   │   │   ├── tarot/         # 타로 해석 API
 │   │   │   │   ├── astrology/     # 점성술 API (출생정보/해석)
 │   │   │   │   ├── saju/          # 사주 API (해석)
-│   │   │   │   ├── admin/         # 관리자 API
 │   │   │   │   ├── history/       # 히스토리 API
 │   │   │   │   └── auth/          # NextAuth 인증
 │   │   │   ├── login/             # 로그인 페이지
 │   │   │   └── result/[id]/       # 결과 공유 페이지
 │   │   ├── components/            # UI 컴포넌트
 │   │   ├── data/                  # 타로/점성술/인삿말 데이터
-│   │   └── lib/                   # 유틸리티 (Supabase, AI, 관리자)
+│   │   └── lib/                   # 유틸리티 (Supabase, AI)
 │   └── package.json
 └── shared/types/                  # 공유 타입
 ```
