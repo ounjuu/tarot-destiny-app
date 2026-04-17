@@ -10,6 +10,7 @@ import TarotSpread from "@/components/TarotSpread";
 import History from "@/components/History";
 import AstrologyMain from "@/components/AstrologyMain";
 import SajuMain from "@/components/SajuMain";
+import AppInstallPopup from "@/components/AppInstallPopup";
 import { CATEGORIES } from "@/data/tarot-cards";
 
 export default function Home() {
@@ -176,6 +177,8 @@ export default function Home() {
           </p>
         </footer>
       )}
+      {/* 앱 설치 팝업 */}
+      <AppInstallPopup />
     </div>
   );
 }
