@@ -17,7 +17,7 @@ export default function PrivacyPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0a0a1a] text-foreground/80">
+    <div className="min-h-screen bg-background text-foreground/80">
       <div className="max-w-[430px] mx-auto px-5 py-8">
         <h1 className="text-gold text-xl font-bold mb-6">개인정보처리방침</h1>
 

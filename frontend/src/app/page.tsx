@@ -11,6 +11,7 @@ import History from "@/components/History";
 import AstrologyMain from "@/components/AstrologyMain";
 import SajuMain from "@/components/SajuMain";
 import AppInstallPopup from "@/components/AppInstallPopup";
+import ThemeToggle from "@/components/ThemeToggle";
 import { CATEGORIES } from "@/data/tarot-cards";
 
 export default function Home() {
@@ -82,14 +83,17 @@ export default function Home() {
             {service === "tarot" ? "LunaTarot" : service === "astrology" ? "LunaStars" : service === "saju" ? "LunaSaju" : "Luna"}
           </h1>
         </div>
-        <div className="absolute right-3">
+        <div className="absolute right-3 flex items-center gap-2">
           {!service && !selectedCategory && currentTab === "home" && (
-            <button
-              onClick={() => signOut({ callbackUrl: "/login" })}
-              className="text-gold/40 text-[10px] cursor-pointer"
-            >
-              로그아웃
-            </button>
+            <>
+              <ThemeToggle />
+              <button
+                onClick={() => signOut({ callbackUrl: "/login" })}
+                className="text-gold/40 text-[10px] cursor-pointer"
+              >
+                로그아웃
+              </button>
+            </>
           )}
         </div>
         {selectedCategory && (

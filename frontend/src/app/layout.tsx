@@ -50,10 +50,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#0a0a1a" />
+        <script dangerouslySetInnerHTML={{ __html: `
+          (function(){
+            var t=localStorage.getItem('theme');
+            if(t==='light'){
+              document.documentElement.classList.add('light');
+              var m=document.querySelector('meta[name="theme-color"]');
+              if(m)m.setAttribute('content','#f5f0e8');
+            }
+          })();
+        `}} />
       </head>
       <body className="antialiased">
         <Providers>{children}</Providers>

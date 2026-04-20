@@ -7,6 +7,17 @@
   --gold-light: #e8d48b;
   --purple: #6b3fa0;
   --purple-dark: #2d1b4e;
+  --card-surface: #1a1025;
+}
+
+html.light {
+  --background: #f5f0e8;
+  --foreground: #2a2235;
+  --gold: #a07c2e;
+  --gold-light: #c9a84c;
+  --purple: #8b5ec0;
+  --purple-dark: #e8dff0;
+  --card-surface: #ffffff;
 }
 
 @theme inline {
@@ -16,6 +27,23 @@
   --color-gold-light: var(--gold-light);
   --color-purple: var(--purple);
   --color-purple-dark: var(--purple-dark);
+  --color-card-surface: var(--card-surface);
+}
+
+/* 별 반짝이는 배경 */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+.star {
+  animation: twinkle var(--duration, 3s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+/* 라이트 모드 별 색상 */
+html.light .star {
+  background: rgba(160, 124, 46, 0.4) !important;
 }
 
 /* 앱뷰 기본 설정 */

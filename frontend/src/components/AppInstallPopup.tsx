@@ -41,7 +41,7 @@ export default function AppInstallPopup() {
       />
 
       {/* 팝업 */}
-      <div className="relative w-full max-w-[320px] bg-[#1a1025] border border-gold/20 rounded-2xl p-6 text-center fade-in">
+      <div className="relative w-full max-w-[320px] bg-card-surface border border-gold/20 rounded-2xl p-6 text-center fade-in">
         {/* 아이콘 */}
         <div className="mb-4">
           <img
